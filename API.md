@@ -4,12 +4,12 @@
 
 - Les cartes les plus puissantes
 - Les cartes les plus rares (basé sur les données du micro 2)
-- Les utilisateurs avec les meilleurs collections
 - Les cartes les plus recherchées.
 
 
 ## Micro 2 :
 
+- Les utilisateurs avec les meilleurs collections
 - Se connecter
 - S'inscrire
 - Voir ses cartes
@@ -24,10 +24,10 @@
 ## Micro 1 :
 - `/getPowerfulCard`
 - `/getRarestCard`
-- `/getBestUsersCollections`
 - `/getMostSearchedCard`
 
 ## Micro 2 :
+- `/getBestUsersCollections`
 - `/login`
 - `/register`
 - `/getMyCard`
