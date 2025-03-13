@@ -6,7 +6,7 @@ Ce repository a pour but de rassembler les différentes parties de la SAE. Mati�
 
 * [R401](#r401---architecture-logicielle)
 * [R410](#r410---complément-web)
-* [R409](#r409---managment-avancé-des-systèmes-dinformation)
+* [R409](#r409---management-avancé-des-systèmes-dinformation)
 
 ## Architecture R401 et R410
 
