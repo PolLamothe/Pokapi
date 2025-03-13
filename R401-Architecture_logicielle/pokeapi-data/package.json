@@ -1,0 +1,24 @@
+{
+  "name": "pokeapi-data",
+  "version": "1.0.0",
+  "description": "Microservice 1 qui intéragit avec l'API publique dev.pokemontcg.io",
+  "main": "server.js",
+  "type": "module",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "node --test --experimental-test-coverage --test-force-exit test/*",
+    "start-gendoc": "node swagger-autogen.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "nodemon": "^3.1.9",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
