@@ -1,38 +1,52 @@
-# Liste des API :
+# API
 
-## Micro 1 :
+## Fonctionnalités API :
 
-- Les cartes les plus puissantes
+### Data :
+
+- Les cartes les plus puissantes *(définir puissantes)*
 - Les cartes les plus rares (basé sur les données du micro 2)
-- Les cartes les plus recherchées.
+- ---
+*Si on à le temps pas à faire pour l'instant :*
+- Les cartes les plus recherchées
 
 
-## Micro 2 :
+### User :
 
-- Les utilisateurs avec les meilleurs collections
+- Les utilisateurs avec les meilleurs collections *(définir meilleure)*
 - Se connecter
 - S'inscrire
+- Rechercher des utilisateurs
 - Voir ses cartes
 - Ouvrir un boosters
+---
+*Si on à le temps pas à faire pour l'instant :*
 - Echanger des cartes
 - Ajouter une carte comme recherchée
 - Voir les cartes que l'on recherche
-- Rechercher des utilisateurs
 
-# Liste des Routes :
+## Liste des routes :
 
-## Micro 1 :
+**TODO : Définir les paramètres des routes (id...) et les méthodes HTTP (PUT, GET...)**
+
+### Data :
+
 - `/getPowerfulCard`
 - `/getRarestCard`
+---
+*Si on à le temps pas à faire pour l'instant :*
 - `/getMostSearchedCard`
 
-## Micro 2 :
+### User :
+
 - `/getBestUsersCollections`
 - `/login`
 - `/register`
 - `/getMyCard`
 - `/openBooster`
+- `/getUser`
+---
+*Si on à le temps pas à faire pour l'instant :*
 - `/exchangeCard`
 - `/setCardAsSearched`
 - `/getSearchedCard`
-- `/getUser`

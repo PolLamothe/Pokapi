@@ -1,18 +1,12 @@
 'use strict'
 
-import dotenv from 'dotenv'
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
 import swaggerJson from './swagger.json' with {type: 'json'};
-
-dotenv.config()
-
-const serverPort = process.env.PORT || 8080
-const APIPATH = process.env.API_PATH || '/api/v0'
+import CONFIG from "./const.js";
 
 const app = express()
 
-//chargement des middleware
 //Pour le CORS
 app.use((req,res,next)=>{
     res.setHeader("Access-Control-Allow-Origin",'*');
@@ -20,12 +14,13 @@ app.use((req,res,next)=>{
     res.setHeader("Access-Control-Allow-Headers",'Content-Type,Authorization');
     next();
 })
+
 //pour traiter les body en json
 app.use(express.json())
 
 //chargement des routes
 const {default: routes}  = await import ('./route.js')
-app.use(APIPATH+'/',routes)
+app.use(CONFIG.APIPATH+'/',routes)
 
 //route pour swagger
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerJson))
@@ -33,13 +28,11 @@ app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerJson))
 //message par defaut
 app.use((error,req,res,next)=>{
     console.log(error)
-    const status = error.statusCode || 500
-    const message = error.message
-    res.status(status).json({message:message})
+    res.status(error.statusCode || 500).json({message:error.message})
 })
 
-const server = app.listen(serverPort, () =>
-    console.log(`Example app listening on port ${serverPort}`)
+const server = app.listen(CONFIG.PORT, () =>
+    console.log(`Example app listening on port ${CONFIG.PORT}`)
 )
 
 //Pour les interrucptions utilisateur
