@@ -5,8 +5,8 @@
 Ce repository a pour but de rassembler les différentes parties de la SAE. Matières présentes :
 
 * [R401](#r401---architecture-logicielle)
-* [R410](#r410---complement-web)
-* [R409](#r409---managment-avance-des-systemes-d-information)
+* [R410](#r410---complément-web)
+* [R409](#r409---managment-avancé-des-systèmes-dinformation)
 
 ## Architecture R401 et R410
 
