@@ -3,11 +3,7 @@
 import express from "express";
 import swaggerUi from 'swagger-ui-express'
 import swaggerJson from './swagger.json' with {type: 'json'};
-import dotenv from 'dotenv'
-
-dotenv.config()
-
-const APIPATH = process.env.API_PATH || '/api/v0'
+import CONFIG from "./const.js";
 
 const app = express()
 
@@ -26,7 +22,7 @@ app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerJson))
 
 //chargement des routes
 const {default: routes} = await import ('./api/route/route.js')
-app.use(APIPATH + '/', routes)
+app.use(CONFIG.APIPATH + '/', routes)
 
 app.use((error, req, res, next) => {
     console.log(error)

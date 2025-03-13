@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "nodemon server.js",
-    "test": "node --test --experimental-test-coverage --test-force-exit test/*",
+    "test": "node --test --experimental-test-coverage --test-force-exit test/*.js",
     "start-gendoc": "node swagger-autogen.js"
   },
   "author": "",

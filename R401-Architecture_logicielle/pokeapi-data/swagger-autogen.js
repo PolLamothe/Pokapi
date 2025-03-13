@@ -1,11 +1,5 @@
 import swaggerAutogen from 'swagger-autogen';
-import dotenv from 'dotenv'
-
-dotenv.config()
-
-const serverPort = process.env.PORT || 8082
-const APIPATH = process.env.API_PATH || '/api/v0'
-const HOST = process.env.HOST || "localhost"
+import CONFIG from './const.js'
 
 const outputFile = './swagger.json';
 const endpointsFiles = ['./api/route/*.js'];
@@ -16,8 +10,8 @@ const config = {
         description: '',
     },
     tags: [ ],
-    host: HOST+':'+serverPort+APIPATH,
-    schemes: ['http',],
+    host: CONFIG.HOST+':'+CONFIG.PORT+CONFIG.APIPATH,
+    schemes: ['http'],
 };
 
 swaggerAutogen(outputFile, endpointsFiles, config);
