@@ -4,6 +4,7 @@ dotenv.config()
 
 const serverPort = process.env.PORT || 8080
 const APIPATH = process.env.API_PATH || '/api/v0'
+const host = process.env.HOST || 'localhost'
 
 const outputFile = './swagger.json';
 const endpointsFiles = ['./route.js'];
@@ -14,7 +15,7 @@ const config = {
         description: '',
     },
     tags: [ ],
-    host: 'localhost:'+serverPort+APIPATH,
+    host: host+':'+serverPort+APIPATH,
     schemes: ['http'],
 };
 
