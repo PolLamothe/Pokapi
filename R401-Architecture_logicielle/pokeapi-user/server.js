@@ -1,18 +1,13 @@
 'use strict'
 
-import dotenv from 'dotenv'
+import CONFIG from './const.js'
 
-dotenv.config()
-
-// ENV variables
-const serverPort = process.env.PORT || 8081
-const env = process.env.ENV || 'PROD'
-console.log(`env : ${env}`)
+console.log(`ENV : ${CONFIG.ENV}`)
 
 const {default: app}  = await import ('./app.js')
 
-const server = app.listen(serverPort, () =>
-    console.log(`--- Pokeapi-data listening on port ${serverPort} ! ---`)
+const server = app.listen(CONFIG.PORT, () =>
+    console.log(`--- Pokeapi-user listening on port ${CONFIG.PORT} ! ---`)
 )
 
 //Pour les interrucptions utilisateur

@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const serverPort = process.env.PORT || 8080
+const serverPort = process.env.PORT || 8082
 const APIPATH = process.env.API_PATH || '/api/v0'
 const HOST = process.env.HOST || "localhost"
 
