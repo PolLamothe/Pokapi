@@ -1,6 +1,12 @@
 # SAE4_class_grp1_eq1_ARNAUD-Kyllian_DESTAIN-Jauzua_LAMOTHE-Pol_LE--CARLUER-Brieuc_SOUCHET-Thomas
 
-Ce repository a pour but de rassembler les différentes parties de la SAE (au moins R401 et R410 à voir pour les autres).
+**Groupe_1_1 :** Thomas Souchet, Kyllian Arnaud, Pol Lamothe, Brieuc Le Carluer, Jauzua Destain
+
+Ce repository a pour but de rassembler les différentes parties de la SAE. Matières présentes :
+
+* [R401](#r401---architecture-logicielle)
+* [R410](#r410---complement-web)
+* [R409](#r409---managment-avance-des-systemes-d-information)
 
 ## Architecture R401 et R410
 
@@ -24,4 +30,8 @@ Vous devrez pour chaque service fournir les tests du modèle, des contrôleurs, 
 
 **Consignes :**
 
-Vous devrez développer une application de préférence « one page » sur des services rest de votre choix, la richesse des fonctionnalités, l’ergonomie, l’utilisation de la mémoire et du CPU seront pris en compte. Le rendu final sera sous la forme d’une revue de code et d'une présentation du projet. Vous devrez un jour avant la soutenance avoir déposé sur git votre code, un fichier markdown décrivant l’application et son déploiement, (le déploiement sur un serveur apache doit-être possible).
+Vous devrez développer une application de préférence « one page » sur des services rest de votre choix (au moins 2), la richesse des fonctionnalités, l’ergonomie, l’utilisation de la mémoire et du CPU seront pris en compte. Le rendu final sera sous la forme d’une revue de code et d'une présentation du projet. Vous devrez un jour avant la soutenance avoir déposé sur git votre code, un fichier markdown décrivant l’application et son déploiement, (le déploiement sur un serveur apache doit-être possible).
+
+## R409 - Management avancé des systèmes d'information
+
+**Consignes :** [R409-MASI/README.md](https://gitlab.univ-nantes.fr/pub/but/but2/sae4/sae4_class_grp1_eq1_arnaud-kyllian_destain-jauzua_lamothe-pol_le-carluer-brieuc_souchet-thomas/-/blob/main/R409-MASI/README.md?ref_type=heads)
