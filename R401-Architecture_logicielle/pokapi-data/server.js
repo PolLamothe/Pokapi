@@ -7,7 +7,7 @@ console.log(`env : ${CONFIG.ENV}`)
 const {default: app}  = await import ('./app.js')
 
 const server = app.listen(CONFIG.PORT, () =>
-    console.log(`--- Pokeapi-data listening on port ${CONFIG.PORT} ! ---`)
+    console.log(`--- Pokapi-data listening on port ${CONFIG.PORT} ! ---`)
 )
 
 //Pour les interrucptions utilisateur

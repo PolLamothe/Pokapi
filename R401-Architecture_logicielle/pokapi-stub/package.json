@@ -1,15 +1,12 @@
 {
-  "name": "pokeapi-user",
+  "name": "pokapi-stub",
   "version": "1.0.0",
-  "description": "Microservice 2 qui gère les utilisateurs",
+  "description": "Stub de l'API REST pokapi",
   "main": "server.js",
   "type": "module",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "start": "nodemon server.js",
-    "test": "node --test --experimental-test-coverage --test-force-exit test/*.js",
+    "test": "echo \"Error: Aucun test disponible\" && exit 1",
     "start-gendoc": "node swagger-autogen.js"
   },
   "author": "",

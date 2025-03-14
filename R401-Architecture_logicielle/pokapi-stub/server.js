@@ -32,7 +32,7 @@ app.use((error,req,res,next)=>{
 })
 
 const server = app.listen(CONFIG.PORT, () =>
-    console.log(`Example app listening on port ${CONFIG.PORT}`)
+    console.log(`--- Pokapi listening on port ${CONFIG.PORT}! ---`)
 )
 
 //Pour les interrucptions utilisateur

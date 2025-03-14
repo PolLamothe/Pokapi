@@ -1,5 +1,5 @@
 {
-  "name": "pokeapi-data",
+  "name": "pokapi-data",
   "version": "1.0.0",
   "description": "Microservice 1 qui intéragit avec l'API publique dev.pokemontcg.io",
   "main": "server.js",

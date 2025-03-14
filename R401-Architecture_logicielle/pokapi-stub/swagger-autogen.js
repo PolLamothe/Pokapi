@@ -6,7 +6,7 @@ const endpointsFiles = ['./route.js'];
 
 const config = {
     info: {
-        title: 'pokeapi-stub API Documentation',
+        title: 'pokapi-stub API Documentation',
         description: '',
     },
     tags: [ ],
