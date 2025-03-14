@@ -15,7 +15,7 @@ router
     })
 
 router.route("/openBooster/:SETID").get((req,res)=>{
-    res.status(200).send(boosterContent)
+    res.send(boosterContent)
 })
 
 router.route("/getRarestCard").get((req,res)=>{
@@ -23,7 +23,36 @@ router.route("/getRarestCard").get((req,res)=>{
 })
 
 router.route("/getMostSearchedCard").get((req,res)=>{
-    res.status(200).send(rarestCards)
+    res.send(rarestCards)
+})
+
+router.route("/getBestUsersCollections").get((req,res)=>{
+    res.send([
+        {
+            pseudo : "Kiki",
+            collection : rarestCards
+        },
+        {
+            pseudo : "Toto",
+            collection : boosterContent
+        }
+    ])
+})
+
+router.route("/login").post((req,res)=>{
+    if(req.body.login == "admin" && req.body.password == "thomas"){
+        res.status(200).send()
+    }else{
+        res.status(401).send()
+    }
+})
+
+router.route("/register").post((req,res)=>{
+    if(req.body.login == "admin" && req.body.password == "thomas"){
+        res.status(401).send()
+    }else{
+        res.status(200).send()
+    }
 })
 
 export default router
