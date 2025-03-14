@@ -1,10 +1,24 @@
 'use strict'
 
 import CONFIG from './const.js'
+import {mongoose} from 'mongoose';
 
 console.log(`ENV : ${CONFIG.ENV}`)
 
 const {default: app}  = await import ('./app.js')
+
+// Connexion à la BD
+if (CONFIG.ENV === 'TEST') {
+    //en test le travail est en mémoire
+    const {MongoMemoryServer}  = await import('mongodb-memory-server')
+    const mongoServer = await MongoMemoryServer.create();
+    const uri = mongoServer.getUri();
+    await mongoose.connect(uri)
+    console.log("MONGODB : Mongo on memory "+uri)
+} else {
+    await mongoose.connect(CONFIG.MONGO_URL + '/' + CONFIG.MONGO_DB)
+    console.log("MONGODB : Mongo on "+ CONFIG.MONGO_URL + '/' + CONFIG.MONGO_DB)
+}
 
 const server = app.listen(CONFIG.PORT, () =>
     console.log(`--- Pokapi-user listening on port ${CONFIG.PORT} ! ---`)
@@ -17,7 +31,8 @@ for (let signal of ["SIGTERM", "SIGINT"]) {
         console.log("Closing http server.");
         server.close(async (err) => {
             console.log("Http server closed.")
-            // TODO : Add MongoDB close
+            await mongoose.connection.close()
+            console.log("MongoDB connection closed.")
             process.exit(err ? 1 : 0)
         });
     });
