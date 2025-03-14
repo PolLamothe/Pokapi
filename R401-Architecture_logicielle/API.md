@@ -2,14 +2,16 @@
 
 ## Fonctionnalités API :
 
+### Calcul puissance carte :
+
+- HP
+- nb Attaque
+
 ### Data :
 
-- Les cartes les plus puissantes *(définir puissantes)*
+- Ouvrir un booster
 - Les cartes les plus rares (basé sur les données du micro 2)
-- ---
-*Si on à le temps pas à faire pour l'instant :*
 - Les cartes les plus recherchées
-
 
 ### User :
 
@@ -18,12 +20,11 @@
 - S'inscrire
 - Rechercher des utilisateurs
 - Voir ses cartes
-- Ouvrir un boosters
+- Ajouter une carte comme recherchée
+- Voir les cartes que l'on recherche
 ---
 *Si on à le temps pas à faire pour l'instant :*
 - Echanger des cartes
-- Ajouter une carte comme recherchée
-- Voir les cartes que l'on recherche
 
 ## Liste des routes :
 
@@ -31,11 +32,9 @@
 
 ### Data :
 
-- `/getPowerfulCard`
 - `/getRarestCard`
----
-*Si on à le temps pas à faire pour l'instant :*
 - `/getMostSearchedCard`
+- `/openBooster/SET`
 
 ### User :
 
@@ -43,10 +42,9 @@
 - `/login`
 - `/register`
 - `/getMyCard`
-- `/openBooster`
 - `/getUser`
+- `/setCardAsSearched`
+- `/getSearchedCard`
 ---
 *Si on à le temps pas à faire pour l'instant :*
 - `/exchangeCard`
-- `/setCardAsSearched`
-- `/getSearchedCard`
