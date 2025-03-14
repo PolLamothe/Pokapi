@@ -13,9 +13,9 @@ Comment créer une plateforme permettant aux utilisateurs de gérer, optimiser e
 ### Étape 1 :
 
 - [ ] Faire un stub unique (comme le proxy) qui renvoie une réponse constante prédéfinie pour chaque route 🟢
-- [ ] Faire les modèles des données manipulées dans data et user et **les TESTS** qui vont avec. (A partir du stub)
+- [ ] Faire les modèles des données manipulées dans data et user et **les TESTS** qui vont avec. (A partir du stub)🟢
 - [ ] Faire les schéma des BD MongoDB dans data et user
-- [ ] Faire la config de la DB en memory pour ENV=TEST et sur un serveur pour ENV=PROD pour data et user
+- [x] Faire la config de la DB en memory pour ENV=TEST et sur un serveur pour ENV=PROD pour data et user
 
 ### Étape 2 : 
 
