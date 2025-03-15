@@ -2,17 +2,14 @@
 
 import express from 'express'
 
-const router = express.Router()
-
 import boosterContent from './assets/booster.json' with {type: 'json'}
-
 import rarestCards from './assets/rarest.json' with {type: 'json'}
 
-router
-    .route('/todo')
-    .get((req, res) => {
-        res.status(200).send({message: "TODO"})
-    })
+const router = express.Router()
+
+// ---
+// Data
+// ---
 
 router.route("/openBooster/:SETID").get((req,res)=>{
     res.send(boosterContent)
@@ -25,6 +22,10 @@ router.route("/getRarestCard").get((req,res)=>{
 router.route("/getMostSearchedCard").get((req,res)=>{
     res.send(rarestCards)
 })
+
+// ---
+// User
+// ---
 
 router.route("/getBestUsersCollections").get((req,res)=>{
     res.send([
@@ -40,7 +41,7 @@ router.route("/getBestUsersCollections").get((req,res)=>{
 })
 
 router.route("/login").post((req,res)=>{
-    if(req.body.login == "admin" && req.body.password == "thomas"){
+    if(req.body.login === "admin" && req.body.password === "thomas"){
         res.status(200).send()
     }else{
         res.status(401).send()
@@ -48,7 +49,7 @@ router.route("/login").post((req,res)=>{
 })
 
 router.route("/register").post((req,res)=>{
-    if(req.body.login == "admin" && req.body.password == "thomas"){
+    if(req.body.login === "admin" && req.body.password === "thomas"){
         res.status(401).send()
     }else{
         res.status(200).send()
