@@ -1,11 +1,11 @@
-import {Model} from "./Model.js"
+import {Model, SchemaTypes as S} from "./Model.js"
 
 export class Ability extends Model {
 
     static schema = {
-        name: {type: "string", objectName: ""},
-        text: {type: "string", objectName: ""},
-        type: {type: "string", objectName: ""}
+        name: S.String,
+        text: S.String,
+        type: S.String
     }
 
     constructor(data) {

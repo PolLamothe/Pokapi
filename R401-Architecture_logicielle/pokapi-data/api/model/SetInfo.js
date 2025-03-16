@@ -1,10 +1,10 @@
-import {Model} from "./Model.js";
+import {Model, SchemaTypes as S} from "./Model.js";
 
 export class SetImage extends Model {
 
     static schema = {
-        symbol: {type: "string", objectName: ""},
-        logo: {type: "string", objectName: ""},
+        symbol: S.String,
+        logo: S.String,
     }
 
     constructor(data) {
@@ -18,15 +18,15 @@ export class SetImage extends Model {
 export class SetInfo extends Model {
 
     static schema = {
-        id: {type: "string", objectName: ""},
-        name: {type: "string", objectName: ""},
-        series: {type: "string", objectName: ""},
-        printedTotal: {type: "number", objectName: ""},
-        total: {type: "number", objectName: ""},
-        ptcgoCode: {type: "string", objectName: ""},
-        releaseDate: {type: "string", objectName: ""},
-        updatedAt: {type: "string", objectName: ""},
-        images: {type: "object", objectName: SetImage}
+        id: S.String,
+        name: S.String,
+        series: S.String,
+        printedTotal: S.Number,
+        total: S.Number,
+        ptcgoCode: S.StringOptional,
+        releaseDate: S.String,
+        updatedAt: S.String,
+        images: {type: "object", objectName: SetImage, required: true},
     }
 
     constructor(data) {
@@ -37,7 +37,7 @@ export class SetInfo extends Model {
         this.series = data.series
         this.printedTotal = data.printedTotal
         this.total = data.total
-        this.ptcgoCode = data.ptcgoCode
+        this.ptcgoCode = data.ptcgoCode || null
         this.releaseDate = data.releaseDate
         this.updatedAt = data.updatedAt
         this.images = new SetImage(data.images)

@@ -1,22 +1,22 @@
-import {Model} from "./Model.js";
+import {Model, SchemaTypes as S} from "./Model.js";
 
 export class CardMarketPrices extends Model {
     static schema = {
-        averageSellPrice: {type: "number", objectName: ""},
-        lowPrice: {type: "number", objectName: ""},
-        trendPrice: {type: "number", objectName: ""},
-        germanProLow: {type: "number", objectName: ""},
-        suggestedPrice: {type: "number", objectName: ""},
-        reverseHoloSell: {type: "number", objectName: ""},
-        reverseHoloLow: {type: "number", objectName: ""},
-        reverseHoloTrend: {type: "number", objectName: ""},
-        lowPriceExPlus: {type: "number", objectName: ""},
-        avg1: {type: "number", objectName: ""},
-        avg7: {type: "number", objectName: ""},
-        avg30: {type: "number", objectName: ""},
-        reverseHoloAvg1: {type: "number", objectName: ""},
-        reverseHoloAvg7: {type: "number", objectName: ""},
-        reverseHoloAvg30: {type: "number", objectName: ""}
+        averageSellPrice: S.Number,
+        lowPrice: S.Number,
+        trendPrice: S.Number,
+        germanProLow: S.Number,
+        suggestedPrice: S.Number,
+        reverseHoloSell: S.Number,
+        reverseHoloLow: S.Number,
+        reverseHoloTrend: S.Number,
+        lowPriceExPlus: S.Number,
+        avg1: S.Number,
+        avg7: S.Number,
+        avg30: S.Number,
+        reverseHoloAvg1: S.Number,
+        reverseHoloAvg7: S.Number,
+        reverseHoloAvg30: S.Number
     }
 
     constructor(data) {
@@ -43,9 +43,9 @@ export class CardMarketPrices extends Model {
 export class CardMarket extends Model {
 
     static schema = {
-        url: {type: "string", objectName: ""},
-        updatedAt: {type: "string", objectName: ""},
-        prices: {type: "object", objectName: CardMarketPrices}
+        url: S.String,
+        updatedAt: S.String,
+        prices: {type: "object", objectName: CardMarketPrices, required: true},
     }
 
     constructor(data) {

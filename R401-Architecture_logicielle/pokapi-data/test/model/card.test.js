@@ -1,6 +1,7 @@
 import {describe, it } from "node:test"
 import {Card, CardImage} from "../../api/model/Card.js"
 import assert from "node:assert"
+import testCards from '../ressources/cards.json' with {type: 'json'}
 
 describe("Model - Card",()=>{
     const valid = {
@@ -130,7 +131,10 @@ describe("Model - Card",()=>{
     })
     it("Missing attribute",()=>{
         Object.keys(valid).forEach((key)=> {
-            if (["legalities", "tcgplayer"].includes(key)) return
+            // Don't test optional attributes
+            if (["legalities", "tcgplayer", "level", "evolvesFrom", "retreatCost",
+                "convertedRetreatCost", "rarity", "flavorText", "abilities", "resistances",
+                "weaknesses", "attacks", "cardmarket"].includes(key)) return
             test = Object.assign({}, valid)
             delete test[key]
             assert.throws(()=> new Card(test),{
@@ -158,9 +162,12 @@ describe("Model - Card",()=>{
         })
     })
     it("OK", ()=> {
-        test = Object.assign({}, valid)
-        assert.doesNotThrow(()=> new Card(test))
-        assert.deepEqual(test, valid)
+        const testArray = testCards.data
+        testArray.forEach((c, i) => {
+            test = Object.assign({}, c)
+            assert.doesNotThrow(()=> new Card(test), TypeError, `Index ${i} ; Card ${c.id}`)
+            assert.deepEqual(test, c)
+        })
     })
 })
 

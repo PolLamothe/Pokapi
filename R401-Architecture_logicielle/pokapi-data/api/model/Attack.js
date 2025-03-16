@@ -1,13 +1,13 @@
-import {Model} from "./Model.js";
+import {Model, SchemaTypes as S} from "./Model.js";
 
 export class Attack extends Model {
 
     static schema = {
-        name: {type: "string", objectName: ""},
-        cost: {type: "array", objectName: "string"},
-        convertedEnergyCost: {type: "number", objectName: ""},
-        damage: {type: "string", objectName: ""},
-        text: {type: "string", objectName: ""}
+        name: S.String,
+        cost: S.StringArray,
+        convertedEnergyCost: S.Number,
+        damage: S.String,
+        text: S.String
     }
 
     constructor(data) {

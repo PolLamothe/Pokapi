@@ -29,7 +29,7 @@ describe("Model - SetInfo",()=>{
     })
     it("Missing attribute",()=>{
         Object.keys(valid).forEach((key)=> {
-            if (key === "legalities") return
+            if (["legalities", "ptcgoCode"].includes(key)) return
             test = Object.assign({}, valid)
             delete test[key]
             assert.throws(()=> new SetInfo(test),{

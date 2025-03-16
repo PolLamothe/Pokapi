@@ -11,6 +11,7 @@ export class Model {
      */
     static validateTypes(data) {
         for (const key in this.schema) {
+            if (data[key] === undefined && this.schema[key].required === false) continue
             if (this.schema[key].type === "array") {
                 if (data[key] === undefined || !Array.isArray(data[key])) {
                     throw new TypeError(`Invalid type for ${key}: expected ${this.schema[key].type}, got ${typeof data[key]}`)
@@ -29,4 +30,17 @@ export class Model {
             }
         }
     }
+}
+
+/**
+ * Shorthand for declaring schema types
+ */
+export const SchemaTypes = {
+    String: {type: "string", objectName: "", required: true},
+    StringOptional: {type: "string", objectName: "", required: false},
+    Number: {type: "number", objectName: "", required: true},
+    NumberOptional: {type: "number", objectName: "", required: false},
+    StringArray: {type: "array", objectName: "string", required: true},
+    StringArrayOptional: {type: "array", objectName: "string", required: false},
+    NumberArray: {type: "array", objectName: "number", required: true},
 }

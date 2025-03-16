@@ -1,4 +1,4 @@
-import {Model} from "./Model.js"
+import {Model, SchemaTypes as S} from "./Model.js"
 import {CardMarket} from "./CardMarket.js";
 import {SetInfo} from "./SetInfo.js";
 import {Resistance} from "./Resistance.js";
@@ -8,8 +8,8 @@ import {Ability} from "./Ability.js";
 
 export class CardImage extends Model {
     static schema = {
-        small: {type: "string", objectName: ""},
-        large: {type: "string", objectName: ""}
+        small: S.String,
+        large: S.String
     }
 
     constructor(data) {
@@ -23,28 +23,28 @@ export class CardImage extends Model {
 export class Card extends Model {
 
     static schema = {
-        id: {type: "string", objectName: ""},
-        name: {type: "string", objectName: ""},
-        supertype: {type: "string", objectName: ""},
-        subtypes: {type: "array", objectName: "string"},
-        level: {type: "string", objectName: ""},
-        hp: {type: "string", objectName: ""},
-        types: {type: "array", objectName: "string"},
-        evolvesFrom: {type: "string", objectName: ""},
-        abilities: {type: "array", objectName: Ability},
-        attacks: {type: "array", objectName: Attack},
-        weaknesses: {type: "array", objectName: Weakness},
-        resistances: {type: "array", objectName: Resistance},
-        retreatCost: {type: "array", objectName: "string"},
-        convertedRetreatCost: {type: "number", objectName: ""},
-        set: {type: "object", objectName: SetInfo},
-        number: {type: "string", objectName: ""},
-        artist: {type: "string", objectName: ""},
-        rarity: {type: "string", objectName: ""},
-        flavorText: {type: "string", objectName: ""},
-        nationalPokedexNumbers: {type: "array", objectName: "number"},
-        images: {type: "object", objectName: CardImage},
-        cardmarket: {type: "object", objectName: CardMarket}
+        id: S.String,
+        name: S.String,
+        supertype: S.String,
+        subtypes: S.StringArray,
+        level: S.StringOptional,
+        hp: S.String,
+        types: S.StringArray,
+        evolvesFrom: S.StringOptional,
+        abilities: {type: "array", objectName: Ability, required: false},
+        attacks: {type: "array", objectName: Attack, required: false},
+        weaknesses: {type: "array", objectName: Weakness, required: false},
+        resistances: {type: "array", objectName: Resistance, required: false},
+        retreatCost: S.StringArrayOptional,
+        convertedRetreatCost: S.NumberOptional,
+        set: {type: "object", objectName: SetInfo, required: true},
+        number: S.String,
+        artist: S.String,
+        rarity: S.StringOptional,
+        flavorText: S.StringOptional,
+        nationalPokedexNumbers: S.NumberArray,
+        images: {type: "object", objectName: CardImage, required: true},
+        cardmarket: {type: "object", objectName: CardMarket, required: false}
     }
 
     constructor(data) {
@@ -54,23 +54,23 @@ export class Card extends Model {
         this.name = data.name
         this.supertype = data.supertype
         this.subtypes = data.subtypes
-        this.level = data.level
+        this.level = data.level || null
         this.hp = data.hp
         this.types = data.types
-        this.evolvesFrom = data.evolvesFrom
-        this.abilities = data.abilities.map(ability => new Ability(ability))
-        this.attacks = data.attacks.map(attack => new Attack(attack))
-        this.weaknesses = data.weaknesses.map(weakness => new Weakness(weakness))
-        this.resistances = data.resistances.map(resistance => new Resistance(resistance))
-        this.retreatCost = data.retreatCost
-        this.convertedRetreatCost = data.convertedRetreatCost
+        this.evolvesFrom = data.evolvesFrom || null
+        this.abilities = (data.abilities || []).map(ability => new Ability(ability))
+        this.attacks = (data.attacks || []).map(attack => new Attack(attack))
+        this.weaknesses = (data.weaknesses || []).map(weakness => new Weakness(weakness))
+        this.resistances = (data.resistances || []).map(resistance => new Resistance(resistance))
+        this.retreatCost = data.retreatCost || null
+        this.convertedRetreatCost = data.convertedRetreatCost || null
         this.set = new SetInfo(data.set)
         this.number = data.number
         this.artist = data.artist
-        this.rarity = data.rarity
-        this.flavorText = data.flavorText
+        this.rarity = data.rarity || null
+        this.flavorText = data.flavorText || null
         this.nationalPokedexNumbers = data.nationalPokedexNumbers
         this.images = data.images
-        this.cardmarket = new CardMarket(data.cardmarket)
+        this.cardmarket = data.cardmarket ? new CardMarket(data.cardmarket) : null
     }
 }
