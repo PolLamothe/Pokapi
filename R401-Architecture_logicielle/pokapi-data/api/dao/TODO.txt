@@ -1,5 +1,0 @@
-TODO : Faire les DAO prendre exemple sur 05-proxy -> stationDAO.js
-
-2 DAO à faire :
-- Un pour la BD de cache
-- Un pour l'API de Pokemon
