@@ -13,6 +13,8 @@
 - Les cartes les plus rares (basé sur les données du micro 2)
 - Les cartes les plus recherchées
 
+ - *Proposition : faire évoluer un Pokémon*
+
 ### User :
 
 - Les utilisateurs avec les meilleurs collections *(définir meilleure)*
