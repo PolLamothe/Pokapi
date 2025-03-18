@@ -6,21 +6,16 @@ describe("Model - User",()=>{
     const valid = {
         pseudo : "Thomas",
         login : "toto",
-        password : "LongueVieAThomas",
+        password : "1234567",
         collection : [{
-            id:"favé",
+            id:"Mew",
             quantity : 3
         },{
-            id : "kiki",
-        }
-        ],
+            id : "Dialga",
+        }],
         searched : [
-            {
-                id:"favé",
-            },
-            {
-                id : "kiki",
-            }
+            {id:"Palkia",},
+            {id : "Arceus",}
         ]
     }
     let test = null
@@ -43,6 +38,15 @@ describe("Model - User",()=>{
         Object.keys(valid).forEach((key)=> {
             test = Object.assign({}, valid)
             test[key]=BigInt(0)
+            assert.throws(()=>new User(test),{
+                name: 'TypeError'
+            })
+        })
+        // Test table type
+        const arrayTested = ["collection", "searched"]
+        arrayTested.forEach(a => {
+            test = Object.assign({}, valid)
+            test[a] = [BigInt(0), BigInt(0)]
             assert.throws(()=>new User(test),{
                 name: 'TypeError'
             })

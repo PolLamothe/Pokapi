@@ -4,7 +4,8 @@ import assert from "node:assert"
 
 describe("Model - Card",()=>{
     const valid = {
-        id : "thomas"
+        id : "Arceus",
+        quantity: 3
     }
     let test = null
 
@@ -15,6 +16,7 @@ describe("Model - Card",()=>{
     })
     it("Missing attribute",()=>{
         Object.keys(valid).forEach((key)=> {
+            if (key === "quantity") return
             test = Object.assign({}, valid)
             delete test[key]
             assert.throws(()=> new Card(test),{

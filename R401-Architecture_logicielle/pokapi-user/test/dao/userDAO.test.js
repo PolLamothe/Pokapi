@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 import assert from "node:assert"
 import { describe, it, before, beforeEach, after } from "node:test"
-import cardDAO from "../../api/dao/cardDAO.js"
+import userDAO from "../../api/dao/userDAO.js"
 
 let mongod=null
 let connexion = null
 
-describe('DAO - CardDAO', () => {
+describe('DAO - UserDAO', () => {
     before(async ()=>{
         await mongoose.connection.close()
         const {MongoMemoryServer}  = await import('mongodb-memory-server')
@@ -16,30 +16,22 @@ describe('DAO - CardDAO', () => {
     })
 
     beforeEach(async ()=>{
-        await cardDAO.deleteAllCards()
+        await userDAO.deleteAll()
     })
 
-    it('addOneCard', {todo: true}, () => {
+    it('addOne', {todo: true}, () => {
         // TODO
     })
 
-    it('addManyCards', {todo: true}, () => {
+    it('addMany', {todo: true}, () => {
         // TODO
     })
 
-    it('findCardEvolution', {todo: true}, () => {
+    it('update', {todo: true}, () => {
         // TODO
     })
 
-    it('findAllSets', {todo: true}, () => {
-        // TODO
-    })
-
-    it('findCardsBySet', {todo: true}, () => {
-        // TODO
-    })
-
-    it('updateCard', {todo: true}, () => {
+    it('findByPseudo', {todo: true}, () => {
         // TODO
     })
 

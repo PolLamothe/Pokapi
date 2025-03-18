@@ -36,13 +36,17 @@ export class Model {
                 if (data[key] === undefined || !Array.isArray(data[key])) {
                     throw new TypeError(`Invalid type for ${key}: expected ${this.schema[key].type}, got ${typeof data[key]}`)
                 }
-                if (typeof this.schema[key].objectName !== "function") {
-                    data[key].forEach((element) => {
+                data[key].forEach((element) => {
+                    if (typeof this.schema[key].objectName !== "function") {
                         if (typeof element !== this.schema[key].objectName) {
                             throw new TypeError(`Invalid type for element of array ${key}: expected ${this.schema[key].objectName}, got ${typeof element}`)
                         }
-                    })
-                }
+                    } else {
+                        if (typeof element !== "object") {
+                            throw new TypeError(`Invalid type for element of array ${key}: expected object, got ${typeof element}`)
+                        }
+                    }
+                })
             } else {
                 if (data[key] === undefined || typeof data[key] !== this.schema[key].type) {
                     throw new TypeError(`Invalid type for ${key}: expected ${this.schema[key].type}, got ${typeof data[key]}`)
