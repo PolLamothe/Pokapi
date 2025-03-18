@@ -9,10 +9,6 @@ export class Ability extends Model {
     }
 
     constructor(data) {
-        super(data);
-
-        this.name = data.name
-        this.text = data.text
-        this.type = data.type
+        super(data)
     }
 }

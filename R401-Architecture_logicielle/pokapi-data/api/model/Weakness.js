@@ -9,8 +9,5 @@ export class Weakness extends Model {
 
     constructor(data) {
         super(data)
-
-        this.type = data.type
-        this.value = data.value
     }
 }

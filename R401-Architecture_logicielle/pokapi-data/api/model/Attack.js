@@ -12,11 +12,5 @@ export class Attack extends Model {
 
     constructor(data) {
         super(data)
-
-        this.name = data.name
-        this.cost = data.cost
-        this.convertedEnergyCost = data.convertedEnergyCost
-        this.damage = data.damage
-        this.text = data.text
     }
 }

@@ -20,23 +20,7 @@ export class CardMarketPrices extends Model {
     }
 
     constructor(data) {
-        super(data);
-
-        this.averageSellPrice = data.averageSellPrice
-        this.lowPrice = data.lowPrice
-        this.trendPrice = data.trendPrice
-        this.germanProLow = data.germanProLow
-        this.suggestedPrice = data.suggestedPrice
-        this.reverseHoloSell = data.reverseHoloSell
-        this.reverseHoloLow = data.reverseHoloLow
-        this.reverseHoloTrend = data.reverseHoloTrend
-        this.lowPriceExPlus = data.lowPriceExPlus
-        this.avg1 = data.avg1
-        this.avg7 = data.avg7
-        this.avg30 = data.avg30
-        this.reverseHoloAvg1 = data.reverseHoloAvg1;
-        this.reverseHoloAvg7 = data.reverseHoloAvg7;
-        this.reverseHoloAvg30 = data.reverseHoloAvg30;
+        super(data)
     }
 }
 

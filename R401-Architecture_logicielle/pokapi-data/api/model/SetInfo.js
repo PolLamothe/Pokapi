@@ -8,10 +8,7 @@ export class SetImage extends Model {
     }
 
     constructor(data) {
-        super(data);
-
-        this.symbol = data.symbol;
-        this.logo = data.logo;
+        super(data)
     }
 }
 

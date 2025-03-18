@@ -50,27 +50,18 @@ export class Card extends Model {
     constructor(data) {
         super(data);
 
-        this.id = data.id
-        this.name = data.name
-        this.supertype = data.supertype
-        this.subtypes = data.subtypes
-        this.level = data.level || null
-        this.hp = data.hp
-        this.types = data.types
-        this.evolvesFrom = data.evolvesFrom || null
-        this.abilities = (data.abilities || []).map(ability => new Ability(ability))
-        this.attacks = (data.attacks || []).map(attack => new Attack(attack))
-        this.weaknesses = (data.weaknesses || []).map(weakness => new Weakness(weakness))
-        this.resistances = (data.resistances || []).map(resistance => new Resistance(resistance))
-        this.retreatCost = data.retreatCost || null
-        this.convertedRetreatCost = data.convertedRetreatCost || null
-        this.set = new SetInfo(data.set)
-        this.number = data.number
-        this.artist = data.artist
-        this.rarity = data.rarity || null
-        this.flavorText = data.flavorText || null
-        this.nationalPokedexNumbers = data.nationalPokedexNumbers
-        this.images = data.images
-        this.cardmarket = data.cardmarket ? new CardMarket(data.cardmarket) : null
+        Object.keys(this.constructor.schema).forEach((attr)=>{
+            if(data[attr] != undefined){
+                if(["","string","number"].includes(this.constructor.schema[attr].objectName)){
+                    this[attr] = data[attr]
+                }else{
+                    if(this.constructor.schema[attr].type == "object"){
+                        this[attr] = new this.constructor.schema[attr].objectName(data[attr])
+                    }else{
+                        this[attr] = data[attr].map(content => new this.constructor.schema[attr].objectName(content))
+                    }
+                }
+            }
+        })
     }
 }
