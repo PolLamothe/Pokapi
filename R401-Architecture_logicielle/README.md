@@ -1,5 +1,7 @@
 # R401 - Architecture logicielle
 
+### Liste des routes dans `API.md` 
+
 ## Problématique
 
 Comment créer une plateforme permettant aux utilisateurs de gérer, optimiser et valoriser leur collection de cartes Pokémon, tout en offrant des fonctionnalités avancées pour identifier les cartes les plus puissantes, rares et recherchées, et en facilitant l'interaction avec d'autres collectionneurs ?

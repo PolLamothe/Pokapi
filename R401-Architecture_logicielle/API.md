@@ -1,52 +1,46 @@
 # API
 
-## Fonctionnalités API :
-
-### Calcul puissance carte :
-
-- HP
-- nb Attaque
-
-### Data :
-
-- Ouvrir un booster
-- Les cartes les plus rares (basé sur les données du micro 2)
-- Les cartes les plus recherchées
-
- - *Proposition : faire évoluer un Pokémon*
-
-### User :
-
-- Les utilisateurs avec les meilleurs collections *(définir meilleure)*
-- Se connecter
-- S'inscrire
-- Rechercher des utilisateurs
-- Voir ses cartes
-- Ajouter une carte comme recherchée
-- Voir les cartes que l'on recherche
----
-*Si on à le temps pas à faire pour l'instant :*
-- Echanger des cartes
-
 ## Liste des routes :
 
-**TODO : Définir les paramètres des routes (id...) et les méthodes HTTP (PUT, GET...)**
-
 ### Data :
 
-- `/getRarestCard`
-- `/getMostSearchedCard`
-- `/openBooster/SET`
+- `GET /open-booster/<SET>`
+	+ Ouvrir un booster en fonction d'un SET
+- `GET /card/<ID>`
+	+ Obtenir une carte a partir de son ID
+- `GET /card/evolution/<ID>`
+	+ Faire évoluer une carte si possible
+- `GET /set`
+	+ Obtenir tous les SET avec 3 cartes qui les représentent
+- `POST /deck-price {deck: Array<ID>}`
+	+ Prix d'un deck (en €) a partir d'un array d'id de cartes 
 
 ### User :
 
-- `/getBestUsersCollections`
-- `/login`
-- `/register`
-- `/getMyCard`
-- `/getUser`
-- `/setCardAsSearched`
-- `/getSearchedCard`
----
-*Si on à le temps pas à faire pour l'instant :*
-- `/exchangeCard`
+> `[AUT]` = Nécessite une connection (un JWT)
+
+- `POST /login {login: String, password: String}`
+	+ Se connecter renvoie un JWT
+- `POST /register {login: String, pseudo: String, password: String}`
+	+ Créer un compte renvoie un JWT
+- `[AUTH] GET /my-cards`
+	+ Voir la collection de cartes de l'utilisateur
+- `[AUTH] PUT /update/pseudo {pseudo: String}`
+	+ Modifier son pseudo
+- `GET /user/<PSEUDO>`
+	+ Rechercher un utilisateur a partir de son pseudo
+- `[AUTH] GET /open-booster/<SET>`
+	+ Ouvre un booster a partir de pokapi-data en sauvegardant les cartes dans la collection de l'utilisateur
+- `[AUTH] POST /searched/add {id: String}`
+	+ Ajouter une carte comme recherchée
+- `[AUTH] GET /searched`
+	+ Voir les cartes que l'on recherche
+- `GET /searched/popular`
+	+ Les cartes les plus recherchées triées
+
+
+--- 
+### A faire en plus
+
+- Les utilisateurs avec les meilleures collections *(définir meilleure)*
+- Les cartes les plus rares (nombre d'utilisateur qui l'a possède)
