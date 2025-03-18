@@ -28,15 +28,5 @@ export class SetInfo extends Model {
 
     constructor(data) {
         super(data);
-
-        this.id = data.id
-        this.name = data.name
-        this.series = data.series
-        this.printedTotal = data.printedTotal
-        this.total = data.total
-        this.ptcgoCode = data.ptcgoCode || null
-        this.releaseDate = data.releaseDate
-        this.updatedAt = data.updatedAt
-        this.images = new SetImage(data.images)
     }
 }

@@ -14,9 +14,6 @@ export class CardImage extends Model {
 
     constructor(data) {
         super(data);
-
-        this.small = data.small
-        this.large = data.large
     }
 }
 
@@ -49,19 +46,5 @@ export class Card extends Model {
 
     constructor(data) {
         super(data);
-
-        Object.keys(this.constructor.schema).forEach((attr)=>{
-            if(data[attr] != undefined){
-                if(["","string","number"].includes(this.constructor.schema[attr].objectName)){
-                    this[attr] = data[attr]
-                }else{
-                    if(this.constructor.schema[attr].type == "object"){
-                        this[attr] = new this.constructor.schema[attr].objectName(data[attr])
-                    }else{
-                        this[attr] = data[attr].map(content => new this.constructor.schema[attr].objectName(content))
-                    }
-                }
-            }
-        })
     }
 }

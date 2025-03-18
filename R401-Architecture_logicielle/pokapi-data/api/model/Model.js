@@ -3,6 +3,26 @@ export class Model {
 
     constructor(data) {
         this.constructor.validateTypes(data)
+
+        Object.keys(this.constructor.schema).forEach((attr)=>{
+            if (data[attr] !== undefined) {
+                if (["string", "number"].includes(this.constructor.schema[attr].type)) {
+                    this[attr] = data[attr]
+                } else {
+                    if (this.constructor.schema[attr].type === "object") {
+                        this[attr] = new this.constructor.schema[attr].objectName(data[attr])
+                    } else if (this.constructor.schema[attr].type === "array") {
+                        if (["string", "number"].includes(this.constructor.schema[attr].objectName)) {
+                            this[attr] = data[attr]
+                        } else {
+                            this[attr] = data[attr].map(content => new this.constructor.schema[attr].objectName(content))
+                        }
+                    }
+                }
+            } else {
+                this[attr] = null
+            }
+        })
     }
 
     /**

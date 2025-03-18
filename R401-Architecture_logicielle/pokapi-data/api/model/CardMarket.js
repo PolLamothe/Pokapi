@@ -34,9 +34,5 @@ export class CardMarket extends Model {
 
     constructor(data) {
         super(data);
-
-        this.url = data.url
-        this.updatedAt = data.updatedAt
-        this.prices = data.prices
     }
 }

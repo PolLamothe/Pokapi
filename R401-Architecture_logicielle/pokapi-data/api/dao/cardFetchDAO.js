@@ -2,25 +2,33 @@ import HttpsProxyAgent from 'https-proxy-agent';
 import CONFIG from "../../const.js";
 import {Card} from "../model/Card.js";
 
+// Proxy configuration
 let agent = null
-if (CONFIG.PROXY != undefined) {
-    console.log(`Le proxy est ${CONFIG.PROXY}`)
+if (CONFIG.PROXY !== undefined) {
+    console.log(`PROXY DAO > Le proxy est ${CONFIG.PROXY}`)
     agent =  new HttpsProxyAgent(CONFIG.PROXY);
-}
-else {
-    //pour pouvoir consulter un site avec un certificat invalide
+} else {
+    console.log("PROXY DAO > Pas de proxy trouvé")
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-    console.log("Pas de proxy trouvé")
 }
 
-
+// URL
 const url = "https://api.pokemontcg.io/v2/"
 const urlCard = url+"cards/"
 
+function fetchAPI(fetchUrl) {
+    const fields = {
+        method: "GET",
+    }
+    if (agent !== null) fields.agent = agent
+    if (CONFIG.API_POKEMON_KEY !== undefined) fields.headers = {"X-Api-Key": CONFIG.API_POKEMON_KEY}
+    return fetch(fetchUrl, fields)
+}
+
+// DAO
 const cardFetchDAO = {
-    // TODO : Faire le DAO qui récupère les données de l'API
     findById : async (id)=> {
-        let response = await fetch(urlCard+`${id}`)
+        let response = await fetchAPI(urlCard+`${id}`)
         let json = await response.json()
         return new Card(json.data)
     }
