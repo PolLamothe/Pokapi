@@ -32,6 +32,10 @@ Vous devrez pour chaque service fournir les tests du modèle, des contrôleurs, 
 
 Vous devrez développer une application de préférence « one page » sur des services rest de votre choix (au moins 2), la richesse des fonctionnalités, l’ergonomie, l’utilisation de la mémoire et du CPU seront pris en compte. Le rendu final sera sous la forme d’une revue de code et d'une présentation du projet. Vous devrez un jour avant la soutenance avoir déposé sur git votre code, un fichier markdown décrivant l’application et son déploiement, (le déploiement sur un serveur apache doit-être possible).
 
+### Plan de l'application
+
+![plan](./commun/Plan-app.drawio.png)
+
 ## R409 - Management avancé des systèmes d'information
 
 **Consignes :** [R409-MASI/README.md](https://gitlab.univ-nantes.fr/pub/but/but2/sae4/sae4_class_grp1_eq1_arnaud-kyllian_destain-jauzua_lamothe-pol_le-carluer-brieuc_souchet-thomas/-/blob/main/R409-MASI/README.md?ref_type=heads)
