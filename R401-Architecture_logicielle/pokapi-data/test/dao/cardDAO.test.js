@@ -46,8 +46,15 @@ describe('DAO - CardDAO', () => {
         assert.deepEqual(await cardDAO.findCardByID(base22.id), base22)
     })
 
-    it('findCardEvolution', {todo: true}, () => {
-        // TODO
+    it('findCardEvolution', async () => {
+        let evo = null
+        for (let i=0; i<testCards.data.length; i++) {
+            if (testCards.data[i].id === "sm3-2") {
+                evo = testCards.data[i]
+                break
+            }
+        }
+        assert.deepEqual(await cardDAO.findCardEvolution("sm3-1"), evo)
     })
 
     it('findAllSets', {todo: true}, () => {
