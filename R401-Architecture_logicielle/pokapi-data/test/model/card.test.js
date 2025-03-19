@@ -17,6 +17,7 @@ describe("Model - Card",()=>{
             "Fire"
         ],
         "evolvesFrom": "Charmeleon",
+        "evolvesTo": ["Charmeleon", "Charmeleon"],
         "abilities": [
             {
                 "name": "Energy Burn",
@@ -134,7 +135,7 @@ describe("Model - Card",()=>{
             // Don't test optional attributes
             if (["legalities", "tcgplayer", "level", "evolvesFrom", "retreatCost",
                 "convertedRetreatCost", "rarity", "flavorText", "abilities", "resistances",
-                "weaknesses", "attacks", "cardmarket"].includes(key)) return
+                "weaknesses", "attacks", "cardmarket", "evolvesTo"].includes(key)) return
             test = Object.assign({}, valid)
             delete test[key]
             assert.throws(()=> new Card(test),{

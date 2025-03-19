@@ -28,6 +28,7 @@ export class Card extends Model {
         hp: S.String,
         types: S.StringArray,
         evolvesFrom: S.StringOptional,
+        evolvesTo: S.StringArrayOptional,
         abilities: {type: "array", objectName: Ability, required: false},
         attacks: {type: "array", objectName: Attack, required: false},
         weaknesses: {type: "array", objectName: Weakness, required: false},
