@@ -47,7 +47,7 @@ describe('DAO - CardDAO', () => {
     })
 
     it('findCardEvolution', async () => {
-        await cardDAO.addManyCards(testCards.data)
+        await cardDAO.addManyCards(testCards.data.map(c => new Card(c)))
         let evo = null
         for (let i=0; i<testCards.data.length; i++) {
             if (testCards.data[i].id === "sm3-2") {
