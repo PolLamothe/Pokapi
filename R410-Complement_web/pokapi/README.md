@@ -6,13 +6,13 @@ Application React.
 
 **A choisir :**
 
-1. **Styled-components** - Permet de créer des composants React avec des styles CSS personnalisés, y compris les polices.
+1. ~~**Styled-components**~~ - Permet de créer des composants React avec des styles CSS personnalisés, y compris les polices.
 
 2. **Chakra UI** - Offre un système de thème très flexible pour personnaliser tous les aspects visuels, dont les polices.
 
-3. **Material-UI (MUI)** - Comprend un système de thème complet qui permet de modifier les polices et autres styles.
+3. ~~**Material-UI (MUI)**~~ - Comprend un système de thème complet qui permet de modifier les polices et autres styles.
 
-4. **Tailwind CSS** - Bien que ce soit un framework utilitaire, il permet une personnalisation complète des thèmes, y compris les polices.
+4. ~~**Tailwind CSS**~~ - Bien que ce soit un framework utilitaire, il permet une personnalisation complète des thèmes, y compris les polices.
 
 5. **Theme UI** - Spécialement conçu pour des thèmes personnalisés avec des tokens pour les polices, couleurs, etc.
 
