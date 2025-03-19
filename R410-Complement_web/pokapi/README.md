@@ -2,6 +2,15 @@
 
 Application React.
 
+## TODO
+
+- [ ] Config React router
+- [ ] Ajouter UI lib
+
+## Plan de l'application
+
+![plan](../../commun/Plan-app.drawio.png)
+
 ## UI Lib
 
 **A choisir :**
@@ -19,7 +28,6 @@ Application React.
 6. **Ant Design** - Propose une personnalisation du thème via des variables moins.
 
 7. **Radix UI** - Offre des primitifs non stylisés que vous pouvez styliser entièrement selon vos besoins.
-
 
 ## React + Vite
 
