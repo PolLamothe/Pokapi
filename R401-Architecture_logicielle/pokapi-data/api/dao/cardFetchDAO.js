@@ -27,10 +27,16 @@ function fetchAPI(fetchUrl) {
 
 // DAO
 const cardFetchDAO = {
-    findById : async (id)=> {
+    findCardById : async (id)=> {
         let response = await fetchAPI(urlCard+`${id}`)
         let json = await response.json()
         return new Card(json.data)
+    },
+    findCardsByID : async (ids) => {
+        // TODO: récupérer toutes les cartes à partir d'un tableau d'IDs
+    },
+    findSetCards: async (id) => {
+        // TODO: récupérer toutes les cartes d'un set
     }
 }
 

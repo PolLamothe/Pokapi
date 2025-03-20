@@ -8,10 +8,14 @@
 	+ Ouvrir un booster en fonction d'un SET
 - `GET /card/<ID>`
 	+ Obtenir une carte a partir de son ID
+- `POST /cards {cards: Array<ID>}`
+	+ Obtenir plusieurs cartes a partir de leurs IDs
 - `GET /card/evolution/<ID>`
 	+ Faire évoluer une carte si possible
-- `GET /set`
-	+ Obtenir tous les SET avec 3 cartes qui les représentent
+- `GET /sets`
+	+ Obtenir tous les SET avec 3 cartes qui les représentent pour chaque
+- `GET /set/<SET>`
+	+ Obtenir tous les cartes d'un set
 - `POST /deck-price {deck: Array<ID>}`
 	+ Prix d'un deck (en €) a partir d'un array d'id de cartes 
 
