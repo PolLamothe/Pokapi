@@ -2,6 +2,10 @@
 
 Application React.
 
+## Docs
+
+- [React router](https://reactrouter.com/start/declarative/navigating)
+
 ## TODO
 
 - [ ] Config React router
