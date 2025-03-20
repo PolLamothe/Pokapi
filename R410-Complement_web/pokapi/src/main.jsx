@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import {BrowserRouter, Navigate, Route, Routes} from "react-router";
 import './index.css'
-import App from './pages/App.jsx'
+import App from './App.jsx'
 import Register from "./auth/Register.jsx";
 import Login from "./auth/Login.jsx";
 import Auth from "./auth/Auth.jsx";
@@ -10,27 +10,31 @@ import Account from "./pages/Account.jsx";
 import Home from "./pages/Home.jsx";
 import Collection from "./pages/Collection.jsx";
 import Card from "./pages/Card.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import ProtectedRoute from "./auth/ProtectedRoute.jsx";
+import "@radix-ui/themes/styles.css";
+import {Theme} from "@radix-ui/themes";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-      <BrowserRouter>
-          <Routes>
-              <Route element={<ProtectedRoute />} >
-                  <Route path="/" element={<App />}>
-                      <Route index element={<Home />} />
-                      <Route path="/account" element={<Account />} />
-                      <Route path="/collection" element={<Collection />} />
-                      <Route path="/card/:cardId" element={<Card />} />
+      <Theme accentColor="violet" grayColor="mauve">
+          <BrowserRouter>
+              <Routes>
+                  <Route element={<ProtectedRoute />} >
+                      <Route path="/" element={<App />}>
+                          <Route index element={<Home />} />
+                          <Route path="/account" element={<Account />} />
+                          <Route path="/collection" element={<Collection />} />
+                          <Route path="/card/:cardId" element={<Card />} />
+                      </Route>
                   </Route>
-              </Route>
-              <Route path="/auth" element={<Auth />}>
-                  <Route index element={<Navigate to="/auth/login" replace />} />
-                  <Route path="register" element={<Register />} />
-                  <Route path="login" element={<Login />} />
-              </Route>
-              <Route path="*" element={<h1>404 Not found</h1>}/>
-          </Routes>
-      </BrowserRouter>
+                  <Route path="/auth" element={<Auth />}>
+                      <Route index element={<Navigate to="/auth/login" replace />} />
+                      <Route path="register" element={<Register />} />
+                      <Route path="login" element={<Login />} />
+                  </Route>
+                  <Route path="*" element={<h1>404 Not found</h1>}/>
+              </Routes>
+          </BrowserRouter>
+      </Theme>
   </StrictMode>,
 )
