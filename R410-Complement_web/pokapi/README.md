@@ -1,21 +1,23 @@
 # Pokapi
 
-Application React.
-
 ## Docs
 
+- [Radix UI](https://www.radix-ui.com/themes/docs/components/alert-dialog)
+- [Lucide Icons](https://lucide.dev/icons/)
 - [React router](https://reactrouter.com/start/declarative/navigating)
+- [React](https://react.dev/reference/react)
 
 ## TODO
 
-- [ ] Config React router
-- [ ] Ajouter UI lib
+- [ ] Formulaire login / register
 
 ## Plan de l'application
 
 ![plan](../../commun/Plan-app.drawio.png)
 
-## UI Lib
+---
+
+### UI Lib
 
 **A choisir :**
 
@@ -33,7 +35,7 @@ Application React.
 
 7. **Radix UI** - Offre des primitifs non stylisés que vous pouvez styliser entièrement selon vos besoins.
 
-## React + Vite
+### React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
