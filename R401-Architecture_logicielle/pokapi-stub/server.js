@@ -4,6 +4,8 @@ import express from 'express'
 import swaggerUi from 'swagger-ui-express'
 import swaggerJson from './swagger.json' with {type: 'json'};
 import CONFIG from "./const.js";
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 const app = express()
 
@@ -15,8 +17,16 @@ app.use((req,res,next)=>{
     next();
 })
 
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 //pour traiter les body en json
 app.use(express.json())
+app.use(cookieParser());
 
 //chargement des routes
 const {default: routes}  = await import ('./route.js')

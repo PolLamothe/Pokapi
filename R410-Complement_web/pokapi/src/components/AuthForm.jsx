@@ -30,10 +30,11 @@ function AuthForm({fields,destination,callback}) {
             body:JSON.stringify(fieldsState),
             headers: {
                 "Content-Type": "application/json",
-            }
+            },
+            credentials: 'include'
         })
         if(response.status == 200){
-            callback(await response.json())
+            callback(response)
         }
     }
 

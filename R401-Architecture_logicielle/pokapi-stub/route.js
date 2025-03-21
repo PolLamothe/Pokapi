@@ -42,9 +42,13 @@ router.route("/getBestUsersCollections").get((req,res)=>{
 
 router.route("/login").post((req,res)=>{
     if(req.body.login === "admin" && req.body.password === "thomas"){
-        res.status(200).send({
-            token:"LesChaussettesDeL'archiDuchesseSontEllesSèches"
-        })
+        res.cookie('token', "LesChaussettesDeL'archiDuchesseSontEllesSèches", {
+            httpOnly: true, 
+            secure: true,
+            sameSite: 'None',
+            partitioned: true
+          });
+        res.status(200).send()
     }else{
         res.status(401).send()
     }
@@ -54,9 +58,19 @@ router.route("/register").post((req,res)=>{
     if(req.body.login === "admin" && req.body.password === "thomas"){
         res.status(401).send()
     }else{
-        res.status(200).send({
-            token:"LesChaussettesDeL'archiDuchesseSontEllesSèches"
-        })
+        res.cookie('token', "LesChaussettesDeL'archiDuchesseSontEllesSèches", {
+            secure: true,
+            sameSite: 'None',
+          });
+        res.status(200).send()
+    }
+})
+
+router.route("/getInfo").get((req,res)=>{
+    if(req.cookies["token"] == "LesChaussettesDeL'archiDuchesseSontEllesSèches"){
+        res.status(200).send()
+    }else{
+        res.status(401).send()
     }
 })
 
