@@ -2,8 +2,11 @@ import { useEffect,useState } from "react";
 import {TextField,Button,Flex} from "@radix-ui/themes"
 import {Pen} from "lucide-react"
 import config from "../config";
+import {useNavigate} from "react-router";
 
 function Account() {
+    const naviguation = useNavigate()
+
     const [accountInfo,setAccountInfo] = useState({})
 
     useEffect(()=>{
@@ -12,9 +15,13 @@ function Account() {
                 method:"GET",
                 credentials: "include"
             })
-            let data = await response.json()
-            data["password"] = ""
-            setAccountInfo(data)
+            if(response.status == 200){
+                let data = await response.json()
+                data["password"] = ""
+                setAccountInfo(data)
+            }else{
+                naviguation("/")
+            }
         }
         getAccountInfo()
     },[])

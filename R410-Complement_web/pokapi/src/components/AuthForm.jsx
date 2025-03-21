@@ -2,7 +2,6 @@ import {TextField,Flex,Button} from "@radix-ui/themes"
 import { useState } from "react";
 import {useNavigate} from "react-router";
 import config from "../config"
-import Cookies from 'js-cookie'
 
 function AuthForm({fields,destination,callback}) {
     const fieldStyle = {
