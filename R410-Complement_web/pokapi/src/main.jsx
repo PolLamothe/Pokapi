@@ -3,14 +3,14 @@ import { createRoot } from 'react-dom/client'
 import {BrowserRouter, Navigate, Route, Routes} from "react-router";
 import './index.css'
 import App from './App.jsx'
-import Register from "./auth/Register.jsx";
-import Login from "./auth/Login.jsx";
-import Auth from "./auth/Auth.jsx";
+import Register from "./pages/auth/Register.jsx";
+import Login from "./pages/auth/Login.jsx";
+import Auth from "./pages/auth/Auth.jsx";
 import Account from "./pages/Account.jsx";
 import Home from "./pages/Home.jsx";
 import Collection from "./pages/Collection.jsx";
 import Card from "./pages/Card.jsx";
-import ProtectedRoute from "./auth/ProtectedRoute.jsx";
+import ProtectedRoute from "./pages/auth/ProtectedRoute.jsx";
 import "@radix-ui/themes/styles.css";
 import {Theme} from "@radix-ui/themes";
 

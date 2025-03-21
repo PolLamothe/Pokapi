@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-import AuthForm from "../components/AuthForm";
+import AuthForm from "../../components/AuthForm.jsx";
 import {useNavigate} from "react-router";
 
 function Login() {
