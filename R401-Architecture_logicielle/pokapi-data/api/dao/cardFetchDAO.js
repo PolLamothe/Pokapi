@@ -65,7 +65,9 @@ const cardFetchDAO = {
     },
     findSetCards: async (id) => {
         // TODO: récupérer toutes les cartes d'un set
-        
+        let response = await fetchAPI(urlCard + `?q=set.id:${id}`)
+        let json = await response.json()
+        return json.data.map(e =>  new Card(e))
     }
 }
 

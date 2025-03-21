@@ -25,8 +25,8 @@ export class Card extends Model {
         supertype: S.String,
         subtypes: S.StringArray,
         level: S.StringOptional,
-        hp: S.String,
-        types: S.StringArray,
+        hp: S.StringOptional,
+        types: S.StringArrayOptional,
         evolvesFrom: S.StringOptional,
         evolvesTo: S.StringArrayOptional,
         abilities: {type: "array", objectName: Ability, required: false},
@@ -40,7 +40,7 @@ export class Card extends Model {
         artist: S.String,
         rarity: S.StringOptional,
         flavorText: S.StringOptional,
-        nationalPokedexNumbers: S.NumberArray,
+        nationalPokedexNumbers: S.NumberArrayOptional,
         images: {type: "object", objectName: CardImage, required: true},
         cardmarket: {type: "object", objectName: CardMarket, required: false}
     }
