@@ -52,7 +52,9 @@ router.route("/register").post((req,res)=>{
     if(req.body.login === "admin" && req.body.password === "thomas"){
         res.status(401).send()
     }else{
-        res.status(200).send()
+        res.status(200).send({
+            token:"LesChaussettesDeL'archiDuchesseSontEllesSèches"
+        })
     }
 })
 
