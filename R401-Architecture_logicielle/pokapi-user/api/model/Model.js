@@ -31,7 +31,7 @@ export class Model {
      */
     static validateTypes(data) {
         for (const key in this.schema) {
-            if (data[key] === undefined && this.schema[key].required === false) continue
+            if ((data[key] === undefined || data[key] == null) && this.schema[key].required === false) continue
             if (this.schema[key].type === "array") {
                 if (data[key] === undefined || !Array.isArray(data[key])) {
                     throw new TypeError(`Invalid type for ${key}: expected ${this.schema[key].type}, got ${typeof data[key]}`)
