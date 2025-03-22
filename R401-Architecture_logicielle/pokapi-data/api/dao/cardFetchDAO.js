@@ -37,6 +37,14 @@ const cardFetchDAO = {
     },
     findSetCards: async (id) => {
         // TODO: récupérer toutes les cartes d'un set
+    },
+    findSets: async () => {
+        // TODO: Récupère tous les sets : https://api.pokemontcg.io/v2/sets
+        // Return un tableau d'objet setInfo
+    },
+    findSetPresentation: async (id) => {
+        // TODO: Récupère 4 cartes d'un set en fonction de son id renvoie un tableau de cartes
+        // https://api.pokemontcg.io/v2/cards?q=set.id:sv6pt5&pageSize=4
     }
 }
 
