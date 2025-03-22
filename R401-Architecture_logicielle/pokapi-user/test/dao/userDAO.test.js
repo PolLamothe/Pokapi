@@ -58,7 +58,7 @@ describe('DAO - UserDAO', () => {
         await userDAO.addOne(u1)
         u1.pseudo = "Updated"
         await userDAO.update(u1.login, u1)
-        assert.deepEqual(userDAO.findByLogin(u1.login),u2)
+        assert.deepEqual(await userDAO.findByLogin(u1.login),u2)
     })
 
     it('findByPseudo',async () => {
