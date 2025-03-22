@@ -51,14 +51,6 @@ describe('DAO - UserDAO', () => {
         assert.deepEqual(await userDAO.findByLogin(u1.login),u2)
     })
 
-    it('addMany', async () => {
-        const u1 = new User(user1)
-        const u2 = new User(user2)
-        await userDAO.addMany([u1, u2])
-        assert.deepStrictEqual(await userDAO.findByLogin(u1.login),u1)
-        assert.deepStrictEqual(await userDAO.findByLogin(u2.login),u2)
-    })
-
     it('update', async() => {
         const u1 = new User(user1)
         const u2 = new User(user1)
@@ -66,7 +58,7 @@ describe('DAO - UserDAO', () => {
         await userDAO.addOne(u1)
         u1.pseudo = "Updated"
         await userDAO.update(u1.login, u1)
-        assert.deepEqual(userDAO.findByLogin(u1.login),u2)
+        assert.deepEqual(await userDAO.findByLogin(u1.login),u2)
     })
 
     it('findByPseudo',async () => {

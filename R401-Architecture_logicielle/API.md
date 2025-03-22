@@ -39,6 +39,8 @@
 	+ Ajouter une carte comme recherchée
 - `[AUTH] GET /searched`
 	+ Voir les cartes que l'on recherche
+- `[AUTH] GET /getInfo` 
+- `[AUTH] PUT /update`
 - `GET /searched/popular`
 	+ Les cartes les plus recherchées triées
 

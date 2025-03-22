@@ -67,4 +67,5 @@ export const SchemaTypes = {
     StringArray: {type: "array", objectName: "string", required: true},
     StringArrayOptional: {type: "array", objectName: "string", required: false},
     NumberArray: {type: "array", objectName: "number", required: true},
+    NumberArrayOptional: {type: "array", objectName: "number", required: false},
 }

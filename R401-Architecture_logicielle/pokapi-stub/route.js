@@ -43,7 +43,7 @@ router.route("/getBestUsersCollections").get((req,res)=>{
 router.route("/login").post((req,res)=>{
     if(req.body.login === "admin" && req.body.password === "thomas"){
         res.status(200).send({
-            token:"LesChaussettesDeL'archiDuchesseSontEllesSèches"
+            token : "LesChaussettesDeL'archiDuchesseSontEllesSèches"
         })
     }else{
         res.status(401).send()
@@ -55,9 +55,27 @@ router.route("/register").post((req,res)=>{
         res.status(401).send()
     }else{
         res.status(200).send({
-            token:"LesChaussettesDeL'archiDuchesseSontEllesSèches"
+            token : "LesChaussettesDeL'archiDuchesseSontEllesSèches"
         })
     }
+})
+
+router.route("/getInfo").get((req,res)=>{
+    if(req.cookies["token"] != "LesChaussettesDeL'archiDuchesseSontEllesSèches"){
+        res.status(401).send()
+        return
+    }
+    res.status(200).send({
+        pseudo : "Thomas"
+    })
+})
+
+router.route("/update").put((req,res)=>{
+    if(req.cookies["token"] != "LesChaussettesDeL'archiDuchesseSontEllesSèches"){
+        res.status(401).send()
+        return
+    }
+    res.status(200).send()
 })
 
 export default router
