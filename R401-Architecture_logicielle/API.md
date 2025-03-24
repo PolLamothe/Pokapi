@@ -12,10 +12,12 @@
 	+ Obtenir plusieurs cartes a partir de leurs IDs
 - `GET /card/evolution/<ID>`
 	+ Faire évoluer une carte si possible
-- `GET /sets`
-	+ Obtenir tous les SET avec 3 cartes qui les représentent pour chaque
+- `GET /set/presentation/<SET>`
+	+ Obtenir un SET avec 4 images de cartes qui le représente
 - `GET /set/<SET>`
 	+ Obtenir tous les cartes d'un set
+- `GET /sets`
+	+ Obtenir tous les set
 - `POST /deck-price {deck: Array<ID>}`
 	+ Prix d'un deck (en €) a partir d'un array d'id de cartes 
 

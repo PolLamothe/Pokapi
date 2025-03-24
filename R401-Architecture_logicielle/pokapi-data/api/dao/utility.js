@@ -1,6 +1,7 @@
 import {mongoose} from 'mongoose';
-import {Model, SchemaTypes as S} from "../model/Model.js";
-import {Card} from "../model/Card.js";
+import {Model} from "../model/Model.js";
+import CONFIG from "../../const.js";
+import HttpsProxyAgent from 'https-proxy-agent';
 
 /**
  * Build a Mongoose schema from a Model schema
@@ -48,3 +49,28 @@ export function buildMongooseSchema(modelClass) {
 }
 
 export const projection = { _id: 0, __v:0}
+
+export const url = "https://api.pokemontcg.io/v2/"
+
+/**
+ * Fetch the Pokémon API with the given URL, the configured API key and the proxy
+ * @param fetchUrl
+ * @return {Promise<Response>}
+ */
+export function fetchAPI(fetchUrl) {
+    // Proxy configuration
+    let agent = null
+    if (CONFIG.PROXY !== undefined) {
+        console.log(`PROXY DAO > Le proxy est ${CONFIG.PROXY}`)
+        agent =  new HttpsProxyAgent(CONFIG.PROXY);
+    } else {
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+    }
+
+    const fields = {
+        method: "GET",
+    }
+    if (agent !== null) fields.agent = agent
+    if (CONFIG.API_POKEMON_KEY !== undefined) fields.headers = {"X-Api-Key": CONFIG.API_POKEMON_KEY}
+    return fetch(fetchUrl, fields)
+}

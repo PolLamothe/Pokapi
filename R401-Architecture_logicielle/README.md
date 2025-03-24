@@ -25,6 +25,10 @@ Comment créer une plateforme permettant aux utilisateurs de gérer, optimiser e
 
 - [ ] DAO user avec tests 🟢
 - [ ] DAO data avec tests 🟢
+	- [x] cardFetchDAO
+	- [ ] cardDAO
+	- [ ] setFetchDAO
+	- [ ] setDAO
 
 ### Étape 3 : 
 

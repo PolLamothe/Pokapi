@@ -39,12 +39,11 @@ const cardController = {
                 3.3 Retourner les cartes [END]
          */
     },
-    sets: async () => {
+    setPresentation: async (id) => {
         // FONCTIONNEMENT :
         /*
-            1. Pour chaque set appeler findSetCards du controller
-                1.1. Récupérer 1 setInfo et 3 images de cartes
-            2. Retourner tous les sets avec les 3 images pour chaque [END]
+            1. Appeler findSetCards du controller
+            2. Récupérer 1 setInfo et 3 images de cartes [END]
          */
     },
     findEvolution: async (id) => {
