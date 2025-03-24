@@ -9,7 +9,17 @@
 
 ## TODO
 
-- [ ] Formulaire login / register
+> 🟢 = Commencé
+
+- [ ] Formulaire login / register 🟢
+- [ ] Header 🟢
+- [ ] Collection
+- [ ] Home
+- [ ] Account 🟢
+- [ ] Opening booster
+
+---
+- [ ] Recherche utilisateurs
 
 ## Plan de l'application
 
