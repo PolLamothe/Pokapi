@@ -55,12 +55,21 @@ describe('DAO - CardDAO', () => {
         assert.deepEqual(await cardDAO.findCards([base12.id, base22.id]), [base12, base22])
     })
 
-    it('findCardsBySet', {todo: true}, () => {
-        // TODO
+    it('findCardsBySet', async () => {
+        const base11 = new Card(testCards.data[2])
+        const base12 = new Card(testCards.data[2])
+        const base21 = new Card(testCards.data[8])
+        const base22 = new Card(testCards.data[8])
+        await cardDAO.addManyCards([base11, base21])
+        assert.deepEqual(await cardDAO.findCardsBySet("mcd19"), [base12, base22])
     })
 
-    it('updateCard', {todo: true}, () => {
-        // TODO
+    it('updateCard', async () => {
+        const base11 = new Card(testCards.data[0])
+        const base12 = new Card(testCards.data[0])
+        assert.deepEqual(await cardDAO.addOneCard(base11), base12)
+        base12.name = "Test"
+        assert.deepEqual(await cardDAO.updateCard(base12.id, base12), base12)
     })
 
     after(async ()=>{

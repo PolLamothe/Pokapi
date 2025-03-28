@@ -16,7 +16,7 @@ const cardDAO = {
         // TODO: récupérer toutes les cartes à partir d'un tableau d'IDs
     },
     findCardsBySet: async (id) => {
-        // TODO: récupérer toutes les cartes d'un set
+        // TODO: récupérer toutes les cartes d'un set à partir de l'id d'un set
     },
     addOneCard: async (card) => {
         if (card instanceof Card) {
@@ -45,6 +45,7 @@ const cardDAO = {
     },
     updateCard: async (id, card) => {
         // TODO: met à jour la carte (ID) avec le carte donnée
+        //  - Renvoie la carte mise à jour
     }
 }
 

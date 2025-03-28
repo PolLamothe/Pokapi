@@ -8,7 +8,7 @@ const urlCard = url+"sets"
 const setFetchDAO = {
     findAll: async () => {
         // TODO: Récupère tous les sets : https://api.pokemontcg.io/v2/sets
-        // Return un tableau d'objet setInfo
+        //  - Return un tableau d'objet setInfo
     }
 }
 
