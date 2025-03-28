@@ -1,6 +1,7 @@
 import {Outlet, useNavigate} from "react-router";
 import {Flex, Callout, Button, Heading} from "@radix-ui/themes";
 import {House, Library, StickyNote, CircleUserRound, Info, KeyRound} from "lucide-react"
+import Header from "./components/Header";
 import './App.css'
 
 function App() {
@@ -8,9 +9,7 @@ function App() {
 
     return (
     <>
-        <header>
-            {/* HEADER ICI */}
-        </header>
+        <Header></Header>
 
         <Flex px="9" direction="column" gap="5">
             {/* TEMPORAIRE EXEMPLE DE NAVIGATION */}
