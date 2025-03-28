@@ -2,6 +2,7 @@ import {Outlet, useNavigate} from "react-router";
 import {Flex, Callout, Button, Heading} from "@radix-ui/themes";
 import {House, Library, StickyNote, CircleUserRound, Info, KeyRound} from "lucide-react"
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import './App.css'
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             {/* COMPOSANT QUI CHARGE LA PAGE COURANTE (Home, etc) */}
             <Outlet/>
         </Flex>
+        <Footer></Footer>
     </>
   )
 }
