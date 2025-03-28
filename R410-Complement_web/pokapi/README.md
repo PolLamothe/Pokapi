@@ -12,6 +12,8 @@
 > 🟢 = Commencé
 
 - [ ] Formulaire login / register 🟢
+    - [ ] Style
+    - [ ] Gestion des tokens avec **localstorage**
 - [ ] Header 🟢
 - [ ] Collection
 - [ ] Home
