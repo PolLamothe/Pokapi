@@ -31,8 +31,6 @@
 	+ Créer un compte renvoie un JWT
 - `[AUTH] GET /my-cards`
 	+ Voir la collection de cartes de l'utilisateur
-- `[AUTH] PUT /update/pseudo {pseudo: String}`
-	+ Modifier son pseudo
 - `GET /user/<PSEUDO>`
 	+ Rechercher un utilisateur a partir de son pseudo
 - `[AUTH] GET /open-booster/<SET>`
@@ -43,6 +41,7 @@
 	+ Voir les cartes que l'on recherche
 - `[AUTH] GET /getInfo` 
 - `[AUTH] PUT /update`
+	+ Possibilité d'update tout les champs via cette route
 - `GET /searched/popular`
 	+ Les cartes les plus recherchées triées
 

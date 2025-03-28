@@ -23,6 +23,10 @@ router.route("/getMostSearchedCard").get((req,res)=>{
     res.send(rarestCards)
 })
 
+router.route("/card/:ID").get((req,res)=>{
+    res.send(rarestCards[0])
+})
+
 // ---
 // User
 // ---
