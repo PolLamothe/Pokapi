@@ -8,7 +8,8 @@ function Register() {
     const fields = ["login","pseudo","password"]
 
     const authCallback = async (response)=>{
-        Cookies.set("token",(await response.json()).token)
+        let token = (await response.json())["token"]
+        localStorage.setItem("token",token)
         naviguation("/")
     }
 

@@ -1,6 +1,5 @@
 import {TextField,Flex,Button} from "@radix-ui/themes"
 import { useState } from "react";
-import {useNavigate} from "react-router";
 import config from "../config"
 
 function AuthForm({fields,destination,callback}) {
@@ -26,11 +25,10 @@ function AuthForm({fields,destination,callback}) {
     async function submitForm(){
         const response = await fetch(config.url+destination,{
             method:"POST",
-            body:JSON.stringify(fieldsState),
             headers: {
                 "Content-Type": "application/json",
             },
-            credentials: 'include'
+            body : JSON.stringify(fieldsState)
         })
         if(response.status == 200){
             callback(response)

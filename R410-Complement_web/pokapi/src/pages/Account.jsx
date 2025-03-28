@@ -13,7 +13,9 @@ function Account() {
         async function getAccountInfo(){
             const response = await fetch(config.url+"/getInfo",{
                 method:"GET",
-                credentials: "include"
+                headers : {
+                    "Authentification-Token":localStorage.getItem("token")
+                }
             })
             if(response.status == 200){
                 let data = await response.json()

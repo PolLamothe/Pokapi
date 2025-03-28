@@ -61,7 +61,8 @@ router.route("/register").post((req,res)=>{
 })
 
 router.route("/getInfo").get((req,res)=>{
-    if(req.cookies["token"] != "LesChaussettesDeL'archiDuchesseSontEllesSèches"){
+    console.log(req.headers)
+    if(req.headers["authentification-token"] != "LesChaussettesDeL'archiDuchesseSontEllesSèches"){
         res.status(401).send()
         return
     }
@@ -71,7 +72,7 @@ router.route("/getInfo").get((req,res)=>{
 })
 
 router.route("/update").put((req,res)=>{
-    if(req.cookies["token"] != "LesChaussettesDeL'archiDuchesseSontEllesSèches"){
+    if(req.headers["authentification-token"] != "LesChaussettesDeL'archiDuchesseSontEllesSèches"){
         res.status(401).send()
         return
     }

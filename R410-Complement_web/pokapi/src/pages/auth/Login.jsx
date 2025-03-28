@@ -8,7 +8,8 @@ function Login() {
     const fields = ["login","password"]
     
     const authCallback = async (response)=>{
-        Cookies.set("token",(await response.json()).token)    
+        let token = (await response.json())["token"]
+        localStorage.setItem("token",token)
         naviguation("/")
     }
 
