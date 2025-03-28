@@ -75,8 +75,8 @@ const imageSlotStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  marginRight: '20px',
-  marginLeft: '5%',
+  marginRight: '10%',
+  marginLeft: '3%',
 };
 
 const imageStyle = {
