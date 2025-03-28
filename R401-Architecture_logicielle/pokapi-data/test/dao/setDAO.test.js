@@ -61,6 +61,7 @@ describe("DAO - SetDAO", () => {
         const base12 = new SetInfo(set1)
         const base21 = new SetInfo(set2)
         const base22 = new SetInfo(set2)
+        assert.deepEqual(await setDAO.findAll(), [])
         await setDAO.addMany([base11, base21])
         assert.deepEqual(await setDAO.findAll(), [base12, base22])
         await setDAO.deleteAll()
