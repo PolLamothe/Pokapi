@@ -11,7 +11,7 @@
     "http"
   ],
   "paths": {
-    "/openBooster/{SETID}": {
+    "/open-booster/{SETID}": {
       "get": {
         "description": "",
         "parameters": [
@@ -29,7 +29,89 @@
         }
       }
     },
-    "/getRarestCard": {
+    "/card/{ID}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/cards": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/card/evolution/{ID}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/set/presentation/{SETID}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "SETID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/set/{SETID}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "SETID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/sets": {
       "get": {
         "description": "",
         "responses": {
@@ -39,18 +121,8 @@
         }
       }
     },
-    "/getMostSearchedCard": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/getBestUsersCollections": {
-      "get": {
+    "/deck-price": {
+      "post": {
         "description": "",
         "responses": {
           "200": {
@@ -115,6 +187,134 @@
           },
           "401": {
             "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/my-cards": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authentification-token",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/user/{PSEUDO}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "PSEUDO",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/searched/add": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authentification-token",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/searched": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authentification-token",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/info": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authentification-token",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/update": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authentification-token",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/searched/popular": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
