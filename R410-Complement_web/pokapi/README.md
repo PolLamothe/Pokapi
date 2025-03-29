@@ -32,7 +32,10 @@ Les identifiants pour se connecter avec le stub sont : `login: admin ; password:
     - [ ] Style de la page (cf. maquette)
     - [x] Gestion des tokens avec **localstorage**
 - [ ] Header 🟢
-    - [ ] Ajouté la navigation fonctionnelle avec le react router *Thomas*
+    - [x] Ajouté la navigation fonctionnelle avec le react router
+    - [ ] Responsive
+- [ ] Footer 🟢
+  - [ ] Responsive
 - [ ] Collection
     - [ ] Fetch pour récupérer la collection
     - [ ] Style de la page (cf. maquette)

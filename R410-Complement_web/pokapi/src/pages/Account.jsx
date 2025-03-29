@@ -50,7 +50,7 @@ function Account() {
     }
 
     const fields = Object.keys(accountInfo).map((element)=>{
-        return <Flex gap='1vw'>
+        return <Flex gap='1vw' key={element}>
                     <TextField.Root value={accountInfo[element]} onChange={handleInput} name="pseudo" placeholder={element}></TextField.Root>
                     <Button style={buttonStyle} onClick={updatePseudo}>
                         <Pen/>

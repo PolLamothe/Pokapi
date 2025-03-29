@@ -1,32 +1,31 @@
 import React from 'react';
-import pokapimini from "../assets/masterball.png";
+import pokapimini from "../assets/masterball.svg";
+import {NavLink} from "react-router";
+import {Link} from "@radix-ui/themes";
 
 const Footer = () => {
   return (
     <footer style={footerStyle}>
-      <div style={containerStyle}>
         <div style={imageSlotStyle}>
           <img src={pokapimini} alt="Logo" style={imageStyle} />
         </div>
         <div style={columnStyle}>
           <h4 style={titleStyle}>Pages</h4>
           <ul style={listStyle}>
-            <li>Cards</li>
-            <li>Home</li>
-            <li>Settings</li>
-            <li>Code</li>
+
+            <li><NavLink to="/collection">Cards</NavLink></li>
+            <li><NavLink to="/">Home</NavLink></li>
+            <li><NavLink to="/account">Account</NavLink></li>
           </ul>
         </div>
         <div style={columnStyle}>
           <h4 style={titleStyle}>Source</h4>
           <ul style={listStyle}>
-            <li>Pokemon Compagnie</li>
-            <li>API Pokemon</li>
-            <li>API Bot</li>
+            <li><Link href="https://www.pokemon.com/fr">Pokémon Company</Link></li>
+            <li><Link href="https://dev.pokemontcg.io/">API Pokemon</Link></li>
+            <li><Link href="https://gitlab.univ-nantes.fr/pub/but/but2/sae4/sae4_class_grp1_eq1_arnaud-kyllian_destain-jauzua_lamothe-pol_le-carluer-brieuc_souchet-thomas">Code</Link></li>
           </ul>
         </div>
-        <div style={shadowStyle}></div>
-      </div>
     </footer>
   );
 };
@@ -34,31 +33,25 @@ const Footer = () => {
 const footerStyle = {
   backgroundColor: '#fff',
   color: '#333',
-  padding: '10px 0',
+  padding: '48px 80px 0 80px',
   textAlign: 'center',
-};
-
-const containerStyle = {
-  position: "relative", // Change "absolute" to "relative" for better alignment
-  width: "100%",
+  boxShadow: "0px -4px 6px rgba(0, 0, 0, 0.1)",
   display: 'flex',
-  justifyContent: 'space-around',
-  alignItems: 'center',
+  justifyContent: 'start',
+  alignItems: 'start',
+  gap: "10%",
 };
 
 const columnStyle = {
-  marginLeft: '20%',
   fontFamily: 'Rambla, sans-serif',
   color: '#000000',
   fontWeight: 'bold',
   fontSize: '25px',
-  flex: 1,
-  margin: '0 15px',
   textAlign: 'left',
 };
 
 const titleStyle = {
-  marginBottom: '10px',
+  margin: '0 0 10px 0',
 };
 
 const listStyle = {
@@ -75,24 +68,11 @@ const imageSlotStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  marginRight: '10%',
-  marginLeft: '3%',
 };
 
 const imageStyle = {
-  height: '80px',
+  height: '40px',
   filter: "drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.2))",
-};
-
-const shadowStyle = {
-  position: "absolute",
-  top: "0px", 
-  left: "5%", 
-  width: "90%", 
-  height: "10px",
-  boxShadow: "0px -4px 6px rgba(0, 0, 0, 0.1)", 
-  borderRadius: "8px",
-  zIndex: 0,
 };
 
 export default Footer;
