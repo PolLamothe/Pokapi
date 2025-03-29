@@ -39,15 +39,9 @@
 	+ Ajouter une carte comme recherchée
 - `[AUTH] GET /searched`
 	+ Voir les cartes que l'on recherche
-- `[AUTH] GET /getInfo` 
+- `[AUTH] GET /info`
+	+ Obtenir les informations sur l'utilisateur connecté
 - `[AUTH] PUT /update`
 	+ Possibilité d'update tout les champs via cette route
 - `GET /searched/popular`
 	+ Les cartes les plus recherchées triées
-
-
---- 
-### A faire en plus
-
-- Les utilisateurs avec les meilleures collections *(définir meilleure)*
-- Les cartes les plus rares (nombre d'utilisateur qui l'a possède)
