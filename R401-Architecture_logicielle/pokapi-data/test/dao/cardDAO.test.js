@@ -28,6 +28,10 @@ describe('DAO - CardDAO', () => {
         assert.deepEqual(await cardDAO.findCardByID(base2.id), base2)
     })
 
+    it('addOneCard wrong', async () => {
+        assert.deepEqual(await cardDAO.addOneCard("card"), null)
+    })
+
     it('addOneCard twice', async () => {
         const base1 = new Card(testCards.data[0])
         const base2 = new Card(testCards.data[0])
@@ -56,20 +60,28 @@ describe('DAO - CardDAO', () => {
     })
 
     it('findCardsBySet', async () => {
+        const base01 = new Card(testCards.data[0])
         const base11 = new Card(testCards.data[2])
         const base12 = new Card(testCards.data[2])
         const base21 = new Card(testCards.data[8])
         const base22 = new Card(testCards.data[8])
-        await cardDAO.addManyCards([base11, base21])
+        await cardDAO.addManyCards([base01, base11, base21])
         assert.deepEqual(await cardDAO.findCardsBySet("mcd19"), [base12, base22])
     })
 
     it('updateCard', async () => {
         const base11 = new Card(testCards.data[0])
         const base12 = new Card(testCards.data[0])
+        const base13 = new Card(testCards.data[0])
+        base13.name = "Test"
         assert.deepEqual(await cardDAO.addOneCard(base11), base12)
         base12.name = "Test"
-        assert.deepEqual(await cardDAO.updateCard(base12.id, base12), base12)
+        const res = await cardDAO.updateCard(base12.id, base12)
+        assert.deepEqual(res, base13)
+    })
+
+    it('updateCard wrong', async () => {
+        assert.deepEqual(await cardDAO.updateCard("x", "card"), null)
     })
 
     after(async ()=>{

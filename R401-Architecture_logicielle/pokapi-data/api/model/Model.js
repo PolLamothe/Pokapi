@@ -5,7 +5,7 @@ export class Model {
         this.constructor.validateTypes(data)
 
         Object.keys(this.constructor.schema).forEach((attr)=>{
-            if (data[attr] !== undefined) {
+            if (data[attr] !== undefined && data[attr] !== null) {
                 if (["string", "number"].includes(this.constructor.schema[attr].type)) {
                     this[attr] = data[attr]
                 } else {

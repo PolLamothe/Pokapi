@@ -13,10 +13,12 @@ const cardDAO = {
         return null
     },
     findCards: async (ids) => {
-        // TODO: récupérer toutes les cartes à partir d'un tableau d'IDs
+        const data = await cardModel.find({id: { $in: ids }})
+        return data.map(card => new Card(card))
     },
     findCardsBySet: async (id) => {
-        // TODO: récupérer toutes les cartes d'un set à partir de l'id d'un set
+        const data = await cardModel.find({"set.id": id})
+        return data.map(c => new Card(c))
     },
     addOneCard: async (card) => {
         if (card instanceof Card) {
@@ -44,8 +46,11 @@ const cardDAO = {
         await cardModel.deleteMany({})
     },
     updateCard: async (id, card) => {
-        // TODO: met à jour la carte (ID) avec le carte donnée
-        //  - Renvoie la carte mise à jour
+        if (card instanceof Card) {
+            await cardModel.updateOne({id: id}, {$set: card})
+            return await cardDAO.findCardByID(id)
+        }
+        return null
     }
 }
 
