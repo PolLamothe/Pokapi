@@ -1,24 +1,53 @@
 # Pokapi
 
-## Docs
+> [Lien de la maquette Figma](https://www.figma.com/design/psU19cATXeNnEl7xmLXVrJ/Pokemon?node-id=0-1&t=ld5RRQsjuS7JdJmA-1)
 
-- [Radix UI](https://www.radix-ui.com/themes/docs/components/alert-dialog)
-- [Lucide Icons](https://lucide.dev/icons/)
+## Instruction
+
+Pour lancer le site il faut faire `npm run dev`, le site apparait à cette URL : [http://localhost:5173/](http://localhost:5173/).
+
+Pour que les requêtes à l'API fonctionne durant le développement du site on utilise le stub présent dans `R401.../pokapi-stub`, il faut le lancer avec `npm start` (installer les dépendances si nécessaire avec `npm install`).
+
+Les identifiants pour se connecter avec le stub sont : `login: admin ; password: thomas`.
+
+## Organisation des dossiers
+
++ src
+    + assets : pour mettre vos images
+    + components : Un fichier par composant que vous pouvez après intégrer dans vos pages. Vous pouvez mettre le style CSS directement dans le JSX avec des objets, prenez exemple sur le `Header.jsx`.
+    + pages : Chaque page a son fichier pour mettre tous vos composants (définits dans `components`) ensembles. Ces composants de pages (`Home.jsx`, `Collection.jsx`, ...) sont ensuite automatiquement intégrer dans le fichier `App.jsx` avec le composant `<Outlet/>`.
+
+## Docs et ressources a utiliser
+
+- [Radix UI](https://www.radix-ui.com/themes/docs/components/alert-dialog) : C'est la librairie de composant React dèjà fait que l'on utilise lisez bien la doc il y a plein de choses que vous pouvez utiliser (bouttons, modales, conteneur flex, etc). Cela nous permet de gagner du temps sur les composants simples par contre leur style n'est pas facilement modifiable.
+- [Lucide Icons](https://lucide.dev/icons/) : Si vous voulez ajouter des icônes, vous avez juste a cliquer sur une icône et faire *Copy JSX*. 
 - [React router](https://reactrouter.com/start/declarative/navigating)
 - [React](https://react.dev/reference/react)
 
-## TODO
+## Tâches à faire
 
 > 🟢 = Commencé
 
 - [ ] Formulaire login / register 🟢
-    - [ ] Style
-    - [ ] Gestion des tokens avec **localstorage**
+    - [ ] Style de la page (cf. maquette)
+    - [x] Gestion des tokens avec **localstorage**
 - [ ] Header 🟢
+    - [ ] Ajouté la navigation fonctionelle avec le reactrouter *Thomas*
 - [ ] Collection
+    - [ ] Fetch pour récupérer la collection
+    - [ ] Style de la page (cf. maquette)
+    - [ ] Filtres
+    - [ ] Recherche
 - [ ] Home
+    - [ ] Carousel avec les booster 
+        - [ ] Choisir lib pour faire le carousel
+        - [ ] Gérer le chargment au fur et à mesure
+- [ ] Card 🟢 
+    - [ ] Style de la page (cf. maquette) *Brieuc*
+    - [ ] Chat avec Pokemon
 - [ ] Account 🟢
-- [ ] Opening booster
+    - [ ] Style de la page (cf. maquette)
+- [ ] Page opening booster
 
 ---
 - [ ] Recherche utilisateurs
@@ -26,32 +55,3 @@
 ## Plan de l'application
 
 ![plan](../../commun/Plan-app.drawio.png)
-
----
-
-### UI Lib
-
-**A choisir :**
-
-1. ~~**Styled-components**~~ - Permet de créer des composants React avec des styles CSS personnalisés, y compris les polices.
-
-2. **Chakra UI** - Offre un système de thème très flexible pour personnaliser tous les aspects visuels, dont les polices.
-
-3. ~~**Material-UI (MUI)**~~ - Comprend un système de thème complet qui permet de modifier les polices et autres styles.
-
-4. ~~**Tailwind CSS**~~ - Bien que ce soit un framework utilitaire, il permet une personnalisation complète des thèmes, y compris les polices.
-
-5. **Theme UI** - Spécialement conçu pour des thèmes personnalisés avec des tokens pour les polices, couleurs, etc.
-
-6. **Ant Design** - Propose une personnalisation du thème via des variables moins.
-
-7. **Radix UI** - Offre des primitifs non stylisés que vous pouvez styliser entièrement selon vos besoins.
-
-### React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
