@@ -5,24 +5,24 @@ import config from "../config";
 import {useNavigate} from "react-router";
 
 function Account() {
-    const naviguation = useNavigate()
+    const navigation = useNavigate()
 
     const [accountInfo,setAccountInfo] = useState({})
 
     useEffect(()=>{
         async function getAccountInfo(){
-            const response = await fetch(config.url+"/getInfo",{
+            const response = await fetch(config.url+"/info",{
                 method:"GET",
                 headers : {
-                    "Authentification-Token":localStorage.getItem("token")
+                    "Authentification-Token": localStorage.getItem("token")
                 }
             })
-            if(response.status == 200){
+            if(response.status === 200){
                 let data = await response.json()
                 data["password"] = ""
                 setAccountInfo(data)
             }else{
-                naviguation("/")
+                navigation("/")
             }
         }
         getAccountInfo()

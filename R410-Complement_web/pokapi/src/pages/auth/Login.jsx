@@ -3,14 +3,14 @@ import AuthForm from "../../components/AuthForm.jsx";
 import {useNavigate} from "react-router";
 
 function Login() {
-    const naviguation = useNavigate()
+    const navigation = useNavigate()
 
     const fields = ["login","password"]
     
     const authCallback = async (response)=>{
         let token = (await response.json())["token"]
         localStorage.setItem("token",token)
-        naviguation("/")
+        navigation("/")
     }
 
     return (
