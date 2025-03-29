@@ -7,7 +7,7 @@ describe("Model - User",()=>{
         pseudo : "Thomas",
         login : "toto",
         password : "1234567",
-        collection : [{
+        cards : [{
             id:"Mew",
             quantity : 3
         },{
@@ -43,7 +43,7 @@ describe("Model - User",()=>{
             })
         })
         // Test table type
-        const arrayTested = ["collection", "searched"]
+        const arrayTested = ["cards", "searched"]
         arrayTested.forEach(a => {
             test = Object.assign({}, valid)
             test[a] = [BigInt(0), BigInt(0)]

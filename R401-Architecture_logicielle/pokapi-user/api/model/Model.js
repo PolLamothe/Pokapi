@@ -5,7 +5,7 @@ export class Model {
         this.constructor.validateTypes(data)
 
         Object.keys(this.constructor.schema).forEach((attr)=>{
-            if (data[attr] !== undefined) {
+            if (data[attr] !== undefined && data[attr] !== null) {
                 if (["string", "number"].includes(this.constructor.schema[attr].type)) {
                     this[attr] = data[attr]
                 } else {
@@ -31,7 +31,7 @@ export class Model {
      */
     static validateTypes(data) {
         for (const key in this.schema) {
-            if ((data[key] === undefined || data[key] == null) && this.schema[key].required === false) continue
+            if ((data[key] === undefined || data[key] === null) && this.schema[key].required === false) continue
             if (this.schema[key].type === "array") {
                 if (data[key] === undefined || !Array.isArray(data[key])) {
                     throw new TypeError(`Invalid type for ${key}: expected ${this.schema[key].type}, got ${typeof data[key]}`)
@@ -67,4 +67,5 @@ export const SchemaTypes = {
     StringArray: {type: "array", objectName: "string", required: true},
     StringArrayOptional: {type: "array", objectName: "string", required: false},
     NumberArray: {type: "array", objectName: "number", required: true},
+    NumberArrayOptional: {type: "array", objectName: "number", required: false},
 }

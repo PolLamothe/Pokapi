@@ -11,7 +11,7 @@ const user1 = {
     pseudo : "testPseudo1",
     login : "testLogin1",
     password : "testPassword1",
-    collection : [{id: "11", quantity: 13}, {id: "12"}, {id: "13"}],
+    cards : [{id: "11", quantity: 13}, {id: "12"}, {id: "13"}],
     searched : [{id: "14"}, {id: "15"}, {id: "16"}]
 }
 
@@ -19,7 +19,7 @@ const user2 = {
     pseudo : "testPseudo2",
     login : "testLogin2",
     password : "testPassword2",
-    collection : [{id: "21"}, {id: "22", quantity: 22}, {id: "23"}],
+    cards : [{id: "21"}, {id: "22", quantity: 22}, {id: "23"}],
     searched : [{id: "24"}, {id: "25"}, {id: "26"}]
 }
 
@@ -43,6 +43,10 @@ describe('DAO - UserDAO', () => {
         assert.deepEqual(await userDAO.findByLogin(u1.login),u2)
     })
 
+    it('addOne wrong', async () => {
+        assert.deepEqual(await userDAO.addOne("wrong"), null)
+    })
+
     it('addOne twice', async () => {
         const u1 = new User(user1)
         const u2 = new User(user1)
@@ -57,8 +61,17 @@ describe('DAO - UserDAO', () => {
         u2.pseudo = "Updated"
         await userDAO.addOne(u1)
         u1.pseudo = "Updated"
-        await userDAO.update(u1.login, u1)
+        assert.deepEqual(await userDAO.update(u1.login, u1), u2)
         assert.deepEqual(await userDAO.findByLogin(u1.login),u2)
+    })
+
+    it('update wrong', async () => {
+        assert.deepEqual(await userDAO.update("wrong", "wrong"), null)
+    })
+
+    it("update don't exists", async () => {
+        const u1 = new User(user1)
+        await assert.rejects(userDAO.update(u1.login, u1))
     })
 
     it('findByPseudo',async () => {
@@ -66,7 +79,7 @@ describe('DAO - UserDAO', () => {
             pseudo : "testFindByPseudo",
             login : "testFindByPseudo",
             password : "testFindByPseudo",
-            collection : [],
+            cards : [],
             searched : []
         })
 
@@ -74,7 +87,7 @@ describe('DAO - UserDAO', () => {
             pseudo : "testfindbypseudo",
             login : "testfindbypseudo",
             password : "testFindByPseudo",
-            collection : [],
+            cards : [],
             searched : []
         })
 
@@ -82,7 +95,7 @@ describe('DAO - UserDAO', () => {
             pseudo : "notInTestFindByPseudo",
             login : "notInTestFindByPseudo",
             password : "notInTestFindByPseudo",
-            collection : [],
+            cards : [],
             searched : []
         })
         

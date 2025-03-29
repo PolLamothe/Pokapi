@@ -13,34 +13,31 @@ const userDAO = {
         return null
     },
     findByPseudo: async (pseudo) => {
-        const result = (await userModel.find({pseudo : new RegExp(`^${pseudo}$`,"i") }))
+        const result = (await userModel.find({pseudo : new RegExp(`^${pseudo}.*$`,"i") }))
         return result.map(user => new User(user))
     },
     addOne: async (user) => {
         if (user instanceof User) {
             if (await userDAO.findByLogin(user.login) == null) {
-                let response = await userModel.insertOne(user)
-                return new User(response)
-            } else {
+                return new User(await userModel.insertOne(user))
             }
-        } else {
+            return null
         }
-
+        return null
     },
     deleteAll: async () => {
         await userModel.deleteMany()
     },
     update: async (login, user) => {
-        // TODO: met à jour le user (ID) avec le nouveau user donné
         if (user instanceof User) {
             if (await userDAO.findByLogin(user.login) == null) {
                 throw new Error(`${user.login} does not exist`)
             } else {
                 await userModel.updateOne({login: login}, {$set: user})
+                return await userDAO.findByLogin(login)
             }
-        } else {
-            return null
         }
+        return null
     }
 }
 

@@ -6,7 +6,7 @@ export class User extends Model{
         pseudo: S.String,
         login: S.String,
         password: S.String,
-        collection : {type: "array", objectName: Card, required: true},
+        cards : {type: "array", objectName: Card, required: true},
         searched : {type: "array", objectName: Card, required: true}
     }
 

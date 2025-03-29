@@ -14,7 +14,7 @@ Comment créer une plateforme permettant aux utilisateurs de gérer, optimiser e
 
 ### Étape 1 :
 
-- [ ] Faire un stub unique (comme le proxy) qui renvoie une réponse constante prédéfinie pour chaque route 🟢
+- [x] Faire un stub unique (comme le proxy) qui renvoie une réponse constante prédéfinie pour chaque route
 - [x] Faire les modèles des données manipulées dans data et user et **les TESTS** qui vont avec.
 	- [x] Data
 	- [x] User 
@@ -23,17 +23,19 @@ Comment créer une plateforme permettant aux utilisateurs de gérer, optimiser e
 
 ### Étape 2 : 
 
-- [ ] DAO user avec tests 🟢
-- [ ] DAO data avec tests 🟢
+- [x] DAO user avec tests
+- [x] DAO data avec tests
 	- [x] cardFetchDAO
-	- [ ] cardDAO
-	- [ ] setFetchDAO
-	- [ ] setDAO
+	- [x] cardDAO
+	- [x] setFetchDAO
+	- [x] setDAO
 
 ### Étape 3 : 
 
-- [ ] Contrôlleur user avec tests 
-- [ ] Contrôlleur data avec tests 
+- [ ] Contrôlleur user avec tests 🟢
+- [ ] Contrôlleur data avec tests 🟢
+	- [ ] cardController
+	- [ ] setController
 
 ### Étape 4 : 
 
