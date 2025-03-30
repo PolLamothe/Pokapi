@@ -5,7 +5,6 @@ import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
 import * as Accordion from '@radix-ui/react-accordion';
 import {AccordionContent, AccordionTrigger} from "@radix-ui/react-accordion";
 import {ChevronDownIcon, Scroll} from "lucide-react";
-import card from "./Card.jsx";
 
 
 function ImageCard({card}) {
@@ -21,7 +20,9 @@ function Collection() {
     const [userCardsAll, setUserCardsAll] = useState([])
     const [types, setTypes] = useState([])
     const [rarities, setRarities] = useState([])
+    const [raritiesAll, setRaritiesAll] = useState([])
     const [sets, setSets] = useState([])
+    const [setsAll, setSetsAll] = useState([])
 
     const [selectedType, setSelectedType] = useState([])
     const [selectedRarities, setSelectedRarities] = useState([])
@@ -61,7 +62,8 @@ function Collection() {
                 method: "GET"
             })
             let dataRarities = await allRarities.json()
-            setRarities(dataRarities)
+            setRarities(dataRarities.data)
+            setRaritiesAll(dataRarities.data)
         }
         fetchRarities()
     }, [setRarities])
@@ -72,7 +74,9 @@ function Collection() {
                 method: "GET"
             })
             let dataSets = await allSets.json()
-            setSets(dataSets)
+            console.log(dataSets.data, 'lllllll')
+            setSets(dataSets.data)
+            setSetsAll(dataSets.data)
         }
         fetchSets()
     }, [setSets])
@@ -80,15 +84,42 @@ function Collection() {
     const handleSearch = async (e) => {
         const recherche = e.target.value
         let res = []
+        let uc = [...userCardsAll]
         if (recherche.trim() === "") {
             await fetchCardsUser()
         } else {
-            if (userCards.length > 0) {
-                res = userCards.filter((user) => user.name.toLowerCase().includes(recherche))
-            }
+            res = uc.filter((user) => user.name.toLowerCase().includes(recherche))
             setUserCards(res)
         }
     }
+
+    const handleSearchRarities = async (e) => {
+        const recherche = e.target.value
+        let res = []
+        let rar = [...raritiesAll]
+        if (recherche.trim() === "") {
+            setRarities(raritiesAll)
+        } else {
+            res = rar.filter((rarity) => rarity.toLowerCase().includes(recherche))
+            setRarities(res)
+        }
+
+    }
+
+    const handleSearchSets = async (e) => {
+        const recherche = e.target.value
+        let res = []
+        let set = [...setsAll]
+        console.log(set, "here")
+        if (recherche.trim() === "") {
+            setSets(setsAll)
+        } else {
+            res = set.filter((s) => s.name.toLowerCase().includes(recherche))
+            setSets(res)
+        }
+
+    }
+
 
 
     const onChecked = (nom, e) => {
@@ -175,8 +206,6 @@ function Collection() {
 
     }
 
-
-
     return (
         <Grid columns="3" style={{gridTemplateColumns:'25% 75%'}}>
             <Flex id="searchBar" px="5" py="5" justify="center" style={{gridColumn: 'span 3'}} >
@@ -208,10 +237,16 @@ function Collection() {
                     <Accordion.Item value="Rareté" className="AccordionItem">
                         <AccordionTrigger className="AccordionTrigger">Rareté <ChevronDownIcon className="AccordionChevron" aria-hidden /> </AccordionTrigger>
                         <AccordionContent className="AccordionContent">
+                            <TextField.Root radius="full" placeholder="rechercher une rareté ..." size="2" onChange={handleSearchRarities}>
+                                <TextField.Slot>
+                                    <MagnifyingGlassIcon height="16" width="16" />
+                                </TextField.Slot>
+                            </TextField.Root>
                             <ScrollArea className="raritiesScroll" style={{height: '250px'}}>
                                 <CheckboxGroup.Root name="rarities" value={selectedRarities} onValueChange={(values) => onChecked("Rarities", values)}>
-                                    {rarities && rarities.data ? (
-                                        rarities.data.map((rarity) => (
+
+                                    {rarities && rarities.length > 0 ? (
+                                        rarities.map((rarity) => (
                                         <CheckboxGroup.Item key={rarity} value={rarity}>{rarity}</CheckboxGroup.Item>
                                         ))
                                     ): (
@@ -225,10 +260,15 @@ function Collection() {
                     <Accordion.Item value="Set" className="AccordionItem">
                         <AccordionTrigger className="AccordionTrigger">Set <ChevronDownIcon className="AccordionChevron" aria-hidden /> </AccordionTrigger>
                         <AccordionContent className="AccordionContent">
+                            <TextField.Root radius="full" placeholder="rechercher un set ..." size="2" onChange={handleSearchSets}>
+                                <TextField.Slot>
+                                    <MagnifyingGlassIcon height="16" width="16" />
+                                </TextField.Slot>
+                            </TextField.Root>
                             <ScrollArea className="raritiesScroll" style={{height: '250px'}}>
                                 <CheckboxGroup.Root name="sets" value={selectedSet} onValueChange={(values)=> onChecked("Set", values)}>
-                                    {sets && sets.data ? (
-                                        sets.data.map(set => (
+                                    {sets && sets.length > 0 ? (
+                                        sets.map(set => (
                                         <CheckboxGroup.Item key={set.id} value={set.id}>{set.name}</CheckboxGroup.Item>
                                         ))
                                     ) : (
