@@ -6,6 +6,7 @@ import boosterContent from './assets/booster.json' with {type: 'json'}
 import rarestCards from './assets/rarest.json' with {type: 'json'}
 import sets from './assets/sets.json' with {type: 'json'}
 import types from './assets/types.json' with {type: 'json'}
+import rarities from './assets/rarities.json' with {type: 'json'}
 
 const router = express.Router()
 
@@ -53,6 +54,10 @@ router.route("/deck-price").post((req,res) => {
 
 router.route("/types").get((req,res) => {
     res.status(200).send(types)
+})
+
+router.route("/rarities").get((req,res) => {
+    res.status(200).send(rarities)
 })
 
 // ---
