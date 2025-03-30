@@ -42,7 +42,8 @@ export class Card extends Model {
         flavorText: S.StringOptional,
         nationalPokedexNumbers: S.NumberArrayOptional,
         images: {type: "object", objectName: CardImage, required: true},
-        cardmarket: {type: "object", objectName: CardMarket, required: false}
+        cardmarket: {type: "object", objectName: CardMarket, required: false},
+        storageDate : S.NumberOptional
     }
 
     constructor(data) {

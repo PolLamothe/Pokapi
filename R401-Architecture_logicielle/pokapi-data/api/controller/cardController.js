@@ -1,5 +1,9 @@
 'use strict'
 
+import cardDAO from "../dao/cardDAO.js"
+import cardFetchDAO from "../dao/cardFetchDAO.js"
+import  CONFIG  from "../../const.js"
+
 // This object stores the date of
 // last update of each set if it
 // has already been fetch from the API
@@ -17,6 +21,18 @@ const cardController = {
             3. Sinon
                 3.1. Retourner la carte [END]
          */
+        const localCard = await cardDAO.findCardByID(id)
+        if(localCard != null){
+            if(((Date.now()/1000) - localCard.storageDate) < CONFIG.CACHEEXPIRATION){
+                return localCard
+            }else{//si le cache a expiré
+                var newCard = await cardFetchDAO.findCardById(id)
+                return cardDAO.updateCard(id,newCard)
+            }
+        }else{
+            return await cardDAO.addOneCard((await cardFetchDAO.findCardById(id)))
+
+        }
     },
     findCards: async (ids) => {
         // FONCTIONNEMENT [CACHE] :
@@ -27,6 +43,22 @@ const cardController = {
             4. Puis ajout BD
             5. Retourner toutes les cartes depuis la BD [END]
          */
+        const localCards = await cardDAO.findCards(ids)
+        let result = []
+        localCards.forEach(async localCard => {
+            if(localCard != null){
+                if(((Date.now()/1000) - localCard.storageDate) < CONFIG.CACHEEXPIRATION){
+                    result.push(localCard)
+                }else{//si le cache a expiré
+                    var newCard = await cardFetchDAO.findCardById(id)
+                    result.push(cardDAO.updateCard(id,newCard))
+                }
+            }else{
+                result.push(await cardDAO.addOneCard((await cardFetchDAO.findCardById(id))))
+    
+            } 
+        });
+        return result
     },
     findSetCards: async (id) => {
         // FONCTIONNEMENT [CACHE] :
