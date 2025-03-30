@@ -13,3 +13,45 @@
   font-weight: 400;
   font-style: normal;
 }
+
+.AccordionRoot {
+    width: clamp(200px, 20vw, 300px);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px grey;
+    padding: 15px;
+    height: fit-content;
+}
+
+.AccordionItem {
+    width: 100%;
+    background-color: white;
+    color: black;
+}
+
+.AccordionTrigger {
+    width: 100%;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.AccordionContent {
+    padding: 10px 15px;
+    font-size: 12px;
+}
+
+
+.AccordionChevron {
+    justify-content: end;
+    transition: transform 300ms cubic-bezier(0.87, 0, 0.13, 1);
+}
+
+.AccordionTrigger[data-state="open"] > .AccordionChevron {
+    transform: rotate(180deg);
+}
+
+
