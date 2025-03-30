@@ -1,10 +1,11 @@
 import config from "../config.js";
 import {useEffect, useState} from "react";
-import {Box, CheckboxGroup, Flex, Grid, ScrollArea, TextField} from "@radix-ui/themes";
+import {Box, Checkbox, CheckboxGroup, Flex, Grid, ScrollArea, TextField} from "@radix-ui/themes";
 import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
 import * as Accordion from '@radix-ui/react-accordion';
 import {AccordionContent, AccordionTrigger} from "@radix-ui/react-accordion";
 import {ChevronDownIcon, Scroll} from "lucide-react";
+import card from "./Card.jsx";
 
 
 function ImageCard({card}) {
@@ -15,10 +16,17 @@ function ImageCard({card}) {
 
 function Collection() {
 
+
     const [userCards, setUserCards] = useState([])
+    const [userCardsAll, setUserCardsAll] = useState([])
     const [types, setTypes] = useState([])
     const [rarities, setRarities] = useState([])
     const [sets, setSets] = useState([])
+
+    const [selectedType, setSelectedType] = useState([])
+    const [selectedRarities, setSelectedRarities] = useState([])
+    const [selectedSet, setSelectedSet] = useState([])
+
 
     const fetchCardsUser = async () => {
         let cards = await fetch(config.url + "/my-cards", {
@@ -28,6 +36,7 @@ function Collection() {
             }
         })
         let dataUserCards = await cards.json()
+        setUserCardsAll(dataUserCards)
         setUserCards(dataUserCards)
     }
 
@@ -82,6 +91,88 @@ function Collection() {
     }
 
 
+    const onChecked = (nom, e) => {
+        let filterCards = [...userCardsAll]
+        if (nom === "Type") {
+            if (e.length === 0) {
+                setSelectedType([])
+                if (selectedRarities.length > 0 || selectedSet.length > 0) {
+                    if (selectedRarities.length > 0) {
+                        filterCards = filterCards.filter(card =>
+                            selectedRarities.some(rarity => card.rarity === rarity)
+                        )
+                    }
+                    if (selectedSet.length > 0) {
+                        filterCards = filterCards.filter(card =>
+                            selectedSet.some(set => card.set.id === set)
+                        )
+                    }
+                } else {
+                    filterCards = userCardsAll
+                }
+
+            } else {
+                setSelectedType(e)
+                filterCards = filterCards.filter(card =>
+                    e.some(type => card.types.includes(type))
+                )
+            }
+        }
+        if (nom === "Rarities") {
+            if (e.length === 0) {
+                setSelectedRarities([])
+                if (selectedType.length > 0 || selectedSet.length > 0) {
+                    if (selectedType.length > 0) {
+                        filterCards = filterCards.filter(card =>
+                            selectedType.some(type => card.types.includes(type))
+                        )
+                    }
+                    if (selectedSet.length > 0) {
+                        filterCards = filterCards.filter(card =>
+                            selectedSet.some(set => card.set.id === set)
+                        )
+                    }
+                } else {
+                    filterCards = userCardsAll
+                }
+            } else {
+                setSelectedRarities(e)
+                filterCards = filterCards.filter(card =>
+                    e.some(rarity => card.rarity === rarity)
+                )
+            }
+        }
+        if (nom === "Set") {
+            if (e.length === 0) {
+                setSelectedSet([])
+                if (selectedRarities.length > 0 || selectedType.length > 0) {
+                    if (selectedRarities.length > 0) {
+                        filterCards = filterCards.filter(card =>
+                            selectedRarities.some(rarity => card.rarity === rarity)
+                        )
+                    }
+                    if (selectedType.length > 0) {
+                        filterCards = filterCards.filter(card =>
+                            selectedType.some(type => card.types.includes(type))
+                        )
+                    }
+                } else {
+                    filterCards = userCardsAll
+                }
+            } else {
+                setSelectedSet(e)
+                filterCards = filterCards.filter(card =>
+                    e.some(set => card.set.id === set)
+                )
+            }
+        }
+
+        setUserCards(filterCards)
+
+    }
+
+
+
     return (
         <Grid columns="3" style={{gridTemplateColumns:'25% 75%'}}>
             <Flex id="searchBar" px="5" py="5" justify="center" style={{gridColumn: 'span 3'}} >
@@ -98,8 +189,7 @@ function Collection() {
                     <Accordion.Item value="Type" className="AccordionItem">
                         <AccordionTrigger className="AccordionTrigger">Type <ChevronDownIcon className="AccordionChevron" aria-hidden /> </AccordionTrigger>
                         <AccordionContent className="AccordionContent">
-                            <CheckboxGroup.Root defaultValue='All' name="type">
-                                <CheckboxGroup.Item value="All">All</CheckboxGroup.Item>
+                            <CheckboxGroup.Root name="type" value={selectedType} onValueChange={(values) => onChecked("Type", values)}>
                                 {types && types.data ? (
                                     types.data.map((type) => (
                                         <CheckboxGroup.Item key={type} value={type}>{type}</CheckboxGroup.Item>
@@ -115,8 +205,7 @@ function Collection() {
                         <AccordionTrigger className="AccordionTrigger">Rareté <ChevronDownIcon className="AccordionChevron" aria-hidden /> </AccordionTrigger>
                         <AccordionContent className="AccordionContent">
                             <ScrollArea className="raritiesScroll" style={{height: '250px'}}>
-                                <CheckboxGroup.Root defaultValue='All' name="rarities">
-                                    <CheckboxGroup.Item value="All">All</CheckboxGroup.Item>
+                                <CheckboxGroup.Root name="rarities" value={selectedRarities} onValueChange={(values) => onChecked("Rarities", values)}>
                                     {rarities && rarities.data ? (
                                         rarities.data.map((rarity) => (
                                         <CheckboxGroup.Item key={rarity} value={rarity}>{rarity}</CheckboxGroup.Item>
@@ -133,8 +222,7 @@ function Collection() {
                         <AccordionTrigger className="AccordionTrigger">Set <ChevronDownIcon className="AccordionChevron" aria-hidden /> </AccordionTrigger>
                         <AccordionContent className="AccordionContent">
                             <ScrollArea className="raritiesScroll" style={{height: '250px'}}>
-                                <CheckboxGroup.Root defaultValue='All' name="sets">
-                                    <CheckboxGroup.Item value="All">All</CheckboxGroup.Item>
+                                <CheckboxGroup.Root name="sets" value={selectedSet} onValueChange={(values)=> onChecked("Set", values)}>
                                     {sets && sets.data ? (
                                         sets.data.map(set => (
                                         <CheckboxGroup.Item key={set.id} value={set.id}>{set.name}</CheckboxGroup.Item>
