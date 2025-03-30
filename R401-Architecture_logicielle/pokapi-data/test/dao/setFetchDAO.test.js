@@ -2,6 +2,25 @@ import assert from "node:assert"
 import { describe, it, before, beforeEach, after } from "node:test"
 import setFetchDAO from "../../api/dao/setFetchDAO.js";
 import {SetInfo} from "../../api/model/SetInfo.js";
+import { set } from "mongoose";
+
+const set1 = {
+    "id": "mcd19",
+    "name": "McDonald's Collection 2019",
+    "series": "Other",
+    "printedTotal": 12,
+    "total": 12,
+    "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+    },
+    "releaseDate": "2019/10/15",
+    "updatedAt": "2022/10/10 15:12:00",
+    "images": {
+        "symbol": "https://images.pokemontcg.io/mcd19/symbol.png",
+        "logo": "https://images.pokemontcg.io/mcd19/logo.png"
+    }
+}
 
 describe("DAO - SetFetchDAO", () => {
     it("Find all sets", async () => {
@@ -11,5 +30,11 @@ describe("DAO - SetFetchDAO", () => {
         res.forEach(s => {
             assert.ok(s instanceof SetInfo)
         })
+    })
+
+    it("Find one",async()=>{
+        const base = new SetInfo(set1)
+        const res = await setFetchDAO.find(base.id)
+        assert.deepEqual(base,res)
     })
 })

@@ -1,4 +1,4 @@
-import assert from "node:assert"
+import assert, { deepEqual } from "node:assert"
 import { describe, it, before, beforeEach, after } from "node:test"
 import setDAO from "../../api/dao/setDAO.js"
 import {SetInfo} from "../../api/model/SetInfo.js";
@@ -66,6 +66,13 @@ describe("DAO - SetDAO", () => {
         assert.deepEqual(await setDAO.findAll(), [base12, base22])
         await setDAO.deleteAll()
         assert.deepEqual(await setDAO.findAll(), [])
+    })
+
+    it("add-find",async()=>{
+        const base11 = new SetInfo(set1)
+        deepEqual(await setDAO.add(base11),base11)
+        deepEqual(await setDAO.findAll(),[base11])
+        deepEqual(await setDAO.find(base11.id),base11)
     })
 
     after(async ()=>{
