@@ -54,4 +54,10 @@
     transform: rotate(180deg);
 }
 
+@media (min-width: 1900px) {
+    .cardsUser {
+        margin-right: 20vh;
+    }
+}
+
 

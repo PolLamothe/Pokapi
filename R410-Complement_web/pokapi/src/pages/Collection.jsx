@@ -1,6 +1,6 @@
 import config from "../config.js";
 import {useEffect, useState} from "react";
-import {Box, Flex, Grid, TextField} from "@radix-ui/themes";
+import {Box, CheckboxGroup, Flex, Grid, TextField} from "@radix-ui/themes";
 import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
 import * as Accordion from '@radix-ui/react-accordion';
 import {AccordionContent, AccordionTrigger} from "@radix-ui/react-accordion";
@@ -16,6 +16,7 @@ function ImageCard({card}) {
 function Collection() {
 
     const [userCards, setUserCards] = useState([])
+    const [types, setTypes] = useState([])
 
 
     useEffect(()=>{
@@ -31,6 +32,17 @@ function Collection() {
         }
         fetchCardsUser()
     },[setUserCards])
+
+    useEffect(() => {
+        const fetchAllTypes = async () => {
+            let allTypes = await fetch(config.url + "/types", {
+                method: "GET"
+            })
+            let dataTypes = await allTypes.json()
+            setTypes(dataTypes)
+        }
+        fetchAllTypes()
+    }, [setTypes]);
 
     console.log(userCards)
 
@@ -50,7 +62,12 @@ function Collection() {
                     <Accordion.Item value="Type" className="AccordionItem">
                         <AccordionTrigger className="AccordionTrigger">Type <ChevronDownIcon className="AccordionChevron" aria-hidden /> </AccordionTrigger>
                         <AccordionContent className="AccordionContent">
-                            TEMP
+                            <CheckboxGroup.Root defaultValue='All' name="type">
+                                <CheckboxGroup.Item value="All">All</CheckboxGroup.Item>
+                                {types.map((type) => (
+                                    <CheckboxGroup.Item key={type} value={type}>{type}</CheckboxGroup.Item>
+                                ))}
+                            </CheckboxGroup.Root>
                         </AccordionContent>
                     </Accordion.Item>
 
