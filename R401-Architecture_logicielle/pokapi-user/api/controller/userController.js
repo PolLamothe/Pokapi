@@ -5,6 +5,8 @@ import {User} from "../model/User.js";
 import jwt from 'jsonwebtoken';
 import CONFIG from "../../const.js";
 import bcrypt from "bcrypt";
+import {fetchAPI} from "../dao/utility.js";
+import {Card} from "../model/Card.js";
 
 /**
  * Génère un JWT
@@ -67,7 +69,32 @@ const userController = {
         return await userDAO.findByPseudo(pseudo)
     },
     openBooster: async (user, setId) => {
-        //TODO
+        const userStored = await userDAO.findByLogin(user.login)
+        if (userStored == null) {
+            throw new Error(`${user.login} does not exist`)
+        }
+        // Open booster from Pokapi-data API
+        const url = `${CONFIG.POKAPI_DATA_URL}/open-booster/${setId}`
+        const res = await fetchAPI(url)
+        if (res.ok) {
+            const boosterContent = await res.json()
+            boosterContent.forEach(c => {
+                for(let i=0; i<userStored.cards.length; i++) {
+                    if (userStored.cards[i].id === c.id) {
+                        userStored.cards[i].quantity++
+                        return
+                    }
+                }
+                const newCard = new Card({
+                    id: c.id,
+                    quantity: 1
+                })
+                userStored.cards.push(newCard)
+            })
+            await userDAO.update(userStored.login, userStored)
+            return boosterContent
+        }
+        throw new Error(`Can't fetch Pokapi-data API : ${res.status} ${res.statusText}`)
     },
     updateUser: async (user, pseudo=null, password=null) => {
         let userClone
@@ -90,7 +117,9 @@ const userController = {
                 throw new Error(`Password must not be empty`)
             }
         }
-        return await userDAO.update(userClone.login, userClone)
+        const updatedUser = await userDAO.update(userClone.login, userClone)
+        if (updatedUser === null) throw new Error(`Database error`)
+        return generateJWT(updatedUser)
     },
     addSearched: async (user, cardId) => {
         const userStored = await userDAO.findByLogin(user.login)
@@ -98,7 +127,10 @@ const userController = {
             throw new Error(`${user.login} does not exist`)
         }
         if (userStored.searched.filter(c => c.id === cardId).length === 0) {
-            userStored.searched.push({id: cardId})
+            const newCard = new Card({
+                id: cardId
+            })
+            userStored.searched.push(newCard)
             return await userDAO.update(user.login, userStored)
         }
         throw new Error('Requested card is already marked as searched')

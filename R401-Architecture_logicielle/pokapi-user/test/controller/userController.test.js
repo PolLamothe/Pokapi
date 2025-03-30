@@ -10,6 +10,17 @@ import CONFIG from "../../const.js";
 let mongod= null
 let connexion = null
 
+const assertJWT = (token, expectedLogin, expectedPseudo) => {
+    jwt.verify(token, CONFIG.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            throw new Error("Test fail : Invalid JWT")
+        } else {
+            assert.equal(decoded.login, expectedLogin)
+            assert.equal(decoded.pseudo, expectedPseudo)
+        }
+    })
+}
+
 const user1 = {
     pseudo : "testPseudo1",
     login : "testLogin1",
@@ -76,15 +87,19 @@ describe("Controller - UserController",()=>{
         const expected = new User(user1)
         expected.pseudo = "modified1"
         expected.password = "modified2"
-        const u1Updated = await userController.updateUser(u1, "modified1", "modified2")
+        const token = await userController.updateUser(u1, "modified1", "modified2")
+        const u1Updated = await userDAO.findByLogin(u1.login)
         assert.deepEqual(u1Updated, expected)
+        assertJWT(token, u1.login, "modified1")
     })
 
     it("updateUser no change", async () => {
         const u1 = await userDAO.addOne(new User(user1))
         const expected = new User(user1)
-        const u1Updated = await userController.updateUser(u1)
+        const token = await userController.updateUser(u1)
+        const u1Updated = await userDAO.findByLogin(u1.login)
         assert.deepEqual(u1Updated, expected)
+        assertJWT(token, u1.login, u1.pseudo)
     })
 
     it("updateUser wrong", async () => {
@@ -114,14 +129,7 @@ describe("Controller - UserController",()=>{
     it("register valid", async () => {
         const u1 = await userDAO.addOne(new User(user1))
         const token = await userController.register(user2.login, user2.pseudo, user2.password)
-        jwt.verify(token, CONFIG.JWT_SECRET, (err, decoded) => {
-            if (err) {
-                throw new Error("Invalid JWT")
-            } else {
-                assert.equal(decoded.login, user2.login)
-                assert.equal(decoded.pseudo, user2.pseudo)
-            }
-        })
+        assertJWT(token, user2.login, user2.pseudo)
         const userAdded = await userDAO.findByLogin(user2.login)
         assert.notEqual(userAdded, null)
         assert.notEqual(userAdded.password, user2.password)
@@ -139,14 +147,7 @@ describe("Controller - UserController",()=>{
     it("loginWithToken valid with new", async () => {
         const token = await userController.register(user2.login, user2.pseudo, user2.password)
         const newToken = await userController.loginWithToken(token, true)
-        jwt.verify(newToken, CONFIG.JWT_SECRET, (err, decoded) => {
-            if (err) {
-                throw new Error("Invalid JWT")
-            } else {
-                assert.equal(decoded.login, user2.login)
-                assert.equal(decoded.pseudo, user2.pseudo)
-            }
-        })
+        assertJWT(newToken, user2.login, user2.pseudo)
     })
 
     it("loginWithToken deleted user", async () => {
@@ -167,14 +168,32 @@ describe("Controller - UserController",()=>{
     it("login valid", async () => {
         await userController.register(user1.login, user1.pseudo, user1.password)
         const token = await userController.login(user1.login, user1.password)
-        jwt.verify(token, CONFIG.JWT_SECRET, (err, decoded) => {
-            if (err) {
-                throw new Error("Invalid JWT")
-            } else {
-                assert.equal(decoded.login, user1.login)
-                assert.equal(decoded.pseudo, user1.pseudo)
-            }
-        })
+        assertJWT(token, user1.login, user1.pseudo)
+    })
+
+    it("openBooster valid", async (t) => {
+        const u1 = await userDAO.addOne(new User(user1))
+        let res
+        try {
+            res = await userController.openBooster(u1, "test")
+        } catch (e) {
+            t.skip("Make sure to use the Pokapi-stub API to run this test")
+            return
+        }
+        assert.equal(res.length, 5)
+        let updatedUser = await userDAO.findByLogin(u1.login)
+        assert.equal(updatedUser.cards.length, 8)
+        // Second opening
+        await userController.openBooster(updatedUser, "test")
+        updatedUser = await userDAO.findByLogin(u1.login)
+        assert.equal(updatedUser.cards.length, 8)
+        for(let i=3; i<8; i++) {
+            assert.equal(updatedUser.cards[i].quantity, 2)
+        }
+    })
+
+    it("openBooster wrong user", async () => {
+        await assert.rejects(userController.openBooster(new User(user1), "base1"))
     })
 
     after(async ()=>{

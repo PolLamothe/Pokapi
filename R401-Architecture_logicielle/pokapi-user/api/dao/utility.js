@@ -1,6 +1,7 @@
 import {mongoose} from 'mongoose';
 import {Model, SchemaTypes as S} from "../model/Model.js";
-import {Card} from "../model/Card.js";
+import CONFIG from "../../const.js";
+import HttpsProxyAgent from 'https-proxy-agent';
 
 /**
  * Build a Mongoose schema from a Model schema
@@ -48,3 +49,25 @@ export function buildMongooseSchema(modelClass) {
 }
 
 export const projection = { _id: 0, __v:0}
+
+/**
+ * Fetch an API with the given URL and the configured proxy
+ * @param fetchUrl
+ * @return {Promise<Response>}
+ */
+export function fetchAPI(fetchUrl) {
+    // Proxy configuration
+    let agent = null
+    if (CONFIG.PROXY !== undefined) {
+        console.log(`PROXY FETCH > Le proxy est ${CONFIG.PROXY}`)
+        agent =  new HttpsProxyAgent(CONFIG.PROXY);
+    } else {
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+    }
+
+    const fields = {
+        method: "GET",
+    }
+    if (agent !== null) fields.agent = agent
+    return fetch(fetchUrl, fields)
+}

@@ -32,14 +32,14 @@ Comment créer une plateforme permettant aux utilisateurs de gérer, optimiser e
 
 ### Étape 3 : 
 
-- [ ] Contrôlleur user avec tests 🟢
+- [x] Contrôlleur user avec tests
 - [ ] Contrôlleur data avec tests 🟢
 	- [ ] cardController
 	- [ ] setController
 
 ### Étape 4 : 
 
-- [ ] Routes user avec tests 
+- [ ] Routes user avec tests 🟢 (*Thomas*)
 - [ ] Routes data avec tests 
 
 ### Étape 5 : 
