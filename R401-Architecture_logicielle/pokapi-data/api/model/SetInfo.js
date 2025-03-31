@@ -24,6 +24,22 @@ export class SetInfo extends Model {
         releaseDate: S.String,
         updatedAt: S.String,
         images: {type: "object", objectName: SetImage, required: true},
+        storageDate : S.NumberOptional
+    }
+
+    //fonction pour comparer deux instances sans prendre en compte l'attribut storageDate
+    compare(otherSet){
+        Object.keys(this.constructor.schema).forEach(attribute=>{
+            if(attribute != "storageDate"){
+                try{
+                    deepEqual(this[attribute],otherSet[attribute])
+                }catch(e){
+                    return false
+
+                }
+            }
+        })
+        return true
     }
 
     constructor(data) {

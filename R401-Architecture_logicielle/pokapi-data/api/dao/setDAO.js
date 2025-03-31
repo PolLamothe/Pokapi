@@ -22,16 +22,19 @@ const setDAO = {
     add: async(set)=>{
         const localSet = await setDAO.find(set.id,projection)
         if(localSet == null){
-            return new SetInfo(await setModel.insertOne(set,projection))
+            let realSet = new SetInfo(set)
+            realSet.storageDate = parseInt(Date.now()/1000)
+            return new SetInfo(await setModel.insertOne(realSet,projection))
         }else{
             return false
         }
     },
     addMany: async (sets) => {
         const allSets = await setDAO.findAll()//TODO : Très mal optimisé
-        for (const s of sets) {
+        for (let s of sets) {
             if (s instanceof SetInfo ) {
                 if (!allSets.includes(s)) {
+                    s.storageDate = parseInt(Date.now()/1000)
                     await setModel.insertOne(s)
                 }
             }
