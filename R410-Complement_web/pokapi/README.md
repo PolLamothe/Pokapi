@@ -21,6 +21,7 @@ Les identifiants pour se connecter avec le stub sont : `login: admin ; password:
 
 - [Radix UI](https://www.radix-ui.com/themes/docs/components/alert-dialog) : C'est la librairie de composant React dèjà fait que l'on utilise, lisez bien la doc il y a plein de choses que vous pouvez utiliser (boutons, modales, conteneur flex, etc). Cela nous permet de gagner du temps sur les composants simples par contre leur style n'est pas facilement modifiable.
 - [Lucide Icons](https://lucide.dev/icons/) : Si vous voulez ajouter des icônes, vous avez juste à cliquer sur une icône et faire *Copy JSX*. 
+- [Slick](https://react-slick.neostack.com/) : Librairie pour le carousel de la page d'accueil (à confirmer)
 - [React router](https://reactrouter.com/start/declarative/navigating)
 - [React](https://react.dev/reference/react)
 
@@ -43,7 +44,7 @@ Les identifiants pour se connecter avec le stub sont : `login: admin ; password:
     - [ ] Recherche
 - [ ] Home
     - [ ] Carousel avec les booster 
-        - [ ] Choisir lib pour faire le carousel
+        - [ ] Choisir lib pour faire le carousel => [Slick](https://react-slick.neostack.com/) ?
         - [ ] Gérer le chargement au fur et à mesure
 - [ ] Card 🟢 
     - [ ] Style de la page (cf. maquette) *Brieuc*
