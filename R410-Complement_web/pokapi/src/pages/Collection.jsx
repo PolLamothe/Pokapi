@@ -126,7 +126,7 @@ function Collection() {
                 )
             }
         }
-        if (nom === "Rareté") {
+        if (nom === "Rarity") {
             if (selectedType.length > 0 || selectedSet.length > 0) {
                 if (selectedType.length > 0) {
                     filterCards = filterCards.filter(card =>
@@ -184,7 +184,7 @@ function Collection() {
     return (
         <Grid columns="3" style={{gridTemplateColumns:'25% 75%'}}>
             <Flex id="searchBar" px="5" py="5" justify="center" style={{gridColumn: 'span 3'}} >
-                <TextField.Root radius="full" placeholder="Rechercher un Pokemon ..." size="3" style={{width:'80vh'}} onChange={handleSearch} >
+                <TextField.Root radius="full" placeholder="Search a Pokemon ..." size="3" style={{width:'80vh'}} onChange={handleSearch} >
                     <TextField.Slot>
                         <MagnifyingGlassIcon height="16" width="16" />
                     </TextField.Slot>
@@ -196,7 +196,7 @@ function Collection() {
 
                     <AccordionTab name="Type" onchecked={onChecked} filter={types} selectedFilter={selectedType} searchBar={false}/>
 
-                    <AccordionTab name="Rareté" onchecked={onChecked} filter={rarities} selectedFilter={selectedRarities} handleSearch={handleSearchRarities} searchBar={true}/>
+                    <AccordionTab name="Rarity" onchecked={onChecked} filter={rarities} selectedFilter={selectedRarities} handleSearch={handleSearchRarities} searchBar={true}/>
 
                     <AccordionTab name="Set" onchecked={onChecked} filter={sets} selectedFilter={selectedSet} handleSearch={handleSearchSets} searchBar={true}/>
 
@@ -208,7 +208,7 @@ function Collection() {
                     <ImageCard key={card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.id}`)}}/>
                     ))
                 ) : (
-                    <Flex justify="center" py="9">Aucune Carte Trouvé !</Flex>
+                    <Flex justify="center" py="9">No Cards found !</Flex>
                 )}
             </Grid>
         </Grid>
@@ -220,7 +220,7 @@ function AccordionTab ({name, onchecked, filter, selectedFilter, handleSearch, s
         <AccordionTrigger className="AccordionTrigger">{name}<ChevronDownIcon className="AccordionChevron" aria-hidden /> </AccordionTrigger>
         <AccordionContent className="AccordionContent">
             {searchBar &&
-                <TextField.Root radius="full" placeholder={`rechercher une ${name} ...`} size="2" onChange={handleSearch}>
+                <TextField.Root radius="full" placeholder={`Search a ${name} ...`} size="2" onChange={handleSearch}>
                     <TextField.Slot>
                         <MagnifyingGlassIcon height="16" width="16" />
                     </TextField.Slot>
@@ -235,7 +235,7 @@ function AccordionTab ({name, onchecked, filter, selectedFilter, handleSearch, s
                             <CheckboxGroup.Item key={fil} value={fil}>{fil}</CheckboxGroup.Item>
                         ))
                     ): (
-                        <p>Aucune {name} trouvé !</p>
+                        <p>No {name} found !</p>
                     )}
                 </CheckboxGroup.Root>
             </ScrollArea>
