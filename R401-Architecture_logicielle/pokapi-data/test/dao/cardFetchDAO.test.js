@@ -28,4 +28,10 @@ describe('DAO - CardFetchDAO', () => {
             assert.equal(card.set.id, "dp3")
         })
     })
+
+    it("Find card by name",async ()=>{
+        const base = new Card(testCards.data[0])
+        const res = await cardFetchDAO.findCardByName(base.set.id,base.name)
+        assert(base.compare(res))   
+    })
 })

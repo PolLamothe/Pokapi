@@ -39,6 +39,11 @@ const cardFetchDAO = {
         return Cards
 
     },
+    findCardByName : async (setId,name)=>{
+        let response = await fetchAPI(urlCard+`?q=name:"${name}" set.id:${setId}`)
+        let json = await response.json()
+        return new Card(json.data[0])
+    },
     findSetCards: async (id) => {
         let response = await fetchAPI(urlCard + `?q=set.id:${id}`)
         let json = await response.json()
