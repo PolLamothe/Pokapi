@@ -39,6 +39,13 @@ const setDAO = {
                 }
             }
         }
+    },
+    update : async (id,set)=>{
+        if(set instanceof SetInfo){
+            set.storageDate = parseInt(Date.now()/1000)
+            await setModel.updateOne({id : id,$set : set})
+            return await setModel.findOne({id : id})
+        }
     }
 }
 

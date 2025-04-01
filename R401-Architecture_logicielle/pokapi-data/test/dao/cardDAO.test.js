@@ -24,8 +24,8 @@ describe('DAO - CardDAO', () => {
     it('addOneCard', async () => {
         const base1 = new Card(testCards.data[0])
         const base2 = new Card(testCards.data[0])
-        assert.deepEqual(await cardDAO.addOneCard(base1), base2)
-        assert.deepEqual(await cardDAO.findCardByID(base2.id), base2)
+        assert((await cardDAO.addOneCard(base1)).compare(base2))
+        assert((await cardDAO.findCardByID(base2.id)).compare(base2))
     })
 
     it('addOneCard wrong', async () => {
@@ -35,9 +35,9 @@ describe('DAO - CardDAO', () => {
     it('addOneCard twice', async () => {
         const base1 = new Card(testCards.data[0])
         const base2 = new Card(testCards.data[0])
-        assert.deepEqual(await cardDAO.addOneCard(base1), base2)
+        assert((await cardDAO.addOneCard(base1)).compare(base2))
         assert.deepEqual(await cardDAO.addOneCard(base1), null)
-        assert.deepEqual(await cardDAO.findCardByID(base2.id), base2)
+        assert((await cardDAO.findCardByID(base2.id)).compare(base2))
     })
 
     it('addManyCards',  async () => {
@@ -46,8 +46,8 @@ describe('DAO - CardDAO', () => {
         const base21 = new Card(testCards.data[1])
         const base22 = new Card(testCards.data[1])
         await cardDAO.addManyCards([base11, base21])
-        assert.deepEqual(await cardDAO.findCardByID(base12.id), base12)
-        assert.deepEqual(await cardDAO.findCardByID(base22.id), base22)
+        assert((await cardDAO.findCardByID(base12.id)).compare(base12))
+        assert((await cardDAO.findCardByID(base22.id)).compare(base22))
     })
 
     it('findCards',  async () => {
@@ -56,7 +56,9 @@ describe('DAO - CardDAO', () => {
         const base21 = new Card(testCards.data[1])
         const base22 = new Card(testCards.data[1])
         await cardDAO.addManyCards([base11, base21])
-        assert.deepEqual(await cardDAO.findCards([base12.id, base22.id]), [base12, base22])
+        const result = await cardDAO.findCards([base12.id, base22.id])
+        assert(result[0].compare(base12))
+        assert(result[1].compare(base22))
     })
 
     it('findCardsBySet', async () => {
@@ -66,7 +68,9 @@ describe('DAO - CardDAO', () => {
         const base21 = new Card(testCards.data[8])
         const base22 = new Card(testCards.data[8])
         await cardDAO.addManyCards([base01, base11, base21])
-        assert.deepEqual(await cardDAO.findCardsBySet("mcd19"), [base12, base22])
+        const result = await cardDAO.findCardsBySet("mcd19")
+        assert(result[0].compare(base12))
+        assert(result[1].compare(base22))
     })
 
     it('updateCard', async () => {
@@ -74,14 +78,32 @@ describe('DAO - CardDAO', () => {
         const base12 = new Card(testCards.data[0])
         const base13 = new Card(testCards.data[0])
         base13.name = "Test"
-        assert.deepEqual(await cardDAO.addOneCard(base11), base12)
+        assert((await cardDAO.addOneCard(base11)).compare(base12))
         base12.name = "Test"
         const res = await cardDAO.updateCard(base12.id, base12)
-        assert.deepEqual(res, base13)
+        assert(res.compare(base13))
     })
 
     it('updateCard wrong', async () => {
         assert.deepEqual(await cardDAO.updateCard("x", "card"), null)
+    })
+
+    it("update Cards",async ()=>{
+        const base01 = new Card(testCards.data[0])
+        const base11 = new Card(testCards.data[2])
+        const base21 = new Card(testCards.data[8])
+        const result = await cardDAO.updateCards([base01, base11, base21])
+        assert(result[0].compare(base01))
+        assert(result[1].compare(base11))
+        assert(result[2].compare(base21))
+        result.forEach(card=>{
+            assert((parseInt(Date.now()/1000) - card.storageDate) < 1)
+        })
+        new Promise(resolve => setTimeout(resolve, 1000)).then(()=>{
+            result.forEach(card=>{
+                assert((parseInt(Date.now()/1000) - card.storageDate) > 1)
+            })
+        })
     })
 
     after(async ()=>{
