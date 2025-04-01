@@ -41,3 +41,7 @@ COPY script.php > /usr/src/application
 WORKDIR /usr/src/application
 CMD [ "php", "./script.php" ]
 ```
+Build 
+```bash
+podman build -f ContainerFile
+```
