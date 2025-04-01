@@ -92,7 +92,23 @@ router.route("/my-cards").get((req,res)=>{
         res.status(401).send()
         return
     }
-    res.status(200).send(rarestCards)
+    const myCards = rarestCards.map((card, index) => {
+        return {
+            card: card,
+            quantity: index
+        }
+    })
+    res.status(200).send(myCards)
+})
+
+router.route("/my-cards/:cardId").get((req,res)=>{
+    if(req.headers["authentification-token"] !== stubToken){
+        return res.status(401).send()
+    }
+    res.status(200).send({
+        card: rarestCards[0],
+        quantity: 42
+    })
 })
 
 router.route("/user/:PSEUDO").get((req,res)=>{

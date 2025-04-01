@@ -11,7 +11,7 @@ import pokapiDAO from "../dao/pokapiDAO.js";
 
 function ImageCard({card, navigate}) {
     return <Flex justify="center">
-        <img className="rt-r-px-2 rt-r-py-2" alt={card.name} src={card.images.small} style={{ maxWidth: "261px" , maxHeight: "358px"}} onClick={navigate} />
+        <img className="rt-r-px-2 rt-r-py-2" alt={card.name} src={card.card.images.small} style={{ maxWidth: "261px" , maxHeight: "358px"}} onClick={navigate} />
     </Flex>
 }
 
@@ -205,7 +205,7 @@ function Collection() {
             <Grid className="cardsUser" columns="repeat(auto-fit, minmax(261px, 1fr))" style={{maxWidth: '1500px', height: "fit-content"}}>
                 {userCards && userCards.length > 0 ? (
                     userCards.map(card => (
-                    <ImageCard key={card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.id}`)}}/>
+                    <ImageCard key={card.card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}}/>
                     ))
                 ) : (
                     <Flex justify="center" py="9">No Cards found !</Flex>

@@ -41,8 +41,11 @@ const pokapiDAO = {
         return pokapiDAO.types
     },
     fetchCard: async (cardId) => {
-        let card = await fetch(config.url + "/card/" + cardId, {
-            method: "GET"
+        let card = await fetch(config.url + "/my-cards/" + cardId, {
+            method: "GET",
+            headers : {
+                "Authentification-Token": localStorage.getItem("token")
+            }
         });
         return await card.json();
     },

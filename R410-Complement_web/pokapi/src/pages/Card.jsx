@@ -7,11 +7,13 @@ function Card() {
   let params = useParams()
 
   let [cardData,setCardData] = useState({})
+    let [quantity,setQuantity] = useState(0)
     let [loaded, setLoaded] = useState(false);
 
   useEffect(() => {   
      pokapiDAO.fetchCard(params.cardId).then(data => {
-         setCardData(data);
+         setCardData(data.card);
+         setQuantity(data.quantity);
          setLoaded(true);
      })
   }, [params.cardId]);
