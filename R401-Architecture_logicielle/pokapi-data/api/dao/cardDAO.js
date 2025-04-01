@@ -1,4 +1,4 @@
-import {mongoose} from 'mongoose';
+import {mongoose, set} from 'mongoose';
 import {buildMongooseSchema} from "./utility.js";
 import {Card} from "../model/Card.js";
 
@@ -15,6 +15,13 @@ const cardDAO = {
     findCards: async (ids) => {
         const data = await cardModel.find({id: { $in: ids }})
         return data.map(card => new Card(card))
+    },
+    findCardByName : async(setId,name)=>{
+        const data = await cardModel.findOne({"set.id" : setId,name : name})
+        if(data != null) {
+            return new Card(data.toJSON())
+        }
+        return null
     },
     findCardsBySet: async (id) => {
         const data = await cardModel.find({"set.id": id})

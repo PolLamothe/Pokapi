@@ -107,6 +107,14 @@ describe('DAO - CardDAO', () => {
         })
     })
 
+    it("find card by name",async ()=>{
+        const base = new Card(testCards.data[0])
+        let result = await cardDAO.addOneCard(base)
+        assert(result.compare(base))
+        let result2 = await cardDAO.findCardByName(base.set.id,base.name)
+        assert(result2.compare(base))
+    })
+
     after(async ()=>{
         await mongod.stop()
         connexion.disconnect()
