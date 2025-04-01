@@ -15,10 +15,14 @@ function Login() {
 
     return (
         <>
-            <h3>Se connecter</h3>
+            <h3 style={connect_style}>Se connecter</h3>
             <AuthForm fields={fields} destination="/login" callback={authCallback}></AuthForm>
         </>
     )
 }
 
+const connect_style = {
+    marginTop: "0",
+    marginBottom: "30px"
+}
 export default Login;

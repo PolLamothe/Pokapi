@@ -4,12 +4,13 @@ import config from "../config"
 
 function AuthForm({fields,destination,callback}) {
     const fieldStyle = {
-        width : "30%"
+        width : "90%"
     };
 
     const buttonStyle = {
-        width : "20%",
-        cursor : "pointer"
+        width : "40%",
+        cursor : "pointer",
+        marginTop: "70px"
     }
 
     const [fieldsState,setFieldsState] = useState({})
