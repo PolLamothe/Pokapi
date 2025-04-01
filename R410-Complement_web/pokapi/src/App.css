@@ -54,6 +54,63 @@
     transform: rotate(180deg);
 }
 
+
+.img {
+    max-width: 245px;
+    max-height: 342px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.hoverEffect {
+    display: inline-block;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.hoverEffect figure {
+    position: relative;
+    width: 245px;
+    height: 342px;
+    margin: 0;
+    overflow: hidden;
+}
+
+.hoverEffect figure img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.2s ease-in-out;
+}
+
+.hoverEffect figure:hover img {
+    transform: scale(0.9);
+}
+
+.hoverEffect figure::before {
+    position: absolute;
+    top: 0;
+    left: -125%;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    content: '';
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 100%);
+    transform: skewX(-25deg);
+}
+
+.hoverEffect figure:hover::before {
+    animation: shine 0.5s ease-in-out;
+}
+
+@keyframes shine {
+    100% {
+        left: 75%;
+    }
+}
+
+
 @media (min-width: 1900px) {
     .cardsUser {
         margin-right: 20vh;

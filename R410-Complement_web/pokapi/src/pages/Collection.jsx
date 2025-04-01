@@ -1,4 +1,3 @@
-import config from "../config.js";
 import {useEffect, useState} from "react";
 import {Box, Checkbox, CheckboxGroup, Flex, Grid, ScrollArea, TextField} from "@radix-ui/themes";
 import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
@@ -10,9 +9,17 @@ import pokapiDAO from "../dao/pokapiDAO.js";
 
 
 function ImageCard({card, navigate}) {
-    return <Flex justify="center">
-        <img className="rt-r-px-2 rt-r-py-2" alt={card.name} src={card.card.images.small} style={{ maxWidth: "261px" , maxHeight: "358px"}} onClick={navigate} />
-    </Flex>
+    if (!card.card || !card.card.images || !card.card.images.small) {
+        console.error("Missing images for card:", card);
+        return null
+    }
+    return (
+        <Flex className="hoverEffect" justify="center">
+            <figure>
+                <img className="img" alt={card.card.name} src={card.card.images.small} onClick={navigate} />
+            </figure>
+        </Flex>
+    )
 }
 
 function Collection() {
@@ -202,7 +209,7 @@ function Collection() {
 
                 </Accordion.Root>
             </Flex>
-            <Grid className="cardsUser" columns="repeat(auto-fit, minmax(261px, 1fr))" style={{maxWidth: '1500px', height: "fit-content"}}>
+            <Grid className="cardsUser" columns="repeat(auto-fit, minmax(245px, 1fr))" style={{maxWidth: '1500px', height: "fit-content"}} gap="4">
                 {userCards && userCards.length > 0 ? (
                     userCards.map(card => (
                     <ImageCard key={card.card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}}/>
