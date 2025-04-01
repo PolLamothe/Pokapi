@@ -5,6 +5,7 @@ import cardFetchDAO from "../dao/cardFetchDAO.js"
 import  CONFIG  from "../../const.js"
 import setDAO from "../dao/setDAO.js"
 import setFetchDAO from "../dao/setFetchDAO.js"
+import setController from "./setController.js"
 
 // This object stores the date of
 // last update of each set if it
@@ -100,6 +101,18 @@ const cardController = {
             1. Appeler findSetCards du controller
             2. Récupérer 1 setInfo et 3 images de cartes [END]
          */
+        const set = await setController.find(id)
+        let setCards = await cardController.findSetCards(id)
+        const cards = []
+        while(cards.length < 3){
+            const randomIndex = parseInt(Math.random() * setCards.length)
+            cards.push(setCards[randomIndex])
+            setCards.splice(randomIndex,1)
+        }
+        return {
+            set : set,
+            images : cards.map((card)=>card.images)
+        }
     },
     findEvolution: async (id) => {
         // FONCTIONNEMENT :
