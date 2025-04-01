@@ -1,8 +1,25 @@
 'use strict'
 
+import setDAO from "../dao/setDAO.js"
+import setFetchDAO from "../dao/setFetchDAO.js"
+import CONFIG from "../../const.js"
+
 let lasUpdate = null
 
 const setController = {
+    find : async (id)=>{
+        const localSet = await setDAO.find(id)
+        if(localSet != null){
+            if((parseInt(Date.now()/1000) - localSet.storageDate) < CONFIG.CACHEEXPIRATION){
+                return localSet
+            }else{//si le cache a expiré
+                var newSet = await setFetchDAO.find(id)
+                return await setDAO.update(id,newSet)
+            }
+        }else{
+            return await setDAO.add(await setFetchDAO.find(id))
+        }
+    },
     findAll: async () => {
         // FONCTIONNEMENT [CACHE] :
         /*
