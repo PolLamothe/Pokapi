@@ -3,6 +3,8 @@
 import cardDAO from "../dao/cardDAO.js"
 import cardFetchDAO from "../dao/cardFetchDAO.js"
 import  CONFIG  from "../../const.js"
+import setDAO from "../dao/setDAO.js"
+import setFetchDAO from "../dao/setFetchDAO.js"
 
 // This object stores the date of
 // last update of each set if it
@@ -23,7 +25,7 @@ const cardController = {
          */
         const localCard = await cardDAO.findCardByID(id)
         if(localCard != null){
-            if(((Date.now()/1000) - localCard.storageDate) < CONFIG.CACHEEXPIRATION){
+            if((parseInt(Date.now()/1000) - localCard.storageDate) < CONFIG.CACHEEXPIRATION){
                 return localCard
             }else{//si le cache a expiré
                 var newCard = await cardFetchDAO.findCardById(id)
@@ -31,7 +33,6 @@ const cardController = {
             }
         }else{
             return await cardDAO.addOneCard((await cardFetchDAO.findCardById(id)))
-
         }
     },
     findCards: async (ids) => {
@@ -70,6 +71,28 @@ const cardController = {
                 3.2. Update la date de mise à jour
                 3.3 Retourner les cartes [END]
          */
+        let localSet = await setDAO.find(id)
+        let result = {}
+        if(localSet != null){
+            if((parseInt(Date.now()/1000) - localSet.storageDate) < CONFIG.CACHEEXPIRATION){
+                result["set"] = localSet
+            }else{//si le cache a expiré
+                localSet = setDAO.update(id,await setFetchDAO.find(id))
+            }
+        }else{
+            localSet = await setDAO.add(await setFetchDAO.find(id))
+        }
+        const localCards = await cardDAO.findCardsBySet(localSet.id)
+        const localIds = new Set(localCards.map(card=>card.id))
+        if(localCards.filter(card => (parseInt(Date.now()/1000) - card.storageDate) < CONFIG.CACHEEXPIRATION).length < localSet.total){
+            let allSetCards = await cardFetchDAO.findSetCards(localSet.id)
+
+            let result = [...(await cardDAO.updateCards(allSetCards.filter(card => localIds.has(card.id)))),...(await cardDAO.addManyCards(allSetCards.filter(card => !localIds.has(card.id))))]
+
+            return result
+        }else{
+            return localCards
+        }
     },
     setPresentation: async (id) => {
         // FONCTIONNEMENT :

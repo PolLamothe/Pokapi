@@ -6,8 +6,8 @@ export class Attack extends Model {
         name: S.String,
         cost: S.StringArray,
         convertedEnergyCost: S.Number,
-        damage: S.String,
-        text: S.String
+        damage: S.StringOptional,
+        text: S.StringOptional
     }
 
     constructor(data) {

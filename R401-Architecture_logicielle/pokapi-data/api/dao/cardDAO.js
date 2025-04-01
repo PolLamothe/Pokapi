@@ -35,14 +35,16 @@ const cardDAO = {
         }
     },
     addManyCards: async (cards) => {
+        let result = []
         for (const card of cards) {
             if (card instanceof Card ) {
                 if (await cardModel.findOne({id: card.id}) == null) {
                     card.storageDate = parseInt(Date.now()/1000)
-                    await cardModel.insertOne(card)
+                    result.push(new Card(await cardModel.insertOne(card)))
                 }
             }
         }
+        return result
     },
     deleteAllCards: async () => {
         await cardModel.deleteMany({})
@@ -56,6 +58,11 @@ const cardDAO = {
         return null
     },
     updateCards : async(cards) => {
+        cards.forEach(card => {
+            if(!(card instanceof Card)){
+                throw Error("You must provide Card object")
+            }
+        });
         cards = cards.map(card=>{
             card.storageDate = parseInt(Date.now()/1000)
             return card

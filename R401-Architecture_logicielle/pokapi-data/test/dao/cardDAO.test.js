@@ -92,16 +92,17 @@ describe('DAO - CardDAO', () => {
         const base01 = new Card(testCards.data[0])
         const base11 = new Card(testCards.data[2])
         const base21 = new Card(testCards.data[8])
-        const result = await cardDAO.updateCards([base01, base11, base21])
+        let result = await cardDAO.updateCards([base01, base11, base21])
         assert(result[0].compare(base01))
         assert(result[1].compare(base11))
         assert(result[2].compare(base21))
         result.forEach(card=>{
             assert((parseInt(Date.now()/1000) - card.storageDate) < 1)
         })
-        new Promise(resolve => setTimeout(resolve, 1000)).then(()=>{
+        new Promise(resolve => setTimeout(resolve, 1000)).then(async()=>{
+            let result = await cardDAO.updateCards([base01, base11, base21])
             result.forEach(card=>{
-                assert((parseInt(Date.now()/1000) - card.storageDate) > 1)
+                assert((parseInt(Date.now()/1000) - card.storageDate) < 1)
             })
         })
     })
