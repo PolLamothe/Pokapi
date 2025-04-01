@@ -28,6 +28,12 @@ app.use(cors(corsOptions));
 app.use(express.json())
 app.use(cookieParser());
 
+// logger
+app.use((req,res,next) => {
+    console.log(`${new Date().toDateString()} : ${req.url}`);
+    next()
+})
+
 //chargement des routes
 const {default: routes}  = await import ('./route.js')
 app.use(CONFIG.APIPATH+'/',routes)
