@@ -9,7 +9,7 @@ import {ChevronDownIcon, Scroll} from "lucide-react";
 
 function ImageCard({card}) {
     return <Flex justify="center">
-        <img className="rt-r-px-2 rt-r-py-2" alt={card.name} src={card.images.small} style={{ maxWidth: "261px" , maxHeight: "358px" }} />
+        <img className="rt-r-px-2 rt-r-py-2" alt={card.name} src={card.images.small} style={{ maxWidth: "261px" , maxHeight: "358px"}} />
     </Flex>
 }
 
@@ -74,7 +74,6 @@ function Collection() {
                 method: "GET"
             })
             let dataSets = await allSets.json()
-            console.log(dataSets.data, 'lllllll')
             setSets(dataSets.data)
             setSetsAll(dataSets.data)
         }
@@ -110,7 +109,6 @@ function Collection() {
         const recherche = e.target.value
         let res = []
         let set = [...setsAll]
-        console.log(set, "here")
         if (recherche.trim() === "") {
             setSets(setsAll)
         } else {
@@ -124,7 +122,6 @@ function Collection() {
 
     const onChecked = (nom, e) => {
         let filterCards = [...userCardsAll]
-        console.log(filterCards)
         if (nom === "Type") {
             if (selectedRarities.length > 0 || selectedSet.length > 0) {
                 if (selectedRarities.length > 0) {
