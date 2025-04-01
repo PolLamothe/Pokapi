@@ -5,11 +5,12 @@ import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
 import * as Accordion from '@radix-ui/react-accordion';
 import {AccordionContent, AccordionTrigger} from "@radix-ui/react-accordion";
 import {ChevronDownIcon, Scroll} from "lucide-react";
+import {useNavigate} from "react-router";
 
 
-function ImageCard({card}) {
+function ImageCard({card, navigate}) {
     return <Flex justify="center">
-        <img className="rt-r-px-2 rt-r-py-2" alt={card.name} src={card.images.small} style={{ maxWidth: "261px" , maxHeight: "358px"}} />
+        <img className="rt-r-px-2 rt-r-py-2" alt={card.name} src={card.images.small} style={{ maxWidth: "261px" , maxHeight: "358px"}} onClick={navigate} />
     </Flex>
 }
 
@@ -28,6 +29,8 @@ function Collection() {
     const [selectedRarities, setSelectedRarities] = useState([])
     const [selectedSet, setSelectedSet] = useState([])
 
+    const navigateToCardPage = useNavigate();
+
 
     const fetchCardsUser = async () => {
         let cards = await fetch(config.url + "/my-cards", {
@@ -41,51 +44,47 @@ function Collection() {
         setUserCards(dataUserCards)
     }
 
+    const fetchAllTypes = async () => {
+        let allTypes = await fetch(config.url + "/types", {
+            method: "GET"
+        })
+        let dataTypes = await allTypes.json()
+        setTypes(dataTypes.data)
+    }
+
+    const fetchRarities = async () => {
+        let allRarities = await fetch(config.url + "/rarities", {
+            method: "GET"
+        })
+        let dataRarities = await allRarities.json()
+        setRarities(dataRarities.data)
+        setRaritiesAll(dataRarities.data)
+    }
+
+    const fetchSets = async () => {
+        let allSets = await fetch(config.url + "/sets", {
+            method: "GET"
+        })
+        let dataSets = await allSets.json()
+        dataSets = dataSets.data.map(s => s.name)
+        setSets(dataSets)
+        setSetsAll(dataSets)
+    }
+
     useEffect(()=>{
         fetchCardsUser()
-    },[setUserCards])
-
-    useEffect(() => {
-        const fetchAllTypes = async () => {
-            let allTypes = await fetch(config.url + "/types", {
-                method: "GET"
-            })
-            let dataTypes = await allTypes.json()
-            setTypes(dataTypes)
-        }
         fetchAllTypes()
-    }, [setTypes])
-
-    useEffect(() => {
-        const fetchRarities = async () => {
-            let allRarities = await fetch(config.url + "/rarities", {
-                method: "GET"
-            })
-            let dataRarities = await allRarities.json()
-            setRarities(dataRarities.data)
-            setRaritiesAll(dataRarities.data)
-        }
         fetchRarities()
-    }, [setRarities])
-
-    useEffect(() => {
-        const fetchSets = async () => {
-            let allSets = await fetch(config.url + "/sets", {
-                method: "GET"
-            })
-            let dataSets = await allSets.json()
-            setSets(dataSets.data)
-            setSetsAll(dataSets.data)
-        }
         fetchSets()
-    }, [setSets])
+    },[])
+
 
     const handleSearch = async (e) => {
         const recherche = e.target.value
         let res = []
         let uc = [...userCardsAll]
         if (recherche.trim() === "") {
-            await fetchCardsUser()
+            setUserCards(userCardsAll)
         } else {
             res = uc.filter((user) => user.name.toLowerCase().includes(recherche))
             setUserCards(res)
@@ -112,7 +111,7 @@ function Collection() {
         if (recherche.trim() === "") {
             setSets(setsAll)
         } else {
-            res = set.filter((s) => s.name.toLowerCase().includes(recherche))
+            res = set.filter((s) => s.toLowerCase().includes(recherche))
             setSets(res)
         }
 
@@ -131,7 +130,7 @@ function Collection() {
                 }
                 if (selectedSet.length > 0) {
                     filterCards = filterCards.filter(card =>
-                        selectedSet.some(set => card.set.id === set)
+                        selectedSet.some(set => card.set.name === set)
                     )
                 }
             }
@@ -148,7 +147,7 @@ function Collection() {
                 )
             }
         }
-        if (nom === "Rarities") {
+        if (nom === "Rareté") {
             if (selectedType.length > 0 || selectedSet.length > 0) {
                 if (selectedType.length > 0) {
                     filterCards = filterCards.filter(card =>
@@ -157,7 +156,7 @@ function Collection() {
                 }
                 if (selectedSet.length > 0) {
                     filterCards = filterCards.filter(card =>
-                        selectedSet.some(set => card.set.id === set)
+                        selectedSet.some(set => card.set.name === set)
                     )
                 }
             }
@@ -194,7 +193,7 @@ function Collection() {
             } else {
                 setSelectedSet(e)
                 filterCards = filterCards.filter(card =>
-                    e.some(set => card.set.id === set)
+                    e.some(set => card.set.name === set)
                 )
             }
         }
@@ -216,72 +215,18 @@ function Collection() {
             <Flex justify="center">
                 <Accordion.Root type="multiple" className="AccordionRoot">
 
-                    <Accordion.Item value="Type" className="AccordionItem">
-                        <AccordionTrigger className="AccordionTrigger">Type <ChevronDownIcon className="AccordionChevron" aria-hidden /> </AccordionTrigger>
-                        <AccordionContent className="AccordionContent">
-                            <CheckboxGroup.Root name="type" value={selectedType} onValueChange={(values) => onChecked("Type", values)}>
-                                {types && types.data ? (
-                                    types.data.map((type) => (
-                                        <CheckboxGroup.Item key={type} value={type}>{type}</CheckboxGroup.Item>
-                                    ))
-                                ) : (
-                                    <p>Aucun Type trouvée.</p>
-                                )}
-                            </CheckboxGroup.Root>
-                        </AccordionContent>
-                    </Accordion.Item>
+                    <AccordionTab name="Type" onchecked={onChecked} filter={types} selectedFilter={selectedType} searchBar={false}/>
 
-                    <Accordion.Item value="Rareté" className="AccordionItem">
-                        <AccordionTrigger className="AccordionTrigger">Rareté <ChevronDownIcon className="AccordionChevron" aria-hidden /> </AccordionTrigger>
-                        <AccordionContent className="AccordionContent">
-                            <TextField.Root radius="full" placeholder="rechercher une rareté ..." size="2" onChange={handleSearchRarities}>
-                                <TextField.Slot>
-                                    <MagnifyingGlassIcon height="16" width="16" />
-                                </TextField.Slot>
-                            </TextField.Root>
-                            <ScrollArea className="raritiesScroll" style={{height: '250px'}}>
-                                <CheckboxGroup.Root name="rarities" value={selectedRarities} onValueChange={(values) => onChecked("Rarities", values)}>
+                    <AccordionTab name="Rareté" onchecked={onChecked} filter={rarities} selectedFilter={selectedRarities} handleSearch={handleSearchRarities} searchBar={true}/>
 
-                                    {rarities && rarities.length > 0 ? (
-                                        rarities.map((rarity) => (
-                                        <CheckboxGroup.Item key={rarity} value={rarity}>{rarity}</CheckboxGroup.Item>
-                                        ))
-                                    ): (
-                                        <p>Aucune Rareté trouvé !</p>
-                                    )}
-                                </CheckboxGroup.Root>
-                            </ScrollArea>
-                        </AccordionContent>
-                    </Accordion.Item>
-
-                    <Accordion.Item value="Set" className="AccordionItem">
-                        <AccordionTrigger className="AccordionTrigger">Set <ChevronDownIcon className="AccordionChevron" aria-hidden /> </AccordionTrigger>
-                        <AccordionContent className="AccordionContent">
-                            <TextField.Root radius="full" placeholder="rechercher un set ..." size="2" onChange={handleSearchSets}>
-                                <TextField.Slot>
-                                    <MagnifyingGlassIcon height="16" width="16" />
-                                </TextField.Slot>
-                            </TextField.Root>
-                            <ScrollArea className="raritiesScroll" style={{height: '250px'}}>
-                                <CheckboxGroup.Root name="sets" value={selectedSet} onValueChange={(values)=> onChecked("Set", values)}>
-                                    {sets && sets.length > 0 ? (
-                                        sets.map(set => (
-                                        <CheckboxGroup.Item key={set.id} value={set.id}>{set.name}</CheckboxGroup.Item>
-                                        ))
-                                    ) : (
-                                        <p>Aucun Sets trouvée !</p>
-                                    )}
-                                </CheckboxGroup.Root>
-                            </ScrollArea>
-                        </AccordionContent>
-                    </Accordion.Item>
+                    <AccordionTab name="Set" onchecked={onChecked} filter={sets} selectedFilter={selectedSet} handleSearch={handleSearchSets} searchBar={true}/>
 
                 </Accordion.Root>
             </Flex>
             <Grid className="cardsUser" columns="repeat(auto-fit, minmax(261px, 1fr))" style={{maxWidth: '1500px', height: "fit-content"}}>
                 {userCards && userCards.length > 0 ? (
                     userCards.map(card => (
-                    <ImageCard key={card.name} card={card}/>
+                    <ImageCard key={card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.id}`)}}/>
                     ))
                 ) : (
                     <Flex justify="center" py="9">Aucune Carte Trouvé !</Flex>
@@ -289,6 +234,34 @@ function Collection() {
             </Grid>
         </Grid>
     )
+}
+
+function AccordionTab ({name, onchecked, filter, selectedFilter, handleSearch, searchBar}) {
+    return <Accordion.Item value={name} className="AccordionItem">
+        <AccordionTrigger className="AccordionTrigger">{name}<ChevronDownIcon className="AccordionChevron" aria-hidden /> </AccordionTrigger>
+        <AccordionContent className="AccordionContent">
+            {searchBar &&
+                <TextField.Root radius="full" placeholder={`rechercher une ${name} ...`} size="2" onChange={handleSearch}>
+                    <TextField.Slot>
+                        <MagnifyingGlassIcon height="16" width="16" />
+                    </TextField.Slot>
+                </TextField.Root>
+            }
+
+            <ScrollArea className={`${name}Scroll`} style={{height: '260px'}}>
+                <CheckboxGroup.Root name={name} value={selectedFilter} onValueChange={(values) => onchecked(name, values)}>
+
+                    {filter && filter.length > 0 ? (
+                        filter.map((fil) => (
+                            <CheckboxGroup.Item key={fil} value={fil}>{fil}</CheckboxGroup.Item>
+                        ))
+                    ): (
+                        <p>Aucune {name} trouvé !</p>
+                    )}
+                </CheckboxGroup.Root>
+            </ScrollArea>
+        </AccordionContent>
+    </Accordion.Item>
 }
 
 export default Collection;
