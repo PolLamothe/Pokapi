@@ -24,7 +24,7 @@ const cardDAO = {
         if (card instanceof Card) {
             const c = await cardDAO.findCardByID(card.id)
             if ( c == null) {
-                card.storageDate = Date.now()/1000
+                card.storageDate = parseInt(Date.now()/1000)
                 await cardModel.insertOne(card)
                 return await cardDAO.findCardByID(card.id)
             } else {
@@ -38,7 +38,7 @@ const cardDAO = {
         for (const card of cards) {
             if (card instanceof Card ) {
                 if (await cardModel.findOne({id: card.id}) == null) {
-                    card.storageDate = Date.now()/1000
+                    card.storageDate = parseInt(Date.now()/1000)
                     await cardModel.insertOne(card)
                 }
             }
@@ -49,7 +49,7 @@ const cardDAO = {
     },
     updateCard: async (id, card) => {
         if (card instanceof Card) {
-            card.storageDate = Date.now()/1000
+            card.storageDate = parseInt(Date.now()/1000)
             await cardModel.updateOne({id: id}, {$set: card})
             return await cardDAO.findCardByID(id)
         }

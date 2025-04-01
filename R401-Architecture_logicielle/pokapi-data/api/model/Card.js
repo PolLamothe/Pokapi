@@ -5,6 +5,7 @@ import {Resistance} from "./Resistance.js";
 import {Weakness} from "./Weakness.js";
 import {Attack} from "./Attack.js";
 import {Ability} from "./Ability.js";
+import { deepEqual } from "node:assert"
 
 export class CardImage extends Model {
     static schema = {
@@ -44,6 +45,21 @@ export class Card extends Model {
         images: {type: "object", objectName: CardImage, required: true},
         cardmarket: {type: "object", objectName: CardMarket, required: false},
         storageDate : S.NumberOptional
+    }
+
+    //fonction pour comparer deux instances sans prendre en compte les attributs cardmarket et storageDate
+    compare(otherCard){
+        Object.keys(this.constructor.schema).forEach(attribute=>{
+            if(!["cardmarket","storageDate","set"].includes(attribute)){
+                try{
+                    deepEqual(this[attribute],otherCard[attribute])
+                }catch(e){
+                    return false
+
+                }
+            }
+        })
+        return true
     }
 
     constructor(data) {
