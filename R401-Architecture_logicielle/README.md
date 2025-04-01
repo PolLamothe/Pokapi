@@ -33,9 +33,9 @@ Comment créer une plateforme permettant aux utilisateurs de gérer, optimiser e
 ### Étape 3 : 
 
 - [x] Contrôlleur user avec tests
-- [ ] Contrôlleur data avec tests 🟢
+- [ ] Contrôlleur data avec tests 🟢 (*Pol*)
 	- [ ] cardController
-	- [ ] setController
+	- [x] setController
 
 ### Étape 4 : 
 
