@@ -54,6 +54,21 @@ const cardDAO = {
             return await cardDAO.findCardByID(id)
         }
         return null
+    },
+    updateCards : async(cards) => {
+        cards = cards.map(card=>{
+            card.storageDate = parseInt(Date.now()/1000)
+            return card
+        })
+        const bulkOps = cards.map(card => ({
+            updateOne: {
+                filter: { id: card.id },
+                update: { $set: card },
+                upsert: true // Insère si la carte n'existe pas encore
+            }
+        }))
+        await cardModel.bulkWrite(bulkOps)
+        return await cardDAO.findCards(cards.map(card=>card.id))
     }
 }
 
