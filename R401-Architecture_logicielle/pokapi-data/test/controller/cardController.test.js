@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import assert, { deepEqual } from "node:assert"
+import assert from "node:assert"
 import { describe, it, before, beforeEach, after } from "node:test"
 import cardController from '../../api/controller/cardController.js';
 import testCards from '../ressources/cards.json' with {type: 'json'}
@@ -58,7 +58,7 @@ describe('Controller - CardController', () => {
         assert(new Card(firstCard).compare(result))
         
         await new Promise(resolve => setTimeout(resolve, 1000))
-        const setCardsRetrieved = await cardController.findSetCards("mcd19")
+        const setCardsRetrieved = await cardController.findSetCards(firstCard.set.id)
         assert.equal(setCardsRetrieved.length,firstCard.set.total)
         setCardsRetrieved.forEach((card,index)=>{
             assert((parseInt(Date.now()/1000) - card.storageDate) < 1)
@@ -69,5 +69,17 @@ describe('Controller - CardController', () => {
         const secondCard = new Card(setCards.data[1])
         const result2 = await cardController.findCard(secondCard.id)
         assert.equal(result2.storageDate,setCardsRetrieved[1].storageDate)
+    })
+
+    it("setPresentation",async()=>{
+        const set = (new Card(setCards.data[0])).set
+        const result = await cardController.setPresentation(set.id)
+
+        assert(result.set.compare(set))
+        assert.equal(result.images.length,3)
+        result.images.forEach(image=>{
+            assert(image.small.includes(set.id))
+            assert(image.large.includes(set.id))
+        })
     })
 })
