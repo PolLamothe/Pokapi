@@ -117,7 +117,10 @@ const cardController = {
             3. Retourner toutes les évolutions possibles [END]
          */
         const card = await cardController.findCard(id)
-        return await cardController.findCards(card.evolvesTo)
+        if(card.evolvesTo == null){
+            return null
+        }
+        return await cardController.findByName(card.set.id,card.evolvesTo[0])
     },
     findByName : async(setId,name)=>{
         const localCard = await cardDAO.findCardByName(setId,name)

@@ -4,6 +4,7 @@ import { describe, it, before, beforeEach, after } from "node:test"
 import cardController from '../../api/controller/cardController.js';
 import testCards from '../ressources/cards.json' with {type: 'json'}
 import setCards from "../ressources/setCards.json" with {type : "json"}
+import evolve from "../ressources/evolve.json" with {type : "json"}
 import cardDAO from '../../api/dao/cardDAO.js';
 import {Card} from "../../api/model/Card.js";
 
@@ -54,14 +55,14 @@ describe('Controller - CardController', () => {
     it("findSetCard",async()=>{
         const firstCard = new Card(setCards.data[0])
         const result = await cardController.findCard(firstCard.id)
-        assert((parseInt(Date.now()/1000) - result.storageDate) < 1)//vérification que les carte on étées mise en cache très récemment
+        assert(((Date.now()/1000) - result.storageDate) < 1)//vérification que les carte on étées mise en cache très récemment
         assert(new Card(firstCard).compare(result))
         
         await new Promise(resolve => setTimeout(resolve, 1000))
         const setCardsRetrieved = await cardController.findSetCards(firstCard.set.id)
         assert.equal(setCardsRetrieved.length,firstCard.set.total)
         setCardsRetrieved.forEach((card,index)=>{
-            assert((parseInt(Date.now()/1000) - card.storageDate) < 1)
+            assert(((Date.now()/1000) - card.storageDate) < 1)
             assert(card.compare(new Card(setCards.data[index])))
         })
 
@@ -87,10 +88,32 @@ describe('Controller - CardController', () => {
         const base = new Card(setCards.data[0])
         const result = await cardController.findByName(base.set.id,base.name)
         assert(base.compare(result))
-        assert((parseInt(Date.now()/1000)-result.storageDate) < 1)
-        await new Promise(resolve => setTimeout(resolve, 1500))
+        assert(((Date.now()/1000)-result.storageDate) < 1)
+        await new Promise(resolve => setTimeout(resolve, 1000))
         const result2 = await cardController.findByName(base.set.id,base.name)
-        assert((parseInt(Date.now()/1000)-result2.storageDate) > 1)
+        assert(((Date.now()/1000)-result2.storageDate) > 1)
     })
 
+    it("Find evolution existing",async ()=>{
+        const base = new Card(evolve.data[0])
+        const result = await cardController.findEvolution(base.id)
+        const resultByName = await cardController.findByName(base.set.id,base.evolvesTo[0])
+        assert(result.compare(resultByName))
+        assert(((Date.now()/1000)-result.storageDate) < 1)
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        const result2 = await cardController.findEvolution(base.id)
+        assert(((Date.now()/1000)-result2.storageDate) > 1)
+    })
+
+    it("Find evolution not existing",async ()=>{
+        const base = new Card(setCards.data[1])
+        const result = await cardController.findEvolution(base.id)
+        assert(result == null)
+    })
+
+    it("Find evolution not in set",async ()=>{
+        const base = new Card(setCards.data[0])
+        const result = await cardController.findEvolution(base.id)
+        assert(result == null)
+    })
 })
