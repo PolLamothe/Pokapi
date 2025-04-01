@@ -82,4 +82,15 @@ describe('Controller - CardController', () => {
             assert(image.large.includes(set.id))
         })
     })
+
+    it("Find card by name",async()=>{
+        const base = new Card(setCards.data[0])
+        const result = await cardController.findByName(base.set.id,base.name)
+        assert(base.compare(result))
+        assert((parseInt(Date.now()/1000)-result.storageDate) < 1)
+        await new Promise(resolve => setTimeout(resolve, 1500))
+        const result2 = await cardController.findByName(base.set.id,base.name)
+        assert((parseInt(Date.now()/1000)-result2.storageDate) > 1)
+    })
+
 })

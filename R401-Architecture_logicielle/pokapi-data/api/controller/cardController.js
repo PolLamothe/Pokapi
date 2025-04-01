@@ -96,11 +96,6 @@ const cardController = {
         }
     },
     setPresentation: async (id) => {
-        // FONCTIONNEMENT :
-        /*
-            1. Appeler findSetCards du controller
-            2. Récupérer 1 setInfo et 3 images de cartes [END]
-         */
         const set = await setController.find(id)
         let setCards = await cardController.findSetCards(id)
         const cards = []
@@ -121,6 +116,21 @@ const cardController = {
             2. Appeler findSetCards du controller
             3. Retourner toutes les évolutions possibles [END]
          */
+        const card = await cardController.findCard(id)
+        return await cardController.findCards(card.evolvesTo)
+    },
+    findByName : async(setId,name)=>{
+        const localCard = await cardDAO.findCardByName(setId,name)
+        if(localCard != null){
+            if((parseInt(Date.now()/1000) - localCard.storageDate) < CONFIG.CACHEEXPIRATION){
+                return localCard
+            }else{//si le cache a expiré
+                var newCard = await cardFetchDAO.findCardByName(setId,name)
+                return cardDAO.updateCard(newCard.id,newCard)
+            }
+        }else{
+            return await cardDAO.addOneCard(await cardFetchDAO.findCardByName(setId,name))
+        }
     },
     openBooster: async (setId) => {
         // FONCTIONNEMENT :
