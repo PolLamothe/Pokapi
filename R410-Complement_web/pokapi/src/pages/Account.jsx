@@ -5,29 +5,15 @@ import config from "../config";
 import {useNavigate} from "react-router";
 import Cont from "./auth/Container.jsx";
 import { CircleUserRound } from 'lucide-react';
+import pokapiDAO from "../dao/pokapiDAO.js";
 
 function Account() {
-    const navigation = useNavigate()
-
     const [accountInfo,setAccountInfo] = useState({})
 
     useEffect(()=>{
-        async function getAccountInfo(){
-            const response = await fetch(config.url+"/info",{
-                method:"GET",
-                headers : {
-                    "Authentification-Token": localStorage.getItem("token")
-                }
-            })
-            if(response.status === 200){
-                let data = await response.json()
-                data["password"] = ""
-                setAccountInfo(data)
-            }else{
-                navigation("/")
-            }
-        }
-        getAccountInfo()
+        pokapiDAO.fetchInfo().then(data => {
+            setAccountInfo(data)
+        })
     },[])
 
     function handleInput(e){

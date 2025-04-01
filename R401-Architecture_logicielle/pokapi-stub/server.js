@@ -18,7 +18,7 @@ app.use((req,res,next)=>{
 })
 
 const corsOptions = {
-    origin: 'http://172.21.45.32:8080',
+    origin: 'http://localhost:5173',
     credentials: true,
 };
 

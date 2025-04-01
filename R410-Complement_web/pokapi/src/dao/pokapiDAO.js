@@ -49,6 +49,19 @@ const pokapiDAO = {
         });
         return await card.json();
     },
+    fetchInfo: async () => {
+        const response = await fetch(config.url + "/info",{
+            method:"GET",
+            headers : {
+                "Authentification-Token": localStorage.getItem("token")
+            }
+        })
+        if (response.status === 200) {
+            return await response.json()
+        } else {
+            console.log(response.status)
+        }
+    }
 }
 
 export default pokapiDAO
