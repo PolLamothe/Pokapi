@@ -3,6 +3,8 @@ import {TextField,Button,Flex} from "@radix-ui/themes"
 import {Pen} from "lucide-react"
 import config from "../config";
 import {useNavigate} from "react-router";
+import Cont from "./auth/Container.jsx";
+import { CircleUserRound } from 'lucide-react';
 
 function Account() {
     const navigation = useNavigate()
@@ -54,18 +56,22 @@ function Account() {
                     <TextField.Root value={accountInfo[element]} onChange={handleInput} name="pseudo" placeholder={element}></TextField.Root>
                     <Button style={buttonStyle} onClick={updatePseudo}>
                         <Pen/>
-                        Modifier
+                        Modifier le profil
+                    </Button>
+                    <Button style={buttonStyle} onClick={updatePseudo}>
+                        Se déconnecter
                     </Button>
                 </Flex>
     })
 
     return (
-        <>
+        <Cont>
+            <CircleUserRound size={102} color="#813d9c" strokeWidth={1.75} />
             <h3>Paramètres du compte</h3>
             <Flex direction="column" gap="2vw">
                 {fields}
             </Flex>
-        </>
+        </Cont>
     )
 }
 

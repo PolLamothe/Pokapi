@@ -1,4 +1,4 @@
 const config = {
-    url : "http://localhost:8080/api/v0"
+    url : "http://172.21.45.32:80/api/v0"
 }
 export default config
