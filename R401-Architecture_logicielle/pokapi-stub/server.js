@@ -52,7 +52,7 @@ const server = app.listen(CONFIG.PORT, () =>
 )
 
 //Pour les interrucptions utilisateur
-for (let signal of ["SIGTERM", "SIGINT"])
+for (let signal of ["SIGTERM", "SIGINT", "SIGUSR2"])
     process.on(signal,  () => {
         console.info(`${signal} signal received.`)
         console.log("Closing http server.");
