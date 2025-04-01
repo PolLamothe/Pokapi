@@ -6,6 +6,7 @@ import * as Accordion from '@radix-ui/react-accordion';
 import {AccordionContent, AccordionTrigger} from "@radix-ui/react-accordion";
 import {ChevronDownIcon, Scroll} from "lucide-react";
 import {useNavigate} from "react-router";
+import pokapiDAO from "../dao/pokapiDAO.js";
 
 
 function ImageCard({card, navigate}) {
@@ -32,50 +33,28 @@ function Collection() {
     const navigateToCardPage = useNavigate();
 
 
-    const fetchCardsUser = async () => {
-        let cards = await fetch(config.url + "/my-cards", {
-            method: "GET",
-            headers : {
-                "Authentification-Token": localStorage.getItem("token")
-            }
-        })
-        let dataUserCards = await cards.json()
-        setUserCardsAll(dataUserCards)
-        setUserCards(dataUserCards)
-    }
 
-    const fetchAllTypes = async () => {
-        let allTypes = await fetch(config.url + "/types", {
-            method: "GET"
+    useEffect(() => {
+        pokapiDAO.fetchMyCards().then(usrCards => {
+            setUserCardsAll(usrCards)
+            setUserCards(usrCards)
         })
-        let dataTypes = await allTypes.json()
-        setTypes(dataTypes.data)
-    }
 
-    const fetchRarities = async () => {
-        let allRarities = await fetch(config.url + "/rarities", {
-            method: "GET"
+        pokapiDAO.fetchTypes().then(AllTypes => {
+            setTypes(AllTypes.data)
         })
-        let dataRarities = await allRarities.json()
-        setRarities(dataRarities.data)
-        setRaritiesAll(dataRarities.data)
-    }
 
-    const fetchSets = async () => {
-        let allSets = await fetch(config.url + "/sets", {
-            method: "GET"
+        pokapiDAO.fetchRarities().then(AllRarities => {
+            setRarities(AllRarities.data)
+            setRaritiesAll(AllRarities.data)
         })
-        let dataSets = await allSets.json()
-        dataSets = dataSets.data.map(s => s.name)
-        setSets(dataSets)
-        setSetsAll(dataSets)
-    }
 
-    useEffect(()=>{
-        fetchCardsUser()
-        fetchAllTypes()
-        fetchRarities()
-        fetchSets()
+        pokapiDAO.fetchSets().then(AllSets => {
+            let dataSets = AllSets.data.map(s => s.name)
+            setSets(dataSets)
+            setSetsAll(dataSets)
+        })
+
     },[])
 
 

@@ -1,16 +1,44 @@
+import config from "../config.js";
 
 const pokapiDAO = {
+    types: null,
+    rarities: null,
+    sets: null,
     fetchMyCards: async () => {
-        //TODO
+        let cards = await fetch(config.url + "/my-cards", {
+            method: "GET",
+            headers : {
+                "Authentification-Token": localStorage.getItem("token")
+            }
+        })
+        return await cards.json()
     },
     fetchSets: async () => {
-        //TODO
+        if (pokapiDAO.sets === null) {
+            let allSets = await fetch(config.url + "/sets", {
+                method: "GET"
+            })
+            pokapiDAO.sets = await allSets.json()
+        }
+        return pokapiDAO.sets
     },
     fetchRarities: async () => {
-        //TODO
+        if (pokapiDAO.rarities === null) {
+            let allRarities = await fetch(config.url + "/rarities", {
+                method: "GET"
+            })
+            pokapiDAO.rarities = await allRarities.json()
+        }
+        return pokapiDAO.rarities
     },
     fetchTypes: async () => {
-        //TODO
+        if (pokapiDAO.types === null) {
+            let allTypes = await fetch(config.url + "/types", {
+                method: "GET"
+            })
+            pokapiDAO.types = await allTypes.json()
+        }
+        return pokapiDAO.types
     },
 }
 
