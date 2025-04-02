@@ -13,6 +13,7 @@ import Card from "./pages/Card.jsx";
 import ProtectedRoute from "./pages/auth/ProtectedRoute.jsx";
 import "@radix-ui/themes/styles.css";
 import {Theme} from "@radix-ui/themes";
+import ChatPokemon from "./pages/ChatPokemon.jsx";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')).render(
                           <Route path="/account" element={<Account />} />
                           <Route path="/collection" element={<Collection />} />
                           <Route path="/card/:cardId" element={<Card />} />
+                          <Route path="/chatpokemon/:cardId" element={<ChatPokemon />} />
                       </Route>
                   </Route>
                   <Route path="/auth" element={<Auth />}>
