@@ -36,10 +36,12 @@ On modifie le conatiner FILE
 nano ContainerFile
 ```
 ```bash
-FROM php:apache
-COPY script.php > /usr/src/application
-WORKDIR /usr/src/application
-CMD [ "php", "./script.php" ]
+FROM php:8.3-apache
+
+COPY conf/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY MVC ./
+
+RUN a2enmod rewrite
 ```
 Build 
 ```bash
