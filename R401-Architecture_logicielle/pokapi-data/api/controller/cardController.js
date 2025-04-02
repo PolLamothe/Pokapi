@@ -157,6 +157,20 @@ const cardController = {
             2. Additionner les prix
             3. Retourner le prix total [END]
          */
+
+
+        let cards = []
+        for (const id of ids) {
+            let res = await cardController.findCard(id)
+            cards.push(res)
+        }
+        let prix_total = 0
+
+        cards.forEach((card) => {
+            prix_total+= card.cardmarket.prices.trendPrice
+        })
+
+        return prix_total
     }
 }
 

@@ -7,6 +7,7 @@ import setCards from "../ressources/setCards.json" with {type : "json"}
 import evolve from "../ressources/evolve.json" with {type : "json"}
 import cardDAO from '../../api/dao/cardDAO.js';
 import {Card} from "../../api/model/Card.js";
+import cardFetchDAO from "../../api/dao/cardFetchDAO.js";
 
 let mongod=null
 let connexion = null
@@ -123,5 +124,26 @@ describe('Controller - CardController', () => {
         result.forEach(card=>{
             assert.equal(card.set.id,"mcd19")
         })
+    })
+
+    it("Deck Price", async () =>{
+        let testCard = []
+        let cards = []
+
+
+
+        for (const c of testCards["data"]) {
+            testCard.push(await cardFetchDAO.findCardById(c.id))
+            cards.push(c.id)
+        }
+
+        let totalPrice = 0
+        testCard.forEach((card)=>{
+            totalPrice += card.cardmarket.prices.trendPrice
+        })
+
+
+        const result = await cardController.deckPrice(cards)
+        assert.equal(result, totalPrice)
     })
 })
