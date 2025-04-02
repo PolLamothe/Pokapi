@@ -9,10 +9,6 @@ import pokapiDAO from "../dao/pokapiDAO.js";
 
 
 function ImageCard({card, navigate}) {
-    if (!card.card || !card.card.images || !card.card.images.small) {
-        console.error("Missing images for card:", card);
-        return null
-    }
     return (
         <Flex className="hoverEffect" justify="center">
             <figure>
