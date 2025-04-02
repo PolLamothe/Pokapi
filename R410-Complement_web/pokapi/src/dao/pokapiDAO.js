@@ -61,6 +61,16 @@ const pokapiDAO = {
         } else {
             console.log(response.status)
         }
+    },
+    fetchSetPresentation : async(setId)=>{
+        const result = await fetch(config.url+"/set/presentation/"+setId,{
+            method : "get"
+        })
+        if(result.status == 200){
+            return await result.json()
+        }else{
+            console.log(result.status)
+        }
     }
 }
 
