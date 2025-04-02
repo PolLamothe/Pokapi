@@ -27,11 +27,11 @@ podman run --tls-verify=false --privileged -d -p 8080:80 --name appli a32aa62d4c
 ```
 
 CONTAINER FILE:
-Creation du COntainer FILE
+Creation du Container File
 ```bash
 echo FROM > reseau/ContainerFile
 ```
-On modifie le conatiner FILE
+On modifie le container File
 ```bash
 nano ContainerFile
 ```
@@ -43,7 +43,23 @@ COPY MVC ./
 
 RUN a2enmod rewrite
 ```
+Ecriture d'une confiuration apache
+```bash
+<VirtualHost *:80>
+
+	DocumentRoot /var/www/html/app
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    <Directory /var/www/html/app/>
+	    Options -Indexes +FollowSymLinks
+	    AllowOverride All
+	    Require all granted
+    </Directory>
+</VirtualHost>
+```
 Build 
 ```bash
-podman build -f ContainerFile
+podman build -f Containerfile
 ```
