@@ -103,16 +103,18 @@ function Collection() {
 
     const onChecked = (nom, e) => {
         let filterCards = [...userCardsAll]
+        console.log(filterCards)
+
         if (nom === "Type") {
             if (selectedRarities.length > 0 || selectedSet.length > 0) {
                 if (selectedRarities.length > 0) {
                     filterCards = filterCards.filter(card =>
-                        selectedRarities.some(rarity => card.rarity === rarity)
+                        selectedRarities.some(rarity => card.card.rarity === rarity)
                     )
                 }
                 if (selectedSet.length > 0) {
                     filterCards = filterCards.filter(card =>
-                        selectedSet.some(set => card.set.name === set)
+                        selectedSet.some(set => card.card.set.name === set)
                     )
                 }
             }
@@ -125,7 +127,7 @@ function Collection() {
             } else {
                 setSelectedType(e)
                 filterCards = filterCards.filter(card =>
-                    e.some(type => card.types.includes(type))
+                    e.some(type => card.card.types.includes(type))
                 )
             }
         }
@@ -133,12 +135,12 @@ function Collection() {
             if (selectedType.length > 0 || selectedSet.length > 0) {
                 if (selectedType.length > 0) {
                     filterCards = filterCards.filter(card =>
-                        selectedType.some(type => card.types.includes(type))
+                        selectedType.some(type => card.card.types.includes(type))
                     )
                 }
                 if (selectedSet.length > 0) {
                     filterCards = filterCards.filter(card =>
-                        selectedSet.some(set => card.set.name === set)
+                        selectedSet.some(set => card.card.set.name === set)
                     )
                 }
             }
@@ -150,7 +152,7 @@ function Collection() {
             } else {
                 setSelectedRarities(e)
                 filterCards = filterCards.filter(card =>
-                    e.some(rarity => card.rarity === rarity)
+                        e.some(rarity => card.card.rarity === rarity)
                 )
             }
         }
@@ -158,12 +160,12 @@ function Collection() {
             if (selectedRarities.length > 0 || selectedType.length > 0) {
                 if (selectedRarities.length > 0) {
                     filterCards = filterCards.filter(card =>
-                        selectedRarities.some(rarity => card.rarity === rarity)
+                        selectedRarities.some(rarity => card.card.rarity === rarity)
                     )
                 }
                 if (selectedType.length > 0) {
                     filterCards = filterCards.filter(card =>
-                        selectedType.some(type => card.types.includes(type))
+                        selectedType.some(type => card.card.types.includes(type))
                     )
                 }
             }
@@ -175,7 +177,7 @@ function Collection() {
             } else {
                 setSelectedSet(e)
                 filterCards = filterCards.filter(card =>
-                    e.some(set => card.set.name === set)
+                    e.some(set => card.card.set.name === set)
                 )
             }
         }
