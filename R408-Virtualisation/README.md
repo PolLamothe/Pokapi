@@ -43,7 +43,7 @@ COPY MVC ./
 
 RUN a2enmod rewrite
 ```
-Ecriture d'une confiuration apache
+Ecriture d'une confiuration apache, on a changer le dossier racine, on empeche le listing des dossier, on autorise les fichier htaccess a etre utiliser, et on ignore toutes les restrictions d'acces avec "Require all granted"
 ```bash
 <VirtualHost *:80>
 
