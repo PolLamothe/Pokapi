@@ -14,6 +14,22 @@ Creation avec variable environement
 ```bash
 podman run --tls-verify=false --privileged -d -e MARIADB_ROOT_PASSWORD=E239982A --name conteneur-bd -p 3306:3306 a914eff5d2eb 
 ```
+exec de la bd
+```bash
+podman exec -it conteneur-bd bash
+```
+installation d'une bd maria db sur le container
+```bash
+apt-get update
+apt-get install mariadb-client
+```
+
+on demarre la bd
+```bash
+mariadb -u root -p
+```
+on nous demande un mdp qui est notre variable environement
+
 
 CONTAINER FILE:
 Creation du Container File
