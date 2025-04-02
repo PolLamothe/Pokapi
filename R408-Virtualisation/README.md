@@ -5,30 +5,34 @@
 
 
 MARIADB:
-recherche image maria db
+
+
+On crée un .sql pour qu'il crée automatiquement notre bd au moment de l'execution de notre container file
 ```bash
-podman search --tls-verify=false dockerhub.nexus.dep-info.iut-nantes.univ-nantes.prive/mariadb
-podman pull --tls-verify=false dockerhub.nexus.dep-info.iut-nantes.univ-nantes.prive/mariadb
-```
-Creation avec variable environement
-```bash
-podman run --tls-verify=false --privileged -d -e MARIADB_ROOT_PASSWORD=E239982A --name conteneur-bd -p 3306:3306 a914eff5d2eb 
-```
-exec de la bd
-```bash
-podman exec -it conteneur-bd bash
-```
-installation d'une bd maria db sur le container
-```bash
-apt-get update
-apt-get install mariadb-client
+echo CREATE DATABASE apachebd; > init.sql
 ```
 
-on demarre la bd
+Creation du container File en question
 ```bash
-mariadb -u root -p
+echo FROM > ContainerfileBD
 ```
-on nous demande un mdp qui est notre variable environement
+ce qui est compris dans le Container file
+```bash
+FROM mariadb:latest
+
+ENV MARIADB_ROOT_PASSWORD=E239982A
+
+COPY init.sql /docker-entrypoint-initdb.d/
+EXPOSE 3306
+```
+```bash
+podman build -f ContainerfileBD
+```
+
+8c2d44eafd66 est le numero d'image de notre Image
+```bash
+podman run --tls-verify=false -d --name conteneur-bd 8c2d44eafd66 
+```
 
 
 CONTAINER FILE:
