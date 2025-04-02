@@ -2,17 +2,17 @@
     //HOME est app
     define("HOME",__DIR__.DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR);
     
-    const CFG = array(
+    define("CFG", array(
         "db" => array(
-                "host" => HOME."data".DIRECTORY_SEPARATOR,
+                "host" => "localhost:3306",
                 "port" => null,
-                "database" => "madb.db",
-                "login" => "",
-                "password" => "",
+                "database" => "apachebd",
+                "login" => getenv("DB_LOGIN"),
+                "password" => getenv("DB_PASSWORD"),
                 "options" => array(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION),
                 "exec" => "PRAGMA foreign_keys = ON;"
             ),
           "siteURL" => "http://localhost:8080/"
-        );
+          ));
 
     ?>

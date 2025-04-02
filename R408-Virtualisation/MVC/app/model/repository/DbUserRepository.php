@@ -7,7 +7,8 @@ class DbUserRepository implements UserRepositoryInterface
     private $connexion;
     public function __construct()
     {
-        $dsn = "sqlite:".CFG["db"]["host"].CFG["db"]["database"];
+        //$dsn = "sqlite:".CFG["db"]["host"].CFG["db"]["database"];
+        $dsn = "mysql:host=".CFG["db"]["host"].";dbname=".CFG["db"]["database"];
         $this->connexion = \system\SPDO::getInstance($dsn,CFG["db"]["login"],CFG["db"]["password"],CFG["db"]["options"],CFG["db"]["exec"])
             ->getConnexion();
     }
