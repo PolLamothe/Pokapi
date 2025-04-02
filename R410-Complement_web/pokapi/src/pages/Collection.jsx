@@ -68,7 +68,7 @@ function Collection() {
         if (recherche.trim() === "") {
             setUserCards(userCardsAll)
         } else {
-            res = uc.filter((user) => user.name.toLowerCase().includes(recherche))
+            res = uc.filter((user) =>  user.card.name.toLowerCase().includes(recherche))
             setUserCards(res)
         }
     }
