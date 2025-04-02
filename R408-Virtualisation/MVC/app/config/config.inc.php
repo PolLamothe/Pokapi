@@ -12,7 +12,7 @@
                 "options" => array(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION),
                 "exec" => "PRAGMA foreign_keys = ON;"
             ),
-          "siteURL" => "http://localhost/~jub/mvc/app/"
+          "siteURL" => "http://localhost:8080/"
         );
 
     ?>
