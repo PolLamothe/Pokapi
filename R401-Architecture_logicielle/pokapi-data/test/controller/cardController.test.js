@@ -116,4 +116,12 @@ describe('Controller - CardController', () => {
         const result = await cardController.findEvolution(base.id)
         assert(result == null)
     })
+
+    it("Open booster",async()=>{
+        const result = await cardController.openBooster("mcd19")
+        assert.equal(result.length,5)
+        result.forEach(card=>{
+            assert.equal(card.set.id,"mcd19")
+        })
+    })
 })

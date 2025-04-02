@@ -100,7 +100,7 @@ const cardController = {
         let setCards = await cardController.findSetCards(id)
         const cards = []
         while(cards.length < 3){
-            const randomIndex = parseInt(Math.random() * setCards.length)
+            const randomIndex = parseInt(Math.random() * (setCards.length-1))
             cards.push(setCards[randomIndex])
             setCards.splice(randomIndex,1)
         }
@@ -141,6 +141,14 @@ const cardController = {
             1. Appeler findSetCards du controller
             2. Retourner 5 cartes au hasard [END]
          */
+        let allCards = await cardController.findSetCards(setId)
+        let result = []
+        for(let i = 0;i<5;i++){
+            const index = parseInt(Math.random()*(allCards.length-1))
+            result.push(allCards[index])
+            allCards.splice(index,1)
+        }
+        return result
     },
     deckPrice: async (ids) => {
         // FONCTIONNEMENT :
