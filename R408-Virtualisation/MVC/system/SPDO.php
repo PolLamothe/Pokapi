@@ -13,7 +13,9 @@ class SPDO
                                   ?string $exec = null)
     {
         $this->connexion = new \PDO($dsn,$username , $password, $options);
-        $this->connexion->exec($exec);
+        if (!is_null($exec)) {
+            $this->connexion->exec($exec);
+        }
     }
 
     public static function getInstance(string $dsn,

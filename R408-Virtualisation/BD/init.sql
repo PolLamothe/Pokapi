@@ -17,5 +17,3 @@ CREATE TABLE IF NOT EXISTS user (
 INSERT INTO user (pseudo,password,status) VALUES ('Jojo','$2y$10$JMuuaDMCavASPKf9KBcD1eaMHJ0zkeD8eYs7HjecoD8QeUVRhKQq6','Visitor');
 INSERT INTO user (pseudo,password,status) VALUES ('Raoul','$2y$10$JMuuaDMCavASPKf9KBcD1eaMHJ0zkeD8eYs7HjecoD8QeUVRhKQq6','Customer');
 INSERT INTO user (pseudo,password,status) VALUES ('Romeo','$2y$10$JMuuaDMCavASPKf9KBcD1eaMHJ0zkeD8eYs7HjecoD8QeUVRhKQq6','Administrator');
-
-

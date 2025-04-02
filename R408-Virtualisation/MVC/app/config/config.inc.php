@@ -4,13 +4,13 @@
     
     define("CFG", array(
         "db" => array(
-                "host" => "localhost:3306",
-                "port" => null,
+                "host" => "mariadb_container",
+                "port" => "3306",
                 "database" => "apachebd",
                 "login" => getenv("DB_LOGIN"),
                 "password" => getenv("DB_PASSWORD"),
                 "options" => array(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION),
-                "exec" => "PRAGMA foreign_keys = ON;"
+                "exec" => null
             ),
           "siteURL" => "http://localhost:8080/"
           ));
