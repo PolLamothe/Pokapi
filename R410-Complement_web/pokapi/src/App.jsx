@@ -11,10 +11,7 @@ function App() {
     return (
     <>
         <Header></Header>
-        <Box p="5">
-            {/* COMPOSANT QUI CHARGE LA PAGE COURANTE (Home, etc) */}
-            <Outlet/>
-        </Box>
+        <Outlet/>
         { !location.pathname.startsWith("/chatpokemon/") && <Footer></Footer>}
     </>
   )
