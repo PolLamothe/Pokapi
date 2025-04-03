@@ -12,17 +12,11 @@ function App() {
     <>
         <Header></Header>
 
-        <Box px="5" py="9">
-            {/* TEMPORAIRE EXEMPLE DE NAVIGATION */}
-            <Flex px="9" direction="column" gap="5">
-                <Flex gap="3">
-                    <Button onClick={() => navigate("/card/xy1-1")}><StickyNote size="16"/> Card xy1-1</Button>
-                    <Button onClick={() => navigate("/auth")} variant="surface"><KeyRound size="16" /> Authentification</Button>
-                </Flex>
-            </Flex>
+        <Box p="5">
 
             {/* COMPOSANT QUI CHARGE LA PAGE COURANTE (Home, etc) */}
             <Outlet/>
+
         </Box>
 
         <Footer></Footer>
