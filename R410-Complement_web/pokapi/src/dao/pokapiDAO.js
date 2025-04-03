@@ -66,11 +66,26 @@ const pokapiDAO = {
         const result = await fetch(config.url+"/set/presentation/"+setId,{
             method : "get"
         })
-        if(result.status == 200){
+        if(result.status === 200){
             return await result.json()
         }else{
             console.log(result.status)
         }
+    },
+    fetchAuthentication: async ()=> {
+        if (localStorage.getItem("token") !== null) {
+            const result = await fetch(config.url+"/login",{
+                method : "post",
+                headers : {
+                    "Authentification-Token": localStorage.getItem("token")
+                }
+            })
+            if (result.status === 200) {
+                localStorage.setItem("token", (await result.json()).token)
+                return true
+            }
+        }
+        return false
     }
 }
 

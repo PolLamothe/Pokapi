@@ -1,11 +1,22 @@
-import {Navigate, Outlet} from "react-router";
+import {Navigate, Outlet, useNavigate} from "react-router";
+import pokapiDAO from "../../dao/pokapiDAO.js";
+import {useEffect} from "react";
 
 function ProtectedRoute({ redirectPath = '/auth/login' }) {
-    const isAuthenticated = true; // TODO: checkIfUserIsAuthenticated()
+    const navigate = useNavigate();
 
-    if (!isAuthenticated) {
-        return <Navigate to={redirectPath} replace />;
-    }
+    useEffect(() => {
+        pokapiDAO.fetchAuthentication().then(isAuthenticated => {
+            if (!isAuthenticated) {
+                return navigate(redirectPath);
+            } else {
+                console.log("AUTH >> User authenticated");
+            }
+        }).catch(e => {
+            console.log(`AUTH >> Authentication failed ${e.message}`);
+            return navigate(redirectPath);
+        })
+    });
 
     return <Outlet />;
 }

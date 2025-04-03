@@ -3,15 +3,7 @@ import { useState } from "react";
 import config from "../config"
 
 function AuthForm({fields,destination,callback}) {
-    const fieldStyle = {
-        width : "90%"
-    };
 
-    const buttonStyle = {
-        width : "40%",
-        cursor : "pointer",
-        marginTop: "70px"
-    }
 
     const [fieldsState,setFieldsState] = useState({})
 
@@ -31,7 +23,7 @@ function AuthForm({fields,destination,callback}) {
             },
             body : JSON.stringify(fieldsState)
         })
-        if(response.status == 200){
+        if(response.status === 200){
             callback(response)
         }
     }
@@ -44,6 +36,16 @@ function AuthForm({fields,destination,callback}) {
             </Flex>
         </>
     )
+}
+
+const fieldStyle = {
+    width : "90%"
+};
+
+const buttonStyle = {
+    width : "40%",
+    cursor : "pointer",
+    marginTop: "70px"
 }
 
 export default AuthForm
