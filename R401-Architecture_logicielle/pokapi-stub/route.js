@@ -68,7 +68,7 @@ const stubLogin = "admin"
 const stubPassword = "admin"
 
 router.route("/login").post((req,res)=>{
-    if (req.body.login === stubLogin && req.body.password === stubPassword) {
+    if ((req.body.login === stubLogin && req.body.password === stubPassword) || req.headers["authentification-token"] === stubToken) {
         res.status(200).send({
             token : stubToken
         })
