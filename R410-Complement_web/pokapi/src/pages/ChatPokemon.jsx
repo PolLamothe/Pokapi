@@ -22,7 +22,7 @@ function ChatPokemon() {
         <>
             {loaded ? (
                 <Flex align="center" direction="column" gap="5">
-                    <ScrollArea className={`ChatScroll`} style={{height: '68vh', width: '70vw'}}>
+                    <ScrollArea className={`ChatScroll`} style={{height: 'calc(100vh - 150px)', width: '70vw'}}>
                          <Flex justify="end">
                              <Box style={{padding:'8px 10px 8px 10px', margin: '15px', maxWidth:'350px', height:'fit-content', backgroundColor:'lightgray', borderRadius: '20px'}}>
                                 <p style={{margin: '0'}}>Hello Ampharos ! My name is Le Kicks !!! How are you Today Gars</p>
