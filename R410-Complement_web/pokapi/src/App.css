@@ -67,6 +67,7 @@
     display: inline-block;
     border-radius: 10px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .hoverEffect figure {

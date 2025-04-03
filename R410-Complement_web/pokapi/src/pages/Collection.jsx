@@ -225,7 +225,7 @@ function AccordionTab ({name, onchecked, filter, selectedFilter, handleSearch, s
         <AccordionTrigger className="AccordionTrigger">{name}<ChevronDownIcon className="AccordionChevron" aria-hidden /> </AccordionTrigger>
         <AccordionContent className="AccordionContent">
             {searchBar &&
-                <TextField.Root radius="full" placeholder={`Search a ${name} ...`} size="2" onChange={handleSearch}>
+                <TextField.Root radius="full" placeholder={`Search a ${name} ...`} size="2" onChange={handleSearch} mb="2">
                     <TextField.Slot>
                         <MagnifyingGlassIcon height="16" width="16" />
                     </TextField.Slot>
