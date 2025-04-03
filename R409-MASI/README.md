@@ -1,5 +1,11 @@
 # R409 - Management avancé des systèmes d'information
 
+🔴🔴 **Date limite vendredi 11 avril (vendredi de la semaine de vacances)**
+
+### A faire
+
+Modélisation BPMN d'au moins 5 processus métiers. Voir ([exemple sujet des alternants](https://uncloud.univ-nantes.fr/index.php/s/HRGPygY32NmXSRX)), on doit faire la même chose avec nos services (récupération de données depuis l'API Pokémon et gestion des utilisteurs).
+
 ## Consignes : 
 
 **Énoncé :** vous avez à expliquer et  restituer la logique métier au travers d’un ou plusieurs processus BPMN 2.0.
