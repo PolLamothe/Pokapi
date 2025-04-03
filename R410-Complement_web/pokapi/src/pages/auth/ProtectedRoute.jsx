@@ -9,8 +9,6 @@ function ProtectedRoute({ redirectPath = '/auth/login' }) {
         pokapiDAO.fetchAuthentication().then(isAuthenticated => {
             if (!isAuthenticated) {
                 return navigate(redirectPath);
-            } else {
-                console.log("AUTH >> User authenticated");
             }
         }).catch(e => {
             console.log(`AUTH >> Authentication failed ${e.message}`);

@@ -1,22 +1,23 @@
-import Cookies from 'js-cookie'
 import AuthForm from "../../components/AuthForm.jsx";
-import {useNavigate} from "react-router";
+import {Link as LinkRouter, useNavigate} from "react-router";
+import {Heading} from "@radix-ui/themes";
 
 function Register() {
     const navigation = useNavigate()
 
     const fields = ["login","pseudo","password"]
 
-    const authCallback = async (response)=>{
-        let token = (await response.json())["token"]
-        localStorage.setItem("token",token)
-        navigation("/")
+    const authCallback = async (result)=>{
+        if (result) {
+            navigation("/")
+        }
     }
 
     return (
         <>
-            <h3>S'inscrire</h3>
-            <AuthForm fields={fields} callback={authCallback} destination="/register"></AuthForm>
+            <Heading as="h3" mb="5">Sign up</Heading>
+            <AuthForm fields={fields} callback={authCallback} formName="register"></AuthForm>
+            <LinkRouter to="/auth/login" style={{fontSize: "14px"}}>Already have an account ?</LinkRouter>
         </>
     )
 }

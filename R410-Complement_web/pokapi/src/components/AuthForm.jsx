@@ -1,51 +1,82 @@
-import {TextField,Flex,Button} from "@radix-ui/themes"
+import {TextField, Flex, Button, Callout} from "@radix-ui/themes"
 import { useState } from "react";
-import config from "../config"
+import pokapiDAO from "../dao/pokapiDAO.js";
+import {InfoCircledIcon} from "@radix-ui/react-icons";
 
-function AuthForm({fields,destination,callback}) {
+function AuthForm({fields,formName,callback}) {
 
-
-    const [fieldsState,setFieldsState] = useState({})
-
-    function handleInput(e){
-        setFieldsState({...fieldsState,[e.target.name]:e.target.value})
-    }
-
-    const fieldsComponent = fields.map(element => {
-        return <TextField.Root name={element} placeholder={element} style={fieldStyle} size="3" value={fieldsState[element]} onChange={handleInput}></TextField.Root>
+    let objectState = []
+    fields.forEach(field => {
+        objectState.push([field, ''])
     })
 
-    async function submitForm(){
-        const response = await fetch(config.url+destination,{
-            method:"POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body : JSON.stringify(fieldsState)
+    const [fieldsState,setFieldsState] = useState(Object.fromEntries(objectState))
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
+
+    function handleInput(e){
+        setFieldsState({
+            ...fieldsState,
+            [e.target.name]: e.target.value
         })
-        if(response.status === 200){
-            callback(response)
+    }
+
+    async function submitForm(){
+        try {
+            let result
+            if (formName === "register") {
+                setLoading(true)
+                result = await pokapiDAO.fetchRegister(fieldsState.login, fieldsState.pseudo, fieldsState.password)
+                setLoading(false)
+            } else if (formName === "login") {
+                setLoading(true)
+                result = await pokapiDAO.fetchLogin(fieldsState.login, fieldsState.password)
+                setLoading(false)
+            }
+            callback(result)
+        } catch (e) {
+            setLoading(false)
+            setError(e.message)
         }
     }
 
     return (
         <>
-            <Flex gap="3" direction="column" width="100%" align="center">                
-                {fieldsComponent}
-                <Button size="4" style={buttonStyle} onClick={submitForm}>Valider</Button>
+            <Flex gap="3" direction="column" width="100%" align="center" mb="5">
+                {error &&
+                    <Callout.Root color="red" size="1" mb="5">
+                        <Callout.Icon>
+                            <InfoCircledIcon />
+                        </Callout.Icon>
+                        <Callout.Text>
+                            {error}
+                        </Callout.Text>
+                    </Callout.Root>
+                }
+                {fields.map(element => (
+                    <TextField.Root
+                        key={element}
+                        name={element}
+                        placeholder={element}
+                        size="3"
+                        style={fieldStyle}
+                        value={fieldsState[element]}
+                        onChange={handleInput}
+                        type={element==="password" ? "password" : "text"}>
+                    </TextField.Root>
+                ))}
+                <Button size="3" onClick={submitForm} mt="4" style={buttonStyle} loading={loading}>Submit</Button>
             </Flex>
         </>
     )
 }
 
 const fieldStyle = {
-    width : "90%"
+    width : "100%"
 };
 
 const buttonStyle = {
-    width : "40%",
     cursor : "pointer",
-    marginTop: "70px"
 }
 
 export default AuthForm

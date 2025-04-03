@@ -1,9 +1,7 @@
 import { useEffect,useState } from "react";
 import {TextField,Button,Flex} from "@radix-ui/themes"
 import {Pen} from "lucide-react"
-import config from "../config";
-import {useNavigate} from "react-router";
-import Cont from "./auth/Container.jsx";
+import Cont from "../components/Container.jsx";
 import { CircleUserRound } from 'lucide-react';
 import pokapiDAO from "../dao/pokapiDAO.js";
 
@@ -21,14 +19,13 @@ function Account() {
     }
 
     async function updatePseudo(){
-        const response = await fetch(config.url+"/update",{
-            method:"PUT",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(accountInfo)
-        })
+        try {
+            const newInfo = await pokapiDAO.fetchUpdate(accountInfo.pseudo, accountInfo.password)
+            setAccountInfo(newInfo)
+        } catch (e) {
+            console.log("Error updating pokapiDAO : ", e)
+            //TODO
+        }
     }
 
     const buttonStyle = {
