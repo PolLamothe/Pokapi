@@ -8,9 +8,22 @@ function Home() {
     return (
         <>
             <Carousel></Carousel>
-            <Button>OPEN</Button> {/*TODO*/}
+            <Button style={openButtonStyle}>OPEN</Button>
         </>
     )
+}
+
+const openButtonStyle = {
+    marginLeft : "50vw",
+    transform : "translateX(-50%)",
+    fontSize : "110px",
+    padding : "2vw",
+    cursor : "pointer",
+    height : "fit-content",
+    borderRadius : "40px",
+    border : "solid 5px rgba(200,50,50,1)",
+    fontFamily: "'Racing Sans One', sans-serif",
+    marginBottom : "2vh",
 }
 
 export default Home;

@@ -67,8 +67,8 @@ const Carousel = () => {
 }
 
 const carouselStyle = {
-    paddingTop : "5vh",
-    paddingBottom : "5vh"
+    paddingTop : "2vh",
+    paddingBottom : "2vh"
 }
 
 export default Carousel
