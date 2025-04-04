@@ -5,56 +5,60 @@ import dao from "../dao/pokapiDAO.js"
 import 'swiper/css'
 import SetPresentation from './SetPresentation'
 
+function shuffle(array){
+    let copy = [...array]
+    let result = []
+    while(result.length < array.length){
+        const index = parseInt(Math.random()*copy.length-1)
+        result.push(copy[index])
+        copy.splice(index,1)
+    }
+    return result
+}
+
 const Carousel = () => {
     const [listSet, setListSet] = useState(null)
-    const [loadedSet, setLoadedSet] = useState([])
-    const [middleBoosterIndex, setMiddleBoosterindex] = useState(null)
+    const [activeIndex, setActiveIndex] = useState(0);
 
     const swiperRef = useRef(null);
-    const thumbsRef = useRef(null);
 
     useEffect(() => {
         async function retrieveSetList() {
             let newListSet = (await dao.fetchSets()).data
-            let newLoadedSet = []
-            for (let i = 0; i < 5; i++) {
-                const index = parseInt(Math.random() * newListSet.length - 1)
-                newLoadedSet.push(newListSet[index])
-                newListSet.splice(index, 1)
-            }
+            newListSet = shuffle(newListSet)
+            newListSet = newListSet.slice(0,20)
+            console.log(newListSet)
             setListSet(newListSet)
-            setLoadedSet(newLoadedSet)
-            setMiddleBoosterindex(2)
         }
         retrieveSetList()
-    }, [setListSet, setLoadedSet, setMiddleBoosterindex])
+    },[])
+
+    const handleSlideChange = (swiper) => {
+        setActiveIndex(swiper.realIndex);
+    };
 
     return (
         <div className="carousel-container">
-            <div className="navigation-buttons">
-                <button onClick={() => swiperRef.current?.swiper.slidePrev()}>
-                Précédent
-                </button>
-                <button onClick={() => swiperRef.current?.swiper.slideNext()}>
-                Suivant
-                </button>
-            </div>
-            <Swiper
-                spaceBetween={50}
-                slidesPerView={3}
-                modules={[Navigation]}
-                navigation={{
-                    prevEl: '.swiper-button-prev',
-                    nextEl: '.swiper-button-next',
-                }}
-            >
-                {loadedSet.map((setId) => (
-                    <SwiperSlide key={setId}>
-                        <SetPresentation setId={setId} />
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-
+            {listSet != null && (
+                <Swiper
+                    spaceBetween={50}
+                    slidesPerView={3}
+                    modules={[Navigation]}
+                    navigation={{
+                        prevEl: '.swiper-button-prev',
+                        nextEl: '.swiper-button-next',
+                    }}
+                    allowTouchMove={false}
+                    loop={true}
+                    onSlideChange={handleSlideChange}
+                >
+                    {listSet.map((set,index) => (
+                        <SwiperSlide key={set.id}>
+                            <SetPresentation setId={set.id} displayState={index >= activeIndex-1 && index <= activeIndex + 2}/>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>  
+            )}
             <div className="swiper-button-prev">❮</div>
             <div className="swiper-button-next">❯</div>
         </div>

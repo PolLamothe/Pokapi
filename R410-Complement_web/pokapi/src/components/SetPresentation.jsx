@@ -2,19 +2,29 @@ import React, { useState,useEffect } from 'react';
 import config from "../config.js"
 import dao from "../dao/pokapiDAO.js"
 
-const SetPresentation = ({setId}) => {
+const SetPresentation = ({setId,displayState}) => {
     const [setData,setSetData] = useState(null)
 
     const [cardImages,setCardImages] = useState(null)
 
+    const [everDisplayer,setEverDisplayed] = useState(false)
+
     useEffect(()=>{
-        async function retrieveSetData(){
-            const resultJSON = await dao.fetchSetPresentation(setId)
-            setSetData(resultJSON.set)
-            setCardImages(resultJSON.images)
+        if(everDisplayer){
+            async function retrieveSetData(){
+                const resultJSON = await dao.fetchSetPresentation(setId)
+                setSetData(resultJSON.set)
+                setCardImages(resultJSON.images)
+            }
+            retrieveSetData()
         }
-        retrieveSetData()
-    },[setSetData,setCardImages])
+    },[everDisplayer])
+
+    useEffect(() => {
+        if (displayState) {
+            setEverDisplayed(true)
+        }
+    }, [displayState]); 
 
     return (
         <div>
@@ -26,8 +36,10 @@ const SetPresentation = ({setId}) => {
                     <img key={index} src={image} className='cardImage' style={{...cardImageStyle,...rotationEffect(index)}}/>
                 ))}
             </div>
+            <p>{setId || JSON.stringify(setId)}</p>
         </div>
     )
+
 };
 
 const cardContainerStyle = {
@@ -41,11 +53,12 @@ const setLogoStyle = {
     width : "40%",
     marginLeft : "50%",
     transform : "translateX(-50%)",
+    marginBottom : "5vh",
 }
 
 const rotationEffect = (index)=>{
     const degrees = ["-15","-5","5","15"]
-    const translates = ["5","0","0","5"]
+    const translates = ["10","0","0","10"]
 
     return {
         transform : `rotate(${degrees[index]}deg) translateY(${translates[index]}%)`,
