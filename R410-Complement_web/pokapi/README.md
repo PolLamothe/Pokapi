@@ -29,25 +29,27 @@ Les identifiants pour se connecter avec le stub sont : `login: admin ; password:
 
 > 🟢 = Commencé
 
-- [ ] Formulaire login / register 🟢
-    - [ ] Style de la page (cf. maquette)
+- [x] Formulaire login / register
+    - [x] Style de la page (cf. maquette)
     - [x] Gestion des tokens avec **localstorage**
 - [ ] Header 🟢
     - [x] Ajouté la navigation fonctionnelle avec le react router
     - [ ] Responsive
 - [ ] Footer 🟢
   - [ ] Responsive
-- [ ] Collection
-    - [ ] Fetch pour récupérer la collection
-    - [ ] Style de la page (cf. maquette)
-    - [ ] Filtres
-    - [ ] Recherche
-- [ ] Home
+- [ ] Collection 🟢
+    - [x] Fetch pour récupérer la collection
+    - [x] Style de la page (cf. maquette)
+    - [x] Filtres
+    - [x] Recherche
+    - [ ] Boutton clear filtres
+- [ ] Home 🟢
     - [ ] Carousel avec les booster 
-        - [ ] Choisir lib pour faire le carousel => [Slick](https://react-slick.neostack.com/) ?
-        - [ ] Gérer le chargement au fur et à mesure
+        - [x] Choisir lib pour faire le carousel => [Slick](https://react-slick.neostack.com/) ?
+        - [x] Gérer le chargement au fur et à mesure
+        - [ ] Responsive
 - [ ] Card 🟢 
-    - [ ] Style de la page (cf. maquette) *Brieuc*
+    - [x] Style de la page (cf. maquette)
     - [ ] Chat avec Pokemon
 - [ ] Account 🟢
     - [ ] Style de la page (cf. maquette)
