@@ -2,12 +2,14 @@ import React, { useState,useEffect } from 'react';
 import config from "../config.js"
 import dao from "../dao/pokapiDAO.js"
 
-const SetPresentation = ({setId,displayState}) => {
+const SetPresentation = ({setId,displayState,middleState}) => {
     const [setData,setSetData] = useState(null)
 
     const [cardImages,setCardImages] = useState(null)
 
     const [everDisplayer,setEverDisplayed] = useState(false)
+
+    const [middleStyle,setMiddleStyle] = useState({})
 
     useEffect(()=>{
         if(everDisplayer){
@@ -26,8 +28,16 @@ const SetPresentation = ({setId,displayState}) => {
         }
     }, [displayState]); 
 
+    useEffect(()=>{
+        if(middleState){
+            setMiddleStyle({transform : "scale(1.25)"})
+        }else{
+            setMiddleStyle({})
+        }
+    },[middleState])
+
     return (
-        <div>
+        <div id='container' style={{...middleStyle,...containerStyle}}>
             {setData != null && (
                 <img src={setData.images.logo} id="setLogo" style={setLogoStyle}/>
             )}
@@ -41,6 +51,14 @@ const SetPresentation = ({setId,displayState}) => {
     )
 
 };
+
+const containerStyle = {
+    boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+    borderRadius : "20px",
+    padding : "1vw",
+    margin : "4vw",
+    transitionDuration : ".25s",
+}
 
 const cardContainerStyle = {
     display : "flex",

@@ -35,10 +35,11 @@ const Carousel = () => {
 
     const handleSlideChange = (swiper) => {
         setActiveIndex(swiper.realIndex);
+        console.log(swiper.realIndex)
     };
 
     return (
-        <div className="carousel-container">
+        <div className="carousel-container" style={carouselStyle}>
             {listSet != null && (
                 <Swiper
                     spaceBetween={50}
@@ -54,7 +55,7 @@ const Carousel = () => {
                 >
                     {listSet.map((set,index) => (
                         <SwiperSlide key={set.id}>
-                            <SetPresentation setId={set.id} displayState={index >= activeIndex-1 && index <= activeIndex + 2}/>
+                            <SetPresentation setId={set.id} displayState={index >= activeIndex-1 && index <= activeIndex + 2} middleState={index == activeIndex+1}/>
                         </SwiperSlide>
                     ))}
                 </Swiper>  
@@ -63,6 +64,11 @@ const Carousel = () => {
             <div className="swiper-button-next">❯</div>
         </div>
     )
+}
+
+const carouselStyle = {
+    paddingTop : "5vh",
+    paddingBottom : "5vh"
 }
 
 export default Carousel
