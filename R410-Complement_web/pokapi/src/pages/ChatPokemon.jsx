@@ -62,10 +62,10 @@ function ChatPokemon() {
                             </Box>
                         </Flex>
                     </ScrollArea>
-                    <Flex width="60vw" style={{backgroundColor: "rgb(184,161,213)", position: "fixed", bottom: "20px", borderRadius: '20px'}}>
-                        <TextArea radius="full" placeholder={`Chat with ${cardData.name}`} variant="soft" size="3" style={{width: "55vw", height:"8vh",backgroundColor: "rgb(184,161,213)", border: "none", outline: "none", margin: "10px"}}>
+                    <Flex width="60vw" style={{backgroundColor: "rgb(203,181,230)", opacity:'0.9', position: "fixed", bottom: "20px", borderRadius: '20px'}}>
+                        <TextArea radius="full" placeholder={`Chat with ${cardData.name}`} variant="soft" size="3" style={{width: "55vw", height:"8vh",backgroundColor: "rgb(203,181,230)", border: "none", outline: "none", margin: "10px"}}>
                         </TextArea>
-                        <IconButton radius="full" size="3" style={{backgroundColor: "rgb(100, 64, 141)", border: "1px solid rgb(180, 45, 92)", margin: "10px", position: "absolute", right: "2px", top: "2px"}}>
+                        <IconButton radius="full" size="3" style={{backgroundColor: "rgb(100, 64, 141)",opacity: "1", border: "1px solid rgb(180, 45, 92)", margin: "10px", position: "absolute", right: "2px", top: "2px"}}>
                             <ArrowUp />
                         </IconButton>
                     </Flex>

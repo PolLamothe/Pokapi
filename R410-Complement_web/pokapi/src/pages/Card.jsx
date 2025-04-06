@@ -1,7 +1,8 @@
 import {useNavigate, useParams} from "react-router";
 import {useState, useEffect} from "react";
-import {Box, Button, Flex, Text} from "@radix-ui/themes";
+import {Box, Button, Flex, IconButton, Text} from "@radix-ui/themes";
 import pokapiDAO from "../dao/pokapiDAO.js";
+import {Undo2} from "lucide-react";
 
 function Card() {
     let params = useParams()
@@ -10,6 +11,8 @@ function Card() {
     let [quantity, setQuantity] = useState(0)
     let [loaded, setLoaded] = useState(false);
     let navigateToChat = useNavigate()
+    let navigateBack = useNavigate()
+
 
     useEffect(() => {
         pokapiDAO.fetchCard(params.cardId).then(data => {
@@ -30,6 +33,9 @@ function Card() {
                     py="6"
                     style={{fontFamily: "Arial, sans-serif"}}
                 >
+                    <IconButton radius="full"  size="3" style={{position: "fixed", top: "180px", left: "30px", backgroundColor: "rgb(100, 64, 141)", border: "1px solid rgb(180, 45, 92)"}} onClick={()=>navigateBack(-1)}>
+                        <Undo2/>
+                    </IconButton>
                     <Box
                         p="9"
                         style={{
