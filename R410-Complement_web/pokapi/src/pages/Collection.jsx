@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Box, Button, Checkbox, CheckboxGroup, Flex, Grid, ScrollArea, TextField} from "@radix-ui/themes";
+import {Button, CheckboxGroup, Flex, Grid, ScrollArea, TextField} from "@radix-ui/themes";
 import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
 import * as Accordion from '@radix-ui/react-accordion';
 import {AccordionContent, AccordionTrigger} from "@radix-ui/react-accordion";
@@ -35,7 +35,19 @@ function Collection() {
 
     const navigateToCardPage = useNavigate();
 
+    const [windowSize, setWindowSize] = useState(window.innerWidth)
+    let gridtemplate = null
+    let columnImage = null
 
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [])
 
     useEffect(() => {
         pokapiDAO.fetchMyCards().then(usrCards => {
@@ -103,46 +115,43 @@ function Collection() {
     const onChecked = (nom, e) => {
         let filterCards = [...userCardsAll]
         const selectOne = {
-            Type: {nom: "types", value: selectedType, setter: setSelectedType },
-            Rarity: {nom: "rarity", value: selectedRarities, setter: setSelectedRarities },
-            Set: {nom: "set", value: selectedSet, setter: setSelectedSet},
+            Type: {value: selectedType, setter: setSelectedType },
+            Rarity: {value: selectedRarities, setter: setSelectedRarities },
+            Set: {value: selectedSet, setter: setSelectedSet},
         }
         const selectOthers = Object.entries(selectOne).filter(([key]) => key !== nom)
+        const recupRarityFilter = (a, b) => {
+            if (selectOthers[a][b].value.length > 0) {
+                filterCards = filterCards.filter(card =>
+                    selectOthers[a][b].value.some(rarity => card.card.rarity === rarity)
+                )
+            }
+        }
+        const recupSetFilter = (a, b) => {
+            if (selectOthers[a][b].value.length > 0) {
+                filterCards = filterCards.filter(card =>
+                    selectOthers[a][b].value.some(set => card.card.set.name === set)
+                )
+            }
+        }
+        const recupTypeFilter = (a, b) => {
+            if (selectOthers[a][b].value.length > 0) {
+                filterCards = filterCards.filter(card =>
+                    selectOthers[a][b].value.some(type => card.card.types.includes(type))
+                )
+            }
+        }
 
         if (selectOthers[0][1].value.length > 0 || selectOthers[1][1].value.length > 0) {
             if (nom === "Type") {
-                if (selectOthers[0][1].value.length > 0) {
-                    filterCards = filterCards.filter(card =>
-                        selectOthers[0][1].value.some(rarity => card.card[selectOthers[0][1].nom] === rarity)
-                    )
-                }
-                if (selectOthers[1][1].value.length > 0) {
-                    filterCards = filterCards.filter(card =>
-                        selectOthers[1][1].value.some(set => card.card[selectOthers[1][1].nom].name === set)
-                    )
-                }
+                recupRarityFilter(0,1)
+                recupSetFilter(1,1)
             } else if (nom === "Set") {
-                if (selectOthers[0][1].value.length > 0) {
-                    filterCards = filterCards.filter(card =>
-                        selectOthers[0][1].value.some(type => card.card[selectOthers[0][1].nom].includes(type))
-                    )
-                }
-                if (selectOthers[1][1].value.length > 0) {
-                    filterCards = filterCards.filter(card =>
-                        selectOthers[1][1].value.some(rarity => card.card[selectOthers[1][1].nom] === rarity)
-                    )
-                }
+                recupTypeFilter(0,1)
+                recupRarityFilter(1,1)
             } else if (nom === "Rarity") {
-                if (selectOthers[0][1].value.length > 0) {
-                    filterCards = filterCards.filter(card =>
-                        selectOthers[0][1].value.some(type => card.card[selectOthers[0][1].nom].includes(type))
-                    )
-                }
-                if (selectOthers[1][1].value.length > 0) {
-                    filterCards = filterCards.filter(card =>
-                        selectOthers[1][1].value.some(set => card.card[selectOthers[1][1].nom].name === set)
-                    )
-                }
+                recupTypeFilter(0,1)
+                recupSetFilter(1,1)
             }
         }
         if (e.length === 0) {
@@ -171,9 +180,24 @@ function Collection() {
     }
 
 
+    { windowSize > 1100 ? (
+        gridtemplate = '25% 75%',
+        columnImage = "repeat(auto-fit, minmax(245px, 1fr))"
+    ) : windowSize > 600 && windowSize < 800 ? (
+        gridtemplate = "100%",
+        columnImage = "repeat(auto-fit, minmax(245px, 1fr))"
+    ) : windowSize < 600 ? (
+        gridtemplate = "100%",
+        columnImage = "repeat(auto-fit, minmax(150px, 1fr))"
+    ) : (
+        gridtemplate = '30% 70%',
+        columnImage = "repeat(auto-fit, minmax(245px, 1fr))"
+    )
+    }
+
     return (
-        <Grid columns="3" style={{gridTemplateColumns:'25% 75%'}} py="5" px="5">
-            <Flex id="searchBar" px="5" py="5" justify="center" style={{gridColumn: 'span 3'}} >
+        <Grid className="principalGrid" columns="3" style={{gridTemplateColumns: `${gridtemplate}`}} py="5" px="5">
+            <Flex id="searchBar" px="5" py="5" justify="center">
                 <TextField.Root radius="full" placeholder="Search a Pokemon ..." size="3" style={{width:'80vh'}} onChange={handleSearch} >
                     <TextField.Slot>
                         <MagnifyingGlassIcon height="16" width="16" />
@@ -181,7 +205,7 @@ function Collection() {
                 </TextField.Root>
             </Flex>
 
-            <Flex justify="center">
+            <Flex className="filters" justify="center">
                 <Accordion.Root type="multiple" className="AccordionRoot">
 
                     <AccordionTab name="Type" onchecked={onChecked} filter={types} selectedFilter={selectedType} searchBar={false} ondelete={onChecked}/>
@@ -192,7 +216,7 @@ function Collection() {
 
                 </Accordion.Root>
             </Flex>
-            <Grid className="cardsUser" columns="repeat(auto-fit, minmax(245px, 1fr))" style={{maxWidth: '1500px', height: "fit-content", marginLeft: "10px"}} gap="4">
+            <Grid className="cardsUser" columns={columnImage} style={{maxWidth: '1500px', height: "fit-content", marginLeft: "15px"}} gap="4">
                 {userCards && userCards.length > 0 ? (
                     userCards.map(card => (
                     <ImageCard key={card.card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}}/>
@@ -221,7 +245,7 @@ function AccordionTab ({name, onchecked, filter, selectedFilter, handleSearch, s
                 </TextField.Root>
             }
 
-            <ScrollArea className={`${name}Scroll`} style={{maxHeight: '260px'}}>
+            <ScrollArea id={`${name}Scroll`} className="scrollArea" style={{maxHeight: '260px'}}>
                 <CheckboxGroup.Root name={name} value={selectedFilter} onValueChange={(values) => onchecked(name, values)}>
 
                     {filter && filter.length > 0 ? (

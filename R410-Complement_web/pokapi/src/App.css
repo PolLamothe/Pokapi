@@ -15,7 +15,8 @@
 }
 
 .AccordionRoot {
-    width: clamp(200px, 20vw, 300px);
+    width: clamp(200px, 30vw, 300px);
+    min-width: 200px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 2px grey;
     padding: 15px;
@@ -108,6 +109,9 @@
     animation: shine 0.5s ease-in-out;
 }
 
+#searchBar{
+    grid-column: span 3;
+}
 @keyframes shine {
     100% {
         left: 75%;
@@ -120,9 +124,46 @@
         margin-right: 20vh;
     }
 }
-/*
-@media (max-width: 1100px) {
-}*/
+
+@media (max-width: 800px) {
+    #searchBar{
+        grid-column: 1;
+    }
+
+    .AccordionRoot{
+        display: flex;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .AccordionItem {
+        width: 33.3%;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .AccordionRoot{
+        display: table-column;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .AccordionItem {
+        width: 100%;
+    }
+
+    .img {
+        max-height: 210px;
+        max-width: 150px;
+    }
+
+    .hoverEffect figure {
+        max-width: 170px;
+        max-height: 230px;
+    }
+
+}
 
 .carousel-container {
     position: relative;
