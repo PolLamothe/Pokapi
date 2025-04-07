@@ -1,10 +1,20 @@
 # R409 - Management avancé des systèmes d'information
 
-🔴🔴 **Date limite vendredi 11 avril (vendredi de la semaine de vacances)**
+🔴🔴 **Date limite lundi 14 avril**
 
 ### A faire
 
 Modélisation BPMN d'au moins 5 processus métiers. Voir ([exemple sujet des alternants](https://uncloud.univ-nantes.fr/index.php/s/HRGPygY32NmXSRX)), on doit faire la même chose avec nos services (récupération de données depuis l'API Pokémon et gestion des utilisteurs).
+
+**Processus à modéliser :**
+
+- [ ] 1 - Connexion
+- [ ] 2 - Création de compte
+- [ ] 3 - Ouverture d'un booster
+- [ ] 4 - Voir la collection de cartes
+- [ ] 5 - Mettre à jour les informations de connexion
+
+> Voir `Diagrammes.md`
 
 ## Consignes : 
 
