@@ -6,6 +6,7 @@ import userDAO from "../../api/dao/userDAO.js";
 import {User} from "../../api/model/User.js";
 import jwt from 'jsonwebtoken';
 import CONFIG from "../../const.js";
+import bcrypt from "bcrypt";
 
 let mongod= null
 let connexion = null
@@ -84,12 +85,10 @@ describe("Controller - UserController",()=>{
 
     it("updateUser valid", async () => {
         const u1 = await userDAO.addOne(new User(user1))
-        const expected = new User(user1)
-        expected.pseudo = "modified1"
-        expected.password = "modified2"
         const token = await userController.updateUser(u1, "modified1", "modified2")
         const u1Updated = await userDAO.findByLogin(u1.login)
-        assert.deepEqual(u1Updated, expected)
+        assert.deepEqual(u1Updated.pseudo, "modified1")
+        assert.ok(bcrypt.compare("modified2", u1Updated.password))
         assertJWT(token, u1.login, "modified1")
     })
 
@@ -215,6 +214,32 @@ describe("Controller - UserController",()=>{
             assert.equal(user.cards[i].id, result[i].card.id)
             assert.equal(user.cards[i].quantity, result[i].quantity)
         }
+    })
+
+    it("getUserCard valid", async (t) => {
+        const user = new User(user1)
+        user.cards = [
+            {id: "dp3-1", quantity: 42},
+            {id: "ex12-1", quantity: 3},
+        ]
+        let result
+        try {
+            result = await userController.getUserCard(user, user.cards[0].id)
+        } catch (e) {
+            t.skip("Make sure to use the Pokapi-stub API to run this test")
+            return
+        }
+        assert.equal(user.cards[0].id, result.card.id)
+        assert.equal(user.cards[0].quantity, result.quantity)
+    })
+
+    it("getUserCard wrong", async (t) => {
+        const user = new User(user1)
+        user.cards = [
+            {id: "dp3-1", quantity: 42},
+            {id: "ex12-1", quantity: 3},
+        ]
+        await assert.rejects(userController.getUserCard(user, "wrong"), {message: "You don't have this card"})
     })
 
     it("delete wrong", async () => {

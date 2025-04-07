@@ -56,6 +56,7 @@ describe("Route - route",()=> {
         mongod = await MongoMemoryServer.create();
         const uri = mongod.getUri();
         connexion = await mongoose.connect(uri)
+        CONFIG.LOGS = false
     })
 
     beforeEach(async () => {
@@ -75,7 +76,7 @@ describe("Route - route",()=> {
         const response = await request(app).get(CONFIG.API_PATH+'/my-cards')
             .set("Authorization", `Bearer ${token}`)
         assert.equal(response.status, 200)
-        assert.equal(response.body.cards.length, 10)
+        assert.equal(response.body.length, 10)
     })
 
     it("POST /register invalid fields", async () => {
@@ -224,6 +225,75 @@ describe("Route - route",()=> {
     it("GET /my-cards/:cardId unauthorized", async () => {
         const response = await request(app).get(CONFIG.API_PATH+'/my-cards/wrong')
         assert.equal(response.status, 401)
+    })
+
+    it("PUT /update empty", async () => {
+        const token = await userController.register(user1.login, user1.pseudo, user1.password)
+        const response = await request(app).put(CONFIG.API_PATH+'/update')
+            .set("Authorization", `Bearer ${token}`)
+        assert.equal(response.status, 200)
+        assertJWT(response.body.token, user1.login, user1.pseudo)
+    })
+
+    it("PUT /update pseudo", async () => {
+        const token = await userController.register(user1.login, user1.pseudo, user1.password)
+        const response = await request(app).put(CONFIG.API_PATH+'/update')
+            .send({pseudo: "modified"})
+            .set("Authorization", `Bearer ${token}`)
+        assert.equal(response.status, 200)
+        assertJWT(response.body.token, user1.login, "modified")
+    })
+
+    it("PUT /update password", async () => {
+        const token = await userController.register(user1.login, user1.pseudo, user1.password)
+        const response = await request(app).put(CONFIG.API_PATH+'/update')
+            .send({password: "modified"})
+            .set("Authorization", `Bearer ${token}`)
+        assert.equal(response.status, 200)
+        assertJWT(response.body.token, user1.login, user1.pseudo)
+    })
+
+    it("PUT /update pseudo and password wrong", async () => {
+        const token = await userController.register(user1.login, user1.pseudo, user1.password)
+        const response = await request(app).put(CONFIG.API_PATH+'/update')
+            .send({pseudo: "modified", password: "       "})
+            .set("Authorization", `Bearer ${token}`)
+        assert.equal(response.status, 400)
+    })
+
+    it("GET /my-cards/:cardId wrong", async () => {
+        const token = await userController.register(user1.login, user1.pseudo, user1.password)
+        const response = await request(app).get(CONFIG.API_PATH+'/my-cards/test')
+            .set("Authorization", `Bearer ${token}`)
+        assert.equal(response.status, 400)
+    })
+
+    it("GET /my-cards/:cardId valid", async () => {
+        const token = await userController.register(user1.login, user1.pseudo, user1.password)
+        const user = await userDAO.findByLogin(user1.login)
+        user.cards = [
+            {id: "dp3-1", quantity: 42},
+            {id: "ex12-1", quantity: 3},
+        ]
+        await userDAO.update(user1.login, user)
+        const response = await request(app).get(CONFIG.API_PATH+'/my-cards/dp3-1')
+            .set("Authorization", `Bearer ${token}`)
+        assert.equal(response.status, 200)
+    })
+
+    it("GET /open-booster/:setId wrong", async () => {
+        const token = await userController.register(user1.login, user1.pseudo, user1.password)
+        const response = await request(app).get(CONFIG.API_PATH+'/open-booster/wrong')
+            .set("Authorization", `Bearer ${token}`)
+        assert.equal(response.status, 400)
+    })
+
+    it("GET /open-booster/:setId valid", async () => {
+        const token = await userController.register(user1.login, user1.pseudo, user1.password)
+        let response = await request(app).get(CONFIG.API_PATH+'/open-booster/test')
+            .set("Authorization", `Bearer ${token}`)
+        assert.equal(response.status, 200)
+        assert.equal(response.body.length, 5)
     })
 
     after(async ()=>{

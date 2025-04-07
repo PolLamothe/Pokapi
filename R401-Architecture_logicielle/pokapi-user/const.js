@@ -14,6 +14,7 @@ const CONFIG = {
     JWT_EXPIRES: process.env.JWT_EXPIRES || '2d',
     POKAPI_DATA_URL: process.env.POKAPI_DATA_URL || 'http://localhost:8081/api/v0',
     PROXY: process.env.PROXY || undefined,
+    LOGS: process.env.LOGS || true,
 }
 
 export default CONFIG

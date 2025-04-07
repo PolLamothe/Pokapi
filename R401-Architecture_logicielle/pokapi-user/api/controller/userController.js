@@ -82,7 +82,8 @@ const userController = {
         }
         if (password !== null) {
             if (password.trimEnd().length > 0) {
-                userClone.password = password
+                const salt = await bcrypt.genSalt(10);
+                userClone.password = await bcrypt.hash(password, salt)
             } else {
                 throw new Error(`Password must not be empty`)
             }
@@ -112,6 +113,16 @@ const userController = {
             }
         })
         return userCardsWithContent
+    },
+    getUserCard: async (user, cardId) => {
+        if (user.cards.some(uCard => uCard.id === cardId)) {
+            const result = await pokapiDataDAO.fetchCard(cardId)
+            return {
+                card: result,
+                quantity: user.cards.find(uCard => uCard.id === cardId).quantity
+            }
+        }
+        throw new Error("You don't have this card")
     },
     delete: async (user) => userDAO.deleteOne(user)
 }

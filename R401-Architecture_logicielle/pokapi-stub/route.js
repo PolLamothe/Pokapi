@@ -15,6 +15,8 @@ const router = express.Router()
 // ---
 
 router.route("/open-booster/:SETID").get((req,res)=>{
+    if (req.params.SETID === "wrong")
+        return res.status(400).json({message: "This set does not exist"})
     res.status(200).send(boosterContent)
 })
 
