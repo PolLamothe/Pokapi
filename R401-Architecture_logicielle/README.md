@@ -39,10 +39,10 @@ Comment créer une plateforme permettant aux utilisateurs de gérer, optimiser e
 
 ### Étape 4 : 
 
-- [ ] Routes user avec tests 🟢 (*Thomas*)
+- [x] Routes user avec tests
 - [ ] Routes data avec tests 
 
 ### Étape 5 : 
 
-- [ ] Définir architecture et fonctionnement du proxy
-- [ ] Routes proxy avec tests
+- [ ] Définir architecture et fonctionnement du proxy 🟢 (*Thomas*)
+- [ ] Routes proxy avec tests 🟢 (*Thomas*)
