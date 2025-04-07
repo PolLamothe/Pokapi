@@ -28,6 +28,9 @@ const userDAO = {
     deleteAll: async () => {
         await userModel.deleteMany()
     },
+    deleteOne: async (user) => {
+        return (await userModel.deleteOne({login: user.login})).deletedCount !== 0;
+    },
     update: async (login, user) => {
         if (user instanceof User) {
             if (await userDAO.findByLogin(user.login) == null) {

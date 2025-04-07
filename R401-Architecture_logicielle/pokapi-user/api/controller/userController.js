@@ -5,49 +5,36 @@ import {User} from "../model/User.js";
 import jwt from 'jsonwebtoken';
 import CONFIG from "../../const.js";
 import bcrypt from "bcrypt";
-import {fetchAPI} from "../dao/utility.js";
-import {Card} from "../model/Card.js";
-
-/**
- * Génère un JWT
- * @param user
- * @return {String} Le JWT
- */
-const generateJWT = (user) => {
-    return jwt.sign({
-        login: user.login,
-        pseudo: user.pseudo,
-    }, CONFIG.JWT_SECRET, {
-        expiresIn: CONFIG.JWT_EXPIRES
-    })
-}
+import {pokapiDataDAO} from "../dao/pokapiDataDAO.js";
 
 const userController = {
     login: async (login, password) => {
         const userFound = await userDAO.findByLogin(login)
         if (userFound !== null && await bcrypt.compare(password, userFound.password)) {
-            return generateJWT(userFound)
+            return userController.generateJWT(userFound)
         }
         return null
     },
-    loginWithToken: async (token, generateNew=false) => {
+    loginWithToken: async (token) => {
         return jwt.verify(token, CONFIG.JWT_SECRET, async (err, decoded) => {
             if (err) {
                 return null
             } else {
-                const loggedUSer = await userDAO.findByLogin(decoded.login)
-                if (loggedUSer !== null) {
-                    if (generateNew) {
-                        return generateJWT(loggedUSer)
-                    }
-                    return true
-                }
-                return null
+                return await userDAO.findByLogin(decoded.login)
             }
         });
     },
+    generateJWT: (user) => {
+        return jwt.sign({
+            login: user.login,
+            pseudo: user.pseudo,
+        }, CONFIG.JWT_SECRET, {
+            expiresIn: CONFIG.JWT_EXPIRES
+        })
+    },
     register: async (login, pseudo, password) => {
-        if (login.trim().length > 0 && pseudo.trim().length > 0 && password.trim().length > 0) {
+        const isAllSet = (login && pseudo && password)
+        if (isAllSet && login.trim().length > 0 && pseudo.trim().length > 0 && password.trim().length > 0) {
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(password, salt);
             const newUser = new User({
@@ -59,7 +46,7 @@ const userController = {
             })
             const addedUSer = await userDAO.addOne(newUser)
             if (addedUSer !== null) {
-                return generateJWT(addedUSer)
+                return userController.generateJWT(addedUSer)
             }
             throw new Error(`User already exists`)
         }
@@ -74,27 +61,10 @@ const userController = {
             throw new Error(`${user.login} does not exist`)
         }
         // Open booster from Pokapi-data API
-        const url = `${CONFIG.POKAPI_DATA_URL}/open-booster/${setId}`
-        const res = await fetchAPI(url)
-        if (res.ok) {
-            const boosterContent = await res.json()
-            boosterContent.forEach(c => {
-                for(let i=0; i<userStored.cards.length; i++) {
-                    if (userStored.cards[i].id === c.id) {
-                        userStored.cards[i].quantity++
-                        return
-                    }
-                }
-                const newCard = new Card({
-                    id: c.id,
-                    quantity: 1
-                })
-                userStored.cards.push(newCard)
-            })
-            await userDAO.update(userStored.login, userStored)
-            return boosterContent
-        }
-        throw new Error(`Can't fetch Pokapi-data API : ${res.status} ${res.statusText}`)
+        const boosterContent = await pokapiDataDAO.openBooster(setId)
+        userStored.addCards(boosterContent)
+        await userDAO.update(userStored.login, userStored)
+        return boosterContent
     },
     updateUser: async (user, pseudo=null, password=null) => {
         let userClone
@@ -119,22 +89,31 @@ const userController = {
         }
         const updatedUser = await userDAO.update(userClone.login, userClone)
         if (updatedUser === null) throw new Error(`Database error`)
-        return generateJWT(updatedUser)
+        return userController.generateJWT(updatedUser)
     },
     addSearched: async (user, cardId) => {
         const userStored = await userDAO.findByLogin(user.login)
         if (userStored == null) {
             throw new Error(`${user.login} does not exist`)
         }
-        if (userStored.searched.filter(c => c.id === cardId).length === 0) {
-            const newCard = new Card({
-                id: cardId
-            })
-            userStored.searched.push(newCard)
-            return await userDAO.update(user.login, userStored)
-        }
-        throw new Error('Requested card is already marked as searched')
+        userStored.addSearchedCard(cardId)
+        return await userDAO.update(user.login, userStored)
     },
+    getUserCards: async (user) => {
+        const cards = await pokapiDataDAO.fetchCards(user.cards.map(c => c.id))
+        const userCardsWithContent = []
+        user.cards.forEach(userCard => {
+            const result = cards.find(apiCard => apiCard.id === userCard.id)
+            if (result !== undefined) {
+                userCardsWithContent.push({
+                    card: result,
+                    quantity: userCard.quantity
+                })
+            }
+        })
+        return userCardsWithContent
+    },
+    delete: async (user) => userDAO.deleteOne(user)
 }
 
 export default userController

@@ -52,10 +52,12 @@ export const projection = { _id: 0, __v:0}
 
 /**
  * Fetch an API with the given URL and the configured proxy
- * @param fetchUrl
+ * @param fetchUrl {String}
+ * @param method {String} The HTTP method to use default GET
+ * @param body {Object} The content of the body to send
  * @return {Promise<Response>}
  */
-export function fetchAPI(fetchUrl) {
+export function fetchAPI(fetchUrl, method="GET", body=null) {
     // Proxy configuration
     let agent = null
     if (CONFIG.PROXY !== undefined) {
@@ -66,7 +68,10 @@ export function fetchAPI(fetchUrl) {
     }
 
     const fields = {
-        method: "GET",
+        method: method,
+    }
+    if (body !== null) {
+        fields.body = JSON.stringify(body)
     }
     if (agent !== null) fields.agent = agent
     return fetch(fetchUrl, fields)

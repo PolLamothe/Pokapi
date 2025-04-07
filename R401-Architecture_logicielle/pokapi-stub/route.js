@@ -78,8 +78,8 @@ router.route("/login").post((req,res)=>{
 })
 
 router.route("/register").post((req,res)=>{
-    if(req.body.login === stubLogin && req.body.password === stubPassword){
-        res.status(401).send()
+    if(req.body.login === stubLogin){
+        res.status(400).send({message: "User already exist"})
     } else {
         res.status(200).send({
             token : stubToken

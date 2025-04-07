@@ -110,6 +110,18 @@ describe('DAO - UserDAO', () => {
         assert.ok(!users.some(user => user.pseudo === newUser3.pseudo), "newUser3 should not be in the array")
     })
 
+    it('deleteOne wrong', async () => {
+        const u1 = new User(user1)
+        assert.ok(!(await userDAO.deleteOne(u1)))
+    })
+
+    it('deleteOne valid', async () => {
+        const u1 = new User(user1)
+        await userDAO.addOne(u1)
+        assert.ok(await userDAO.deleteOne(u1))
+        assert.equal(await userDAO.findByLogin(user1.login), null)
+    })
+
     after(async ()=>{
         await mongod.stop()
         connexion.disconnect()

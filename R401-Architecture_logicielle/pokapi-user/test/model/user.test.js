@@ -57,4 +57,36 @@ describe("Model - User",()=>{
             assert.doesNotThrow(()=> new User(test))
             assert.deepEqual(test, valid)
     })
+
+    it("addCards", () => {
+        const user = new User(valid)
+        user.addCards([{id: "New"}, {id: "Mew"}, {id: "Dialga"}])
+        const expected = [
+            {
+                id: "Mew",
+                quantity : 4
+            },
+            {
+                id: "Dialga",
+                quantity: 1
+            },
+            {
+                id: "New",
+                quantity: 1
+            }
+        ]
+        assert.deepEqual(user.cards, expected)
+    })
+
+    it("addSearchedCard", () => {
+        const user = new User(valid)
+        assert.throws(() => user.addSearchedCard("Palkia"))
+        const expected = [
+            {id:"Palkia", quantity: null},
+            {id : "Arceus", quantity: null},
+            {id: "New", quantity: null}
+        ]
+        user.addSearchedCard("New")
+        assert.deepEqual(user.searched, expected)
+    })
 })

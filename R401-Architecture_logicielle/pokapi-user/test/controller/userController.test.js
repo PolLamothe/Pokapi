@@ -139,15 +139,9 @@ describe("Controller - UserController",()=>{
         assert.equal(await userController.loginWithToken("test"), null)
     })
 
-    it("loginWithToken valid no new", async () => {
+    it("loginWithToken valid", async () => {
         const token = await userController.register(user2.login, user2.pseudo, user2.password)
-        assert.ok(await userController.loginWithToken(token))
-    })
-
-    it("loginWithToken valid with new", async () => {
-        const token = await userController.register(user2.login, user2.pseudo, user2.password)
-        const newToken = await userController.loginWithToken(token, true)
-        assertJWT(newToken, user2.login, user2.pseudo)
+        assert.deepEqual(await userController.loginWithToken(token), await userDAO.findByLogin(user2.login))
     })
 
     it("loginWithToken deleted user", async () => {
@@ -194,6 +188,43 @@ describe("Controller - UserController",()=>{
 
     it("openBooster wrong user", async () => {
         await assert.rejects(userController.openBooster(new User(user1), "base1"))
+    })
+
+    it("getUserCards valid", async (t) => {
+        const user = new User(user1)
+        user.cards = [
+            {id: "dp3-1", quantity: 1},
+            {id: "ex12-1", quantity: 3},
+            {id: "mcd19-1", quantity: 2},
+            {id: "ex7-1", quantity: 2},
+            {id: "sm9-1", quantity: 10},
+            {id: "pl1-2", quantity: 1},
+            {id: "ex3-2", quantity: 4},
+            {id: "sm9-2", quantity: 7},
+            {id: "mcd19-2", quantity: 2},
+            {id: "xy5-2", quantity: 100}
+        ]
+        let result
+        try {
+            result = await userController.getUserCards(user)
+        } catch (e) {
+            t.skip("Make sure to use the Pokapi-stub API to run this test")
+            return
+        }
+        for (let i=0; i<user.cards.length; i++) {
+            assert.equal(user.cards[i].id, result[i].card.id)
+            assert.equal(user.cards[i].quantity, result[i].quantity)
+        }
+    })
+
+    it("delete wrong", async () => {
+        const u1 = new User(user1)
+        assert.ok(!(await userController.delete(u1)))
+    })
+
+    it("delete valid", async () => {
+        const u1 = await userDAO.addOne(new User(user1))
+        assert.ok(await userController.delete(u1))
     })
 
     after(async ()=>{

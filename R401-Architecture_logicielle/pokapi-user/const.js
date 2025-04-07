@@ -5,7 +5,7 @@ dotenv.config()
 
 const CONFIG = {
     PORT: process.env.PORT || 8082,
-    APIPATH: process.env.API_PATH || '/api/v0',
+    API_PATH: process.env.API_PATH || '/api/v0',
     HOST: process.env.HOST || "localhost",
     ENV: process.env.ENV || 'PROD',
     MONGO_URL: process.env.MONGO_URL || 'mongodb://localhost:27017',

@@ -10,6 +10,21 @@ Pour changer ce fonctionnement si vous voulez que les tokens persistent au redé
 
 Il est aussi possible de changer la durée de vie des tokens avec la variable d'environnement `JWT_EXPIRES` en spécifiant une chaîne de caractères avec un nombre et une unité (*m*, *h*, *d*), exemple : `12h`. 
 
+### TODO
+
+- [ ] Routes
+  - [x] `/my-cards`
+  - [x] `/register`
+  - [x] `/user/:pseudo`
+  - [x] `/info`
+  - [x] `/searched`
+  - [x] `/searched/add`
+  - [ ] `/update`
+  - [ ] `/open-booster/:setId`
+  - [x] `login`
+  - [x] `delete`
+  - [ ] `/my-cards/:cardId`
+
 ### Ressources :
 
 + [JWT](https://jwt.io/)

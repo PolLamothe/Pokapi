@@ -33,7 +33,7 @@
 	+ Voir la collection de cartes de l'utilisateur
 - `[AUTH] GET /my-cards/<CARDID>`
 	+ Voir une carte de la collection de l'utilisateur
-- `GET /user/<PSEUDO>`
+- `GET /pseudo/<PSEUDO>`
 	+ Rechercher un utilisateur a partir de son pseudo
 - `[AUTH] GET /open-booster/<SET>`
 	+ Ouvre un booster a partir de pokapi-data en sauvegardant les cartes dans la collection de l'utilisateur
@@ -45,6 +45,8 @@
 	+ Obtenir les informations sur l'utilisateur connecté
 - `[AUTH] PUT /update`
 	+ Possibilité d'update tout les champs via cette route
+- `[AUTH] DELETE /delete`
+	+ Supprime l'utilisateur
 	
 ---
 Pas implémentées pour l'instant :
