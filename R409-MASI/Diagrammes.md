@@ -19,7 +19,7 @@ L'utilisateur dispose d'un jeton ou de son login et mdp. Soit le système vérif
 
 L'utilisateur envoie au système le login, le pseudo et le mdp. Le système vérifie qu'un utilisateur avec ce login n'existe pas, si c'est bon alors le système renvoie un jeton d'authentification sinon une erreur.
 
-## 3 - Ouverture d'un booster : *?*
+## 3 - Ouverture d'un booster : *Pol*
 
 Ce cas d'usage nécessite une connexion ou la création d'un compte. Vous pouvez les inclure avec l'utilisation d'un appel à un sous-processus avec une bordure épaisse et un symbole "+" (voir le cours).
 
