@@ -1,113 +1,152 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
     "title": "pokapi-user API Documentation",
-    "description": "",
+    "description": "Cette API est responsable de la gestion des utilisateurs",
     "version": "1.0.0"
   },
-  "host": "localhost:8082/api/v0",
-  "basePath": "/",
-  "schemes": [
-    "http"
+  "servers": [
+    {
+      "url": "http://localhost:8082/api/v0",
+      "description": "Serveur hébergé sur le réseau de l'IUT de Nantes nécessite un VPN."
+    }
+  ],
+  "tags": [
+    {
+      "name": "User"
+    }
   ],
   "paths": {
     "/login": {
       "post": {
+        "tags": [
+          "User"
+        ],
         "summary": "Se connecter à partir des identifiants ou d'un token",
-        "description": "",
+        "description": "Permet à un utilisateur de se connecter en utilisant soit un jeton d'authentification, soit son identifiant et mot de passe si les deux sont fournis alors la vérification se fait avec les identifiants.",
         "parameters": [
           {
             "name": "authorization",
             "in": "header",
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "login": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
+              "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "$ref": "#/components/responses/NewToken"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Jeton ou identifiants invalides",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "in": "body",
+          "description": "Renseigner ses informations de connexion",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
           }
         }
       }
     },
     "/register": {
       "post": {
+        "tags": [
+          "User"
+        ],
         "summary": "Inscrire un nouvel utilisateur",
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "login": {
-                  "example": "any"
-                },
-                "pseudo": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
+        "description": "Permet à un utilisateur de s'inscrire avec un login, un pseudo et un mot de passe. Le login doit être unique.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "$ref": "#/components/responses/NewToken"
+          },
+          "400": {
+            "description": "Un utilisateur avec ce login existe déjà",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
+        },
+        "requestBody": {
+          "in": "body",
+          "description": "Renseigner ses informations de pour la création du compte",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Register"
+              }
+            }
           }
         }
       }
     },
     "/my-cards": {
       "get": {
+        "tags": [
+          "User"
+        ],
         "summary": "Récupérer toutes les cartes de la collection de l'utilisateur",
-        "description": "",
+        "description": "TODO",
         "responses": {
           "200": {
             "description": "OK"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "$ref": "#/components/responses/UnauthorizedResponse"
           },
           "503": {
-            "description": "Service Unavailable"
+            "description": "Service Unavailable",
+            "$ref": "#/components/responses/APIError"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/my-cards/{cardId}": {
       "get": {
+        "tags": [
+          "User"
+        ],
         "summary": "Récupérer une carte de la collection de l'utilisateur",
-        "description": "",
+        "description": "TODO",
         "parameters": [
           {
             "name": "cardId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -118,93 +157,67 @@
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "$ref": "#/components/responses/UnauthorizedResponse"
           },
           "503": {
-            "description": "Service Unavailable"
+            "description": "Service Unavailable",
+            "$ref": "#/components/responses/APIError"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/pseudo/{pseudo}": {
       "get": {
+        "tags": [
+          "User"
+        ],
         "summary": "Trouver un utilisateur à partir de son pseudo",
-        "description": "",
+        "description": "Rechercher des utilisateur à partir de leur pseudo, renvoie tous les utilisateurs dont le pseudo commence par la chaîne donnée.",
         "parameters": [
           {
             "name": "pseudo",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            },
+            "description": "Le début du pseudo a rechercher"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Les informations des utilisateurs trouvés",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListUserInfo"
+                }
+              }
+            }
           }
         }
       }
     },
     "/open-booster/{setId}": {
       "get": {
+        "tags": [
+          "User"
+        ],
         "summary": "Ouvrir un booster pour ajouter des cartes dans la collection",
-        "description": "",
+        "description": "TODO",
         "parameters": [
           {
             "name": "setId",
             "in": "path",
             "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "503": {
-            "description": "Service Unavailable"
-          }
-        }
-      }
-    },
-    "/info": {
-      "get": {
-        "summary": "Récupérer son login et pseudo",
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/update": {
-      "put": {
-        "summary": "Mettre à jour son pseudo et mot de passe",
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "pseudo": {
-                  "example": "any"
-                },
-                "password": {
-                  "example": "any"
-                }
-              }
+              "type": "string"
             }
           }
         ],
@@ -216,69 +229,429 @@
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "$ref": "#/components/responses/UnauthorizedResponse"
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "$ref": "#/components/responses/APIError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/info": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Récupérer son login et pseudo",
+        "description": "Permet à un utilisateur de voir les informations de son compte, c'est-à-dire son login et son pseudo.",
+        "responses": {
+          "200": {
+            "description": "Les informations de l'utilisateur",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfo"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/responses/UnauthorizedResponse"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/update": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Mettre à jour son pseudo et mot de passe",
+        "description": "Permet à un utilisateur de modifier son pseudo et/ou son mot de passe.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "$ref": "#/components/responses/NewToken"
+          },
+          "400": {
+            "description": "Le nouveau pseudo ou mot de passe est invalide",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/responses/UnauthorizedResponse"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "in": "body",
+          "description": "Renseigner le nouveau pseudo ou mot de passe",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update"
+              }
+            }
           }
         }
       }
     },
     "/delete": {
       "delete": {
+        "tags": [
+          "User"
+        ],
         "summary": "Supprimer l'utilisateur",
-        "description": "",
+        "description": "Permet à un utilisateur de supprimer son compte.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "L'utilisateur a été supprimé",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDeleted"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "$ref": "#/components/responses/UnauthorizedResponse"
           },
           "404": {
-            "description": "Not Found"
-          }
-        }
-      }
-    },
-    "/searched": {
-      "get": {
-        "summary": "Récupérer toutes les cartes marquées comme recherchées d'un utilisateur",
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/searched/add": {
-      "post": {
-        "summary": "Ajouter une carte dans la liste des cartes recherchées",
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "example": "any"
+            "description": "L'utilisateur n'a pas été trouvé",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
           }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/searched": {
+      "get": {
+        "tags": [
+          "User"
         ],
+        "summary": "Récupérer toutes les cartes marquées comme recherchées d'un utilisateur",
+        "description": "Voir la les ID des cartes qui sont dans la liste des cartes recherchées par l'utilisateur",
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
+            "description": "La liste des ID des cartes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListId"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "$ref": "#/components/responses/UnauthorizedResponse"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/searched/add": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Ajouter une carte dans la liste des cartes recherchées",
+        "description": "Permet à un utilisateur d'ajouter une carte à la liste des cartes qu'il recherche.",
+        "responses": {
+          "200": {
+            "description": "La carte a été ajoutée"
+          },
+          "400": {
+            "description": "L'utilisateur n'a pas spécifié d'id ou la carte est déjà dans la liste",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "$ref": "#/components/responses/UnauthorizedResponse"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "in": "body",
+          "description": "ID de la carte à ajouter à la liste",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardId"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string",
+            "example": "johnDoe"
+          },
+          "password": {
+            "type": "string",
+            "example": "pswd1234"
+          }
+        },
+        "required": [
+          "login",
+          "password"
+        ]
+      },
+      "Register": {
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string",
+            "example": "johnDoe"
+          },
+          "pseudo": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "password": {
+            "type": "string",
+            "example": "pswd1234"
+          }
+        },
+        "required": [
+          "login",
+          "pseudo",
+          "password"
+        ]
+      },
+      "Update": {
+        "type": "object",
+        "properties": {
+          "pseudo": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "password": {
+            "type": "string",
+            "example": "pswd1234"
+          }
+        }
+      },
+      "UserInfo": {
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string",
+            "example": "johnDoe"
+          },
+          "pseudo": {
+            "type": "string",
+            "example": "John Doe"
+          }
+        },
+        "required": [
+          "login",
+          "pseudo"
+        ]
+      },
+      "Token": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "valid.jwt.token"
+          }
+        },
+        "required": [
+          "token"
+        ]
+      },
+      "UserDeleted": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "User deleted"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "error message"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "UnauthorizedError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Unauthorized : invalid or missing authentication token"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "Card": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "xy1-1"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 3
+          }
+        },
+        "required": [
+          "id",
+          "quantity"
+        ]
+      },
+      "CardId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "xy1-1"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "ListUserInfo": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "example": "5"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "login": {
+                  "type": "string",
+                  "example": "johnDoe"
+                },
+                "pseudo": {
+                  "type": "string",
+                  "example": "John Doe"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ListId": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "example": "xy1-1"
+        }
+      }
+    },
+    "responses": {
+      "UnauthorizedResponse": {
+        "description": "Accès refusé",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UnauthorizedError"
+            }
+          }
+        }
+      },
+      "NewToken": {
+        "description": "Jeton d'authentification actualisé",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Token"
+            }
+          }
+        }
+      },
+      "APIError": {
+        "description": "Une erreur est survenue avec l'API de gestion des cartes Pokapi-data",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
           }
         }
       }

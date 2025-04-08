@@ -20,6 +20,26 @@ async function verifyAuth (req, res, next) {
 
 router.route('/login').post(async (req, res) => {
     // #swagger.summary = "Se connecter à partir des identifiants ou d'un token"
+    // #swagger.description = "Permet à un utilisateur de se connecter en utilisant soit un jeton d'authentification, soit son identifiant et mot de passe si les deux sont fournis alors la vérification se fait avec les identifiants."
+    // #swagger.tags = ['User']
+    /*
+    #swagger.requestBody = {
+        in: 'body',
+        description: "Renseigner ses informations de connexion",
+        required: false,
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/Login" } }
+        }
+    }
+    #swagger.security = [{ "bearerAuth": [] }]
+    #swagger.responses[200] = { $ref: "#/components/responses/NewToken" }
+    #swagger.responses[401] = {
+        description: "Jeton ou identifiants invalides",
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/Error" } }
+        }
+    }
+    */
     if (req.body.login && req.body.password) {
         const token = await userController.login(req.body.login, req.body.password)
         if (token !== null) {
@@ -38,6 +58,25 @@ router.route('/login').post(async (req, res) => {
 
 router.route('/register').post(async (req, res) => {
     // #swagger.summary = "Inscrire un nouvel utilisateur"
+    // #swagger.description = "Permet à un utilisateur de s'inscrire avec un login, un pseudo et un mot de passe. Le login doit être unique."
+    // #swagger.tags = ['User']
+    /*
+    #swagger.requestBody = {
+        in: 'body',
+        description: "Renseigner ses informations de pour la création du compte",
+        required: true,
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/Register" } }
+        }
+    }
+    #swagger.responses[200] = { $ref: "#/components/responses/NewToken" }
+    #swagger.responses[400] = {
+        description: "Un utilisateur avec ce login existe déjà",
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/Error" } }
+        }
+    }
+    */
     try {
         const newToken = await userController.register(req.body.login, req.body.pseudo, req.body.password)
         return res.status(200).json({token: newToken})
@@ -48,6 +87,13 @@ router.route('/register').post(async (req, res) => {
 
 router.route('/my-cards').get(verifyAuth, async (req, res) => {
     // #swagger.summary = "Récupérer toutes les cartes de la collection de l'utilisateur"
+    // #swagger.description = "TODO"
+    // #swagger.tags = ['User']
+    // #swagger.security = [{ "bearerAuth": [] }]
+    /*
+    #swagger.responses[401] = { $ref: "#/components/responses/UnauthorizedResponse" }
+    #swagger.responses[503] = { $ref: "#/components/responses/APIError" }
+     */
     try {
         const userCards = await userController.getUserCards(req.user)
         return res.status(200).json(userCards)
@@ -58,6 +104,13 @@ router.route('/my-cards').get(verifyAuth, async (req, res) => {
 
 router.route('/my-cards/:cardId').get(verifyAuth, async (req, res) => {
     // #swagger.summary = "Récupérer une carte de la collection de l'utilisateur"
+    // #swagger.description = "TODO"
+    // #swagger.tags = ['User']
+    // #swagger.security = [{ "bearerAuth": [] }]
+    /*
+    #swagger.responses[401] = { $ref: "#/components/responses/UnauthorizedResponse" }
+    #swagger.responses[503] = { $ref: "#/components/responses/APIError" }
+     */
     try {
         const userCard = await userController.getUserCard(req.user, req.params.cardId)
         return res.status(200).json(userCard)
@@ -71,6 +124,22 @@ router.route('/my-cards/:cardId').get(verifyAuth, async (req, res) => {
 
 router.route('/pseudo/:pseudo').get(async (req, res) => {
     // #swagger.summary = "Trouver un utilisateur à partir de son pseudo"
+    // #swagger.description = "Rechercher des utilisateur à partir de leur pseudo, renvoie tous les utilisateurs dont le pseudo commence par la chaîne donnée."
+    // #swagger.tags = ['User']
+    /*
+    #swagger.parameters['pseudo'] = {
+        in: 'path',
+        description: "Le début du pseudo a rechercher",
+        required: true,
+        type: "string",
+    }
+    #swagger.responses[200] = {
+        description: "Les informations des utilisateurs trouvés",
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/ListUserInfo" } }
+        }
+    }
+    */
     const data = await userController.findUserByPseudo(req.params.pseudo)
     res.status(200).json({
         count: data.length,
@@ -83,6 +152,13 @@ router.route('/pseudo/:pseudo').get(async (req, res) => {
 
 router.route('/open-booster/:setId').get(verifyAuth, async (req, res) => {
     // #swagger.summary = "Ouvrir un booster pour ajouter des cartes dans la collection"
+    // #swagger.description = "TODO"
+    // #swagger.tags = ['User']
+    // #swagger.security = [{ "bearerAuth": [] }]
+    /*
+    #swagger.responses[401] = { $ref: "#/components/responses/UnauthorizedResponse" }
+    #swagger.responses[503] = { $ref: "#/components/responses/APIError" }
+     */
     try {
         const boosterContent = await userController.openBooster(req.user, req.params.setId)
         return res.status(200).json(boosterContent)
@@ -96,6 +172,18 @@ router.route('/open-booster/:setId').get(verifyAuth, async (req, res) => {
 
 router.route('/info').get(verifyAuth, async (req, res) => {
     // #swagger.summary = "Récupérer son login et pseudo"
+    // #swagger.description = "Permet à un utilisateur de voir les informations de son compte, c'est-à-dire son login et son pseudo."
+    // #swagger.tags = ['User']
+    // #swagger.security = [{ "bearerAuth": [] }]
+    /*
+    #swagger.responses[200] = {
+        description: "Les informations de l'utilisateur",
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/UserInfo" } }
+        }
+    }
+    #swagger.responses[401] = { $ref: "#/components/responses/UnauthorizedResponse" }
+     */
     res.status(200).json({
         login: req.user.login,
         pseudo: req.user.pseudo,
@@ -104,6 +192,27 @@ router.route('/info').get(verifyAuth, async (req, res) => {
 
 router.route('/update').put(verifyAuth, async (req, res) => {
     // #swagger.summary = "Mettre à jour son pseudo et mot de passe"
+    // #swagger.description = "Permet à un utilisateur de modifier son pseudo et/ou son mot de passe."
+    // #swagger.tags = ['User']
+    // #swagger.security = [{ "bearerAuth": [] }]
+    /*
+    #swagger.requestBody = {
+        in: 'body',
+        description: "Renseigner le nouveau pseudo ou mot de passe",
+        required: true,
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/Update" } }
+        }
+    }
+    #swagger.responses[200] = { $ref: "#/components/responses/NewToken" }
+    #swagger.responses[401] = { $ref: "#/components/responses/UnauthorizedResponse" }
+    #swagger.responses[400] = {
+        description: "Le nouveau pseudo ou mot de passe est invalide",
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/Error" } }
+        }
+    }
+     */
     try {
         const newToken = await userController.updateUser(req.user, req.body.pseudo, req.body.password)
         return res.status(200).json({token: newToken})
@@ -114,6 +223,24 @@ router.route('/update').put(verifyAuth, async (req, res) => {
 
 router.route('/delete').delete(verifyAuth, async (req, res) => {
     // #swagger.summary = "Supprimer l'utilisateur"
+    // #swagger.description = "Permet à un utilisateur de supprimer son compte."
+    // #swagger.tags = ['User']
+    // #swagger.security = [{ "bearerAuth": [] }]
+    /*
+    #swagger.responses[200] = {
+        description: "L'utilisateur a été supprimé",
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/UserDeleted" } }
+        }
+    }
+    #swagger.responses[401] = { $ref: "#/components/responses/UnauthorizedResponse" }
+    #swagger.responses[404] = {
+        description: "L'utilisateur n'a pas été trouvé",
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/Error" } }
+        }
+    }
+     */
     const result = await userController.delete(req.user)
     if (result)
         return res.status(200).json({message: "User deleted"})
@@ -122,14 +249,53 @@ router.route('/delete').delete(verifyAuth, async (req, res) => {
 
 router.route('/searched').get(verifyAuth, async (req, res) => {
     // #swagger.summary = "Récupérer toutes les cartes marquées comme recherchées d'un utilisateur"
+    // #swagger.description = "Voir la les ID des cartes qui sont dans la liste des cartes recherchées par l'utilisateur"
+    // #swagger.tags = ['User']
+    // #swagger.security = [{ "bearerAuth": [] }]
+    /*
+    #swagger.responses[200] = {
+        description: "La liste des ID des cartes",
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/ListId" } }
+        }
+    }
+    #swagger.responses[401] = { $ref: "#/components/responses/UnauthorizedResponse" }
+     */
     return res.status(200).json(req.user.searched.map(c => c.id))
 })
 
 router.route('/searched/add').post(verifyAuth, async (req, res) => {
     // #swagger.summary = "Ajouter une carte dans la liste des cartes recherchées"
+    // #swagger.description = "Permet à un utilisateur d'ajouter une carte à la liste des cartes qu'il recherche."
+    // #swagger.tags = ['User']
+    // #swagger.security = [{ "bearerAuth": [] }]
+    /*
+    #swagger.requestBody = {
+        in: 'body',
+        description: "ID de la carte à ajouter à la liste",
+        required: true,
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/CardId" } }
+        }
+    }
+    #swagger.responses[200] = {
+        description: "La carte a été ajoutée"
+    }
+    #swagger.responses[401] = { $ref: "#/components/responses/UnauthorizedResponse" }
+    #swagger.responses[400] = {
+        description: "L'utilisateur n'a pas spécifié d'id ou la carte est déjà dans la liste",
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/Error" } }
+        }
+    }
+    */
     if (req.body.id) {
-        await userController.addSearched(req.user, req.body.id)
-        return res.status(200).json()
+        try {
+            await userController.addSearched(req.user, req.body.id)
+            return res.status(200).json()
+        } catch (e) {
+            return res.status(400).json({message: e.message})
+        }
     }
     return res.status(400).json({message: 'Missing id field'})
 })

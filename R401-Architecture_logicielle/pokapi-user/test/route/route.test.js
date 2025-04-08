@@ -166,6 +166,18 @@ describe("Route - route",()=> {
         assert.equal(response.status, 400)
     })
 
+    it("POST /searched/add already here",async () => {
+        const token = await userController.register(user1.login, user1.pseudo, user1.password)
+        let response = await request(app).post(CONFIG.API_PATH+'/searched/add')
+            .send({id: 'dp3-1'})
+            .set("Authorization", `Bearer ${token}`)
+        assert.equal(response.status, 200)
+        response = await request(app).post(CONFIG.API_PATH+'/searched/add')
+            .send({id: 'dp3-1'})
+            .set("Authorization", `Bearer ${token}`)
+        assert.equal(response.status, 400)
+    })
+
     it("POST /searched/add valid",async () => {
         const token = await userController.register(user1.login, user1.pseudo, user1.password)
         const response = await request(app).post(CONFIG.API_PATH+'/searched/add')
