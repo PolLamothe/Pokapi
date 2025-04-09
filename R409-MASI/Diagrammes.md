@@ -15,6 +15,8 @@ Pour chaque cas suivant une courte description a été faite mais tout n'est pas
 
 L'utilisateur dispose d'un jeton ou de son login et mdp. Soit le système vérifie la validité du jeton. Soit le système vérifie si un utilisateur avec ce login existe puis il vérifie que les mdp correspondent. Dans les 2 cas si l'authentification est réussie le système renvoie un jeton sinon une erreur.
 
+![Connexion](./BPMN/BPMN-Connexion.jpg)
+
 ## 2 - Création de compte : *?*
 
 L'utilisateur envoie au système le login, le pseudo et le mdp. Le système vérifie qu'un utilisateur avec ce login n'existe pas, si c'est bon alors le système renvoie un jeton d'authentification sinon une erreur.
