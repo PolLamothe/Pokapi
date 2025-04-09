@@ -35,6 +35,10 @@ Ce cas d'usage nécessite une connexion. Vous pouvez mettre au début du diagram
 
 L'utilisareur demande sa collection, pokapi user récupère la collection puis demande à pokapi-data les infos de toutes les cartes de la collection. Enfin pokapi-user renvoie toutes les cartes de la collection.
 
+![Collection](./BPMN/BPMN_Collection.jpg)
+
+> 🔴🔴 Je ne sais pas s'il fallait que je développe ce que fait pokapi-user et data et je ne suis pas sur aussi s'il fallait les représenter comme sa dis moi ce qu'il faudrit revoir.
+
 ## 5 - Mettre à jour les informations de connexion : *?*
 
 Ce cas d'usage nécessite une connexion. Vous pouvez mettre au début du diagramme le morceau ci-dessous.
