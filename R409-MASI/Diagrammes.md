@@ -29,7 +29,7 @@ Voici le fonctionnement global, il faut aller plus en détail dans les appels au
 
 L'utilisateur commence par récupérer tous les sets depuis pokapi-data puis il choisi un set après il demande d'ouvrir un booster avec le set choisi, l'API récupère toutes les cartes du set, elle en choisi 5 au hasard. Enfin elle ajoute les 5 cartes à la collection de l'utilisateur et renvoie les 5 cartes à l'utilisateur.
 
-## 4 - Voir la collection de cartes : *?*
+## 4 - Voir la collection de cartes : *Kyllian*
 
 Ce cas d'usage nécessite une connexion. Vous pouvez mettre au début du diagramme le morceau ci-dessous.
 
