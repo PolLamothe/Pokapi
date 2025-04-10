@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Button, CheckboxGroup, Flex, Grid, ScrollArea, TextField} from "@radix-ui/themes";
+import {Button, CheckboxGroup, Flex, Grid, ScrollArea, Spinner, TextField} from "@radix-ui/themes";
 import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
 import * as Accordion from '@radix-ui/react-accordion';
 import {AccordionContent, AccordionTrigger} from "@radix-ui/react-accordion";
@@ -32,6 +32,8 @@ function Collection() {
     const [selectedType, setSelectedType] = useState([])
     const [selectedRarities, setSelectedRarities] = useState([])
     const [selectedSet, setSelectedSet] = useState([])
+
+    const [loadingExpired, setLoadingExpired] = useState(false)
 
     const navigateToCardPage = useNavigate();
 
@@ -71,6 +73,14 @@ function Collection() {
         })
 
     },[])
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoadingExpired(true)
+        }, 3000)
+
+        return () => clearTimeout(timer)
+    }, [])
 
 
     const handleSearch = async (e) => {
@@ -221,8 +231,15 @@ function Collection() {
                     userCards.map(card => (
                     <ImageCard key={card.card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}}/>
                     ))
+                ) : !loadingExpired ? (
+                    <Flex align="center" direction="column" py="9">
+                        <Spinner size="2"/>
+                        Loading
+                    </Flex>
                 ) : (
-                    <Flex justify="center" py="9">No Cards found !</Flex>
+                    <Flex justify="center" py="9">
+                        No Cards founds !
+                    </Flex>
                 )}
             </Grid>
         </Grid>

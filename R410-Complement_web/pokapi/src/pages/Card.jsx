@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router";
 import {useState, useEffect, useRef} from "react";
-import {Box, Button, Flex, IconButton, Text} from "@radix-ui/themes";
+import {Box, Button, Flex, IconButton, Spinner, Text} from "@radix-ui/themes";
 import pokapiDAO from "../dao/pokapiDAO.js";
 import {Undo2} from "lucide-react";
 
@@ -127,7 +127,10 @@ function Card() {
                     </Flex>
                 </Flex>
             ) : (
-                <p>Loading...</p>
+                <Flex align="center" direction="column" py="9">
+                    <Spinner size="2"/>
+                    Loading
+                </Flex>
             )}
         </>
     );

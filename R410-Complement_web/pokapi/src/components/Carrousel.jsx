@@ -4,6 +4,7 @@ import { Navigation } from 'swiper/modules'
 import dao from "../dao/pokapiDAO.js"
 import 'swiper/css'
 import SetPresentation from './SetPresentation'
+import {Flex, Spinner} from "@radix-ui/themes";
 
 function shuffle(array){
     let copy = [...array]
@@ -40,7 +41,7 @@ const Carousel = () => {
 
     return (
         <div className="carousel-container" style={carouselStyle}>
-            {listSet != null && (
+            {listSet != null ? (
                 <Swiper
                     spaceBetween={50}
                     slidesPerView={3}
@@ -59,6 +60,11 @@ const Carousel = () => {
                         </SwiperSlide>
                     ))}
                 </Swiper>  
+            ) : (
+                <Flex align="center" direction="column" py="9">
+                    <Spinner size="2"/>
+                    Loading
+                </Flex>
             )}
             <div className="swiper-button-prev">❮</div>
             <div className="swiper-button-next">❯</div>

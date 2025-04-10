@@ -1,4 +1,4 @@
-import {Button, Flex, ScrollArea, TextField, Box, IconButton, TextArea, Slot} from "@radix-ui/themes";
+import {Button, Flex, ScrollArea, TextField, Box, IconButton, TextArea, Slot, Spinner} from "@radix-ui/themes";
 import {useEffect, useState} from "react";
 import pokapiDAO from "../dao/pokapiDAO.js";
 import {useParams, useNavigate} from "react-router";
@@ -103,9 +103,12 @@ function ChatPokemon() {
                         </IconButton>
                     </Flex>
                 </Flex>
-            ) :
-                ( <p> Loading... </p>)
-            }
+            ) : (
+                <Flex align="center" direction="column" py="9">
+                    <Spinner size="2"/>
+                    Loading
+                </Flex>
+            )}
 
         </>
 
