@@ -37,7 +37,7 @@ L'utilisareur demande sa collection, pokapi user récupère la collection puis d
 
 ![Collection](./BPMN/BPMN_Collection.jpg)
 
-> 🔴🔴 Je ne sais pas s'il fallait que je développe ce que fait pokapi-user et data et je ne suis pas sur aussi s'il fallait les représenter comme sa dis moi ce qu'il faudrit revoir.
+> 🔴🔴 Je ne sais pas s'il fallait que je développe ce que fait pokapi-user et data parce que je trouve que sa fait très vide, après je ne savais pas vers ou devez pointez l'envoie d'un message d'erreur de connexion et je ne suis pas sur aussi s'il fallait représenter pokapi-usert/data comme sa dis moi ce qu'il faudrait revoir.
 
 ## 5 - Mettre à jour les informations de connexion : *?*
 
