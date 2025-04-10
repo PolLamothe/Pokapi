@@ -17,7 +17,7 @@ L'utilisateur dispose d'un jeton ou de son login et mdp. Soit le système vérif
 
 ![Connexion](./BPMN/BPMN-Connexion.jpg)
 
-## 2 - Création de compte : *?*
+## 2 - Création de compte : *Brieuc*
 
 L'utilisateur envoie au système le login, le pseudo et le mdp. Le système vérifie qu'un utilisateur avec ce login n'existe pas, si c'est bon alors le système renvoie un jeton d'authentification sinon une erreur.
 
