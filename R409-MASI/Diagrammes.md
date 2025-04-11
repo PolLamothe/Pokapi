@@ -21,6 +21,8 @@ L'utilisateur dispose d'un jeton ou de son login et mdp. Soit le système vérif
 
 L'utilisateur envoie au système le login, le pseudo et le mdp. Le système vérifie qu'un utilisateur avec ce login n'existe pas, si c'est bon alors le système renvoie un jeton d'authentification sinon une erreur.
 
+![Création](./BPMN/BPMN-Creation.jpg)
+
 ## 3 - Ouverture d'un booster : *Pol*
 
 Ce cas d'usage nécessite une connexion. Vous pouvez mettre au début du diagramme le morceau ci-dessous.
