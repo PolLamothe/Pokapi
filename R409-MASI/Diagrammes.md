@@ -31,6 +31,17 @@ Voici le fonctionnement global, il faut aller plus en détail dans les appels au
 
 L'utilisateur commence par récupérer tous les sets depuis pokapi-data puis il choisi un set après il demande d'ouvrir un booster avec le set choisi, l'API récupère toutes les cartes du set, elle en choisi 5 au hasard. Enfin elle ajoute les 5 cartes à la collection de l'utilisateur et renvoie les 5 cartes à l'utilisateur.
 
+![Ouverture d'un booster](./BPMN/BPMN-Opening%20Boosters.jpg)
+
+**Commentaire apportés par Thomas :**
+
+Le diagramme est clair, mais certains éléments, notamment autour du cache, sont trop détaillés. Il vaudrait mieux simplifier en représentant uniquement la vérification du cache, une gateway “cache valide ?”, puis l’appel à l’API ou l’envoi des données, sans inclure des tâches comme l’actualisation de variables ou du cache.
+
+L’objectif est de montrer le comportement fonctionnel, pas les détails techniques.
+Quelques corrections à prévoir également :
+- Il manque un événement de fin pour l’utilisateur et pokapi-user.
+- Une pool ne peut pas contenir plusieurs événements de début, comme c’est le cas dans pokapi-data ; tu pourrais chaîner les deux processus avec un événement intermédiaire.
+
 ## 4 - Voir la collection de cartes : *Kyllian*
 
 Ce cas d'usage nécessite une connexion. Vous pouvez mettre au début du diagramme le morceau ci-dessous.
@@ -38,8 +49,6 @@ Ce cas d'usage nécessite une connexion. Vous pouvez mettre au début du diagram
 L'utilisareur demande sa collection, pokapi user récupère la collection puis demande à pokapi-data les infos de toutes les cartes de la collection. Enfin pokapi-user renvoie toutes les cartes de la collection.
 
 ![Collection](./BPMN/BPMN_Collection.jpg)
-
-> 🔴🔴 Je ne sais pas s'il fallait que je développe ce que fait pokapi-user et data parce que je trouve que sa fait très vide, après je ne savais pas vers ou devez pointez l'envoie d'un message d'erreur de connexion et je ne suis pas sur aussi s'il fallait représenter pokapi-usert/data comme sa dis moi ce qu'il faudrait revoir.
 
 ## 5 - Mettre à jour les informations de connexion : *?*
 
