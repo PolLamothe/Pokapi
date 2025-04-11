@@ -9,7 +9,6 @@ class DbProductRepository implements ProductRepositoryInterface
     {
         //$dsn = "sqlite:".CFG["db"]["host"].CFG["db"]["database"];
         $dsn = "mysql:host=".CFG["db"]["host"].";port=".CFG["db"]["port"].";dbname=".CFG["db"]["database"];
-        //$dsn = "mysql:host=mariadb;port=3306;dbname=apachebd";
         $this->connexion = \system\SPDO::getInstance($dsn,CFG["db"]["login"],CFG["db"]["password"],CFG["db"]["options"],CFG["db"]["exec"])
             ->getConnexion();
     }
@@ -18,7 +17,7 @@ class DbProductRepository implements ProductRepositoryInterface
     {
         $statement = $this->connexion->prepare("SELECT * FROM product");
         $statement->execute();
-        return $statement->fetchAll(\PDO::FETCH_CLASS, "\app\model\Entity\ProductEntity");
+        return $statement->fetchAll(\PDO::FETCH_CLASS, "\app\model\\entity\ProductEntity");
     }
 
     public function add(\app\model\entity\ProductEntity $product): \app\model\entity\ProductEntity

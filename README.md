@@ -45,6 +45,9 @@ Vous devrez développer une application de préférence « one page » sur des s
 
 **Deadline : ? avril**
 
+- [x] Fini
+- [ ] Rendu : pas encore de dépôt Madoc 
+
 **Consignes :** [R408-Virtualisation/README.md](https://gitlab.univ-nantes.fr/pub/but/but2/sae4/sae4_class_grp1_eq1_arnaud-kyllian_destain-jauzua_lamothe-pol_le-carluer-brieuc_souchet-thomas/-/tree/main/R408-Virtualisation?ref_type=heads)
 
 ## R409 - Management avancé des systèmes d'information
