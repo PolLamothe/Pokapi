@@ -56,6 +56,8 @@ Ce cas d'usage nécessite une connexion. Vous pouvez mettre au début du diagram
 
 L'utilisateur demande de changer son pseudo ou son mot de passe ou les deux. L'API met à jour les infos de l'utilisateur et renvoie les nouvelles infos de l'utilisateur.
 
+![Collection](./BPMN/BPMN-Update.jpg)
+
 
 ## Partie du diagramme pour vérifier la connexion
 
