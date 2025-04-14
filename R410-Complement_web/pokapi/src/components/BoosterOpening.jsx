@@ -34,33 +34,28 @@ function BoosterOpening({setId,callback}){
     return (
         <>
             <div id="globalWrapper" onClick={currentIndex > 5 ? callback : nextCard}>
-                <div id="mainWrapper">
+                <div className={"mainWrapper " + (currentIndex > 5 ? "cardResultWrapper" : "")}>
                     {!cardDisplayState && (
                         <img src="/public/booster.png" className={boosterAnimationState ? "boosterAnimation" : ""} id="boosterImage" onAnimationEnd={()=>{setCardDisplayState(true)}} onClick={startBoosterAnimation}/>
                     )}
-                    {currentIndex <= 5 && cardList.map((card,index)=>{
+                    {cardList.map((card,index)=>{
                         return <img src={(index >= 5-currentIndex) ? cardList[index].images.large : "/public/cardBack.webp"}
-                        className={index < 5-currentIndex ? 
-                            ("cardTransition card "+ 
-                                (!cardDisplayState ? 
-                                    "initSideCard" : 
-                                    "finalSideCard"
-                                )
-                            ) : 
-                            ("card mainCard")
+                        className={currentIndex <= 5 ?
+                            (index < 5-currentIndex ? 
+                                ("cardTransition card "+ 
+                                    (!cardDisplayState ? 
+                                        "initSideCard" : 
+                                        "finalSideCard"
+                                    )
+                                ) : 
+                                ("card mainCard")) :
+                            ("finalCard")
                             }
-                        style={(cardDisplayState && index < 5-currentIndex) ? 
+                        style={(cardDisplayState && index < 5-currentIndex && currentIndex <= 5) ? 
                             dynamicCardStyle(index) : 
                             {zIndex : 5-index}
                         }/>
                     })}
-                    {currentIndex > 5 && (
-                        <div id="cardResultWrapper">
-                            {cardList.map((card,index)=>{
-                            return <img src={card.images.large} className="finalCard"/>
-                        })}
-                        </div>
-                    )}
                 </div>
             </div>
         </>
