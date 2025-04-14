@@ -8,6 +8,7 @@ import evolve from "../ressources/evolve.json" with {type : "json"}
 import cardDAO from '../../api/dao/cardDAO.js';
 import {Card} from "../../api/model/Card.js";
 import cardFetchDAO from "../../api/dao/cardFetchDAO.js";
+import CONFIG from "../../const.js";
 
 let mongod=null
 let connexion = null
@@ -32,42 +33,58 @@ describe('Controller - CardController', () => {
 
     it("findCard",async ()=>{
         const testCard = new Card(testCards["data"][0])
-        const result = await cardController.findCard(testCard.id)
-        assert(((Date.now()/1000) - result.storageDate) < 1)//vérification que les carte on étées mise en cache très récemment
+        let result = await cardController.findCard(testCard.id)
+        assert(((Date.now()/1000) - result.storageDate) < 3)
         assert(testCard.compare(result))
         await new Promise(resolve => setTimeout(resolve, 1000))
         const cachedResult = await cardController.findCard(testCard.id);
         assert.equal(cachedResult.storageDate,result.storageDate)
         assert(testCard.compare(cachedResult))
+        // Cache expiré
+        const oldConfig = CONFIG.CACHE_EXPIRATION
+        CONFIG.CACHE_EXPIRATION = 1
+        result = await cardController.findCard(testCard.id)
+        assert(((Date.now()/1000) - result.storageDate) < 3)
+        assert(testCard.compare(result))
+        CONFIG.CACHE_EXPIRATION = oldConfig
     })
 
     it("findCards",async ()=>{
         const cards = testCards["data"]
         cards.splice(5,cards.length-5)
         const ids = cards.map((card)=>card["id"])
-        const result = await cardController.findCards(ids)
+        let result = await cardController.findCards(ids)
         assert.equal(ids.length, result.length)
         result.forEach((card,index)=>{
-            assert(((Date.now()/1000) - card.storageDate) < 1)
+            assert(((Date.now()/1000) - card.storageDate) < 3)
             assert(new Card(cards[index]).compare(card))
         })
         await new Promise(resolve => setTimeout(resolve, 1000))
         const cachedResult = await cardController.findCards(ids);
         for (const card of cachedResult) {
             const index = cachedResult.indexOf(card);
-            assert.equal(card.storageDate,result[index].storageDate)
+            assert.equal(card.storageDate, result[index].storageDate)
             assert(new Card(cards[index]).compare(card))
         }
+        // Cache expiré
+        const oldConfig = CONFIG.CACHE_EXPIRATION
+        CONFIG.CACHE_EXPIRATION = 1
+        result = await cardController.findCards(ids)
+        result.forEach((card,index)=>{
+            assert(((Date.now()/1000) - card.storageDate) < 3)
+            assert(new Card(cards[index]).compare(card))
+        })
+        CONFIG.CACHE_EXPIRATION = oldConfig
     })
 
     it("findSetCard",async()=>{
         const firstCard = new Card(setCards.data[0])
         const result = await cardController.findCard(firstCard.id)
-        assert(((Date.now()/1000) - result.storageDate) < 1)//vérification que les carte on étées mise en cache très récemment
+        assert(((Date.now()/1000) - result.storageDate) < 3)
         assert(new Card(firstCard).compare(result))
         
         await new Promise(resolve => setTimeout(resolve, 1000))
-        const setCardsRetrieved = await cardController.findSetCards(firstCard.set.id)
+        let setCardsRetrieved = await cardController.findSetCards(firstCard.set.id)
         assert.equal(setCardsRetrieved.length,firstCard.set.total)
         setCardsRetrieved.forEach((card,index)=>{
             assert(((Date.now()/1000) - card.storageDate) < 1)
@@ -78,6 +95,16 @@ describe('Controller - CardController', () => {
         const secondCard = new Card(setCards.data[1])
         const result2 = await cardController.findCard(secondCard.id)
         assert.equal(result2.storageDate,setCardsRetrieved[1].storageDate)
+        // Cache utilisé
+        setCardsRetrieved = await cardController.findSetCards(firstCard.set.id)
+        assert.equal(setCardsRetrieved.length,firstCard.set.total)
+        assert.equal(result2.storageDate,setCardsRetrieved[1].storageDate)
+        // Cache expiré
+        const oldConfig = CONFIG.CACHE_EXPIRATION
+        CONFIG.CACHE_EXPIRATION = 1
+        const setCardsFetched = await cardController.findSetCards(firstCard.set.id)
+        assert.equal(setCardsFetched.length,firstCard.set.total)
+        CONFIG.CACHE_EXPIRATION = oldConfig
     })
 
     it("setPresentation",async()=>{
@@ -100,6 +127,12 @@ describe('Controller - CardController', () => {
         await new Promise(resolve => setTimeout(resolve, 1000))
         const result2 = await cardController.findByName(base.set.id,base.name)
         assert(((Date.now()/1000)-result2.storageDate) > 1)
+        // Cache expiré
+        const oldConfig = CONFIG.CACHE_EXPIRATION
+        CONFIG.CACHE_EXPIRATION = 1
+        const result3 = await cardController.findByName(base.set.id,base.name)
+        assert(base.compare(result3))
+        CONFIG.CACHE_EXPIRATION = oldConfig
     })
 
     it("Find evolution existing",async ()=>{

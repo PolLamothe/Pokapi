@@ -2,7 +2,7 @@
 
 import cardDAO from "../dao/cardDAO.js"
 import cardFetchDAO from "../dao/cardFetchDAO.js"
-import  CONFIG  from "../../const.js"
+import CONFIG from "../../const.js"
 import setDAO from "../dao/setDAO.js"
 import setFetchDAO from "../dao/setFetchDAO.js"
 import setController from "./setController.js"
@@ -25,14 +25,14 @@ const cardController = {
                 3.1. Retourner la carte [END]
          */
         const localCard = await cardDAO.findCardByID(id)
-        if(localCard != null){
-            if((parseInt(Date.now()/1000) - localCard.storageDate) < CONFIG.CACHE_EXPIRATION){
+        if (localCard != null) {
+            if ((parseInt(Date.now()/1000) - localCard.storageDate) < CONFIG.CACHE_EXPIRATION) {
                 return localCard
-            }else{//si le cache a expiré
+            } else { // Si le cache a expiré
                 let newCard = await cardFetchDAO.findCardById(id)
                 return cardDAO.updateCard(id,newCard)
             }
-        }else{
+        } else {
             return await cardDAO.addOneCard((await cardFetchDAO.findCardById(id)))
         }
     },
@@ -68,7 +68,7 @@ const cardController = {
             if (toFetchAdd.includes(fetchedCard.id)) {
                 result.push(await cardDAO.addOneCard(fetchedCard))
             } else if (toFetchUpdate.includes(fetchedCard.id)) {
-                result.push(cardDAO.updateCard(fetchedCard.id, fetchedCard))
+                result.push(await cardDAO.updateCard(fetchedCard.id, fetchedCard))
             }
         }
 
@@ -85,25 +85,23 @@ const cardController = {
                 3.3 Retourner les cartes [END]
          */
         let localSet = await setDAO.find(id)
-        let result = {}
-        if(localSet != null){
-            if((parseInt(Date.now()/1000) - localSet.storageDate) < CONFIG.CACHE_EXPIRATION){
-                result["set"] = localSet
-            }else{//si le cache a expiré
-                localSet = setDAO.update(id,await setFetchDAO.find(id))
+        if (localSet != null) {
+            if ((parseInt(Date.now()/1000) - localSet.storageDate) > CONFIG.CACHE_EXPIRATION) {
+                // Si le cache a expiré
+                localSet = await setDAO.update(id, await setFetchDAO.find(id))
             }
-        }else{
+        } else {
             localSet = await setDAO.add(await setFetchDAO.find(id))
         }
         const localCards = await cardDAO.findCardsBySet(localSet.id)
         const localIds = new Set(localCards.map(card=>card.id))
         if(localCards.filter(card => (parseInt(Date.now()/1000) - card.storageDate) < CONFIG.CACHE_EXPIRATION).length < localSet.total){
             let allSetCards = await cardFetchDAO.findSetCards(localSet.id)
-
-            let result = [...(await cardDAO.updateCards(allSetCards.filter(card => localIds.has(card.id)))),...(await cardDAO.addManyCards(allSetCards.filter(card => !localIds.has(card.id))))]
-
-            return result
-        }else{
+            return [
+                ...(await cardDAO.updateCards(allSetCards.filter(card => localIds.has(card.id)))),
+                ...(await cardDAO.addManyCards(allSetCards.filter(card => !localIds.has(card.id))))
+            ]
+        } else {
             return localCards
         }
     },
@@ -136,14 +134,14 @@ const cardController = {
     },
     findByName : async(setId,name)=>{
         const localCard = await cardDAO.findCardByName(setId,name)
-        if(localCard != null){
-            if((parseInt(Date.now()/1000) - localCard.storageDate) < CONFIG.CACHE_EXPIRATION){
+        if (localCard != null) {
+            if((parseInt(Date.now()/1000) - localCard.storageDate) < CONFIG.CACHE_EXPIRATION) {
                 return localCard
-            }else{//si le cache a expiré
-                var newCard = await cardFetchDAO.findCardByName(setId,name)
+            } else { // Si le cache a expiré
+                let newCard = await cardFetchDAO.findCardByName(setId,name)
                 return cardDAO.updateCard(newCard.id,newCard)
             }
-        }else{
+        } else {
             return await cardDAO.addOneCard(await cardFetchDAO.findCardByName(setId,name))
         }
     },
@@ -169,8 +167,6 @@ const cardController = {
             2. Additionner les prix
             3. Retourner le prix total [END]
          */
-
-
         let cards = []
         for (const id of ids) {
             let res = await cardController.findCard(id)
