@@ -16,6 +16,68 @@
     height : 60%;
 }
 
+#mainWrapper{
+    width : 60%;
+    height : 80%;
+    left : 50%;
+    top: 50%;
+    position : relative;
+    transform : translate(-50%,-50%);
+    border-radius : 30px;
+    padding-left : 2%;
+}
+
+#globalWrapper{
+    width: 100vw;
+    height : 100vh;
+    background-color : rgba(0,0,0,0.5);
+    position : absolute;
+    top : 0px;
+    left : 0px;
+    z-index : 100;
+    backdrop-filter: blur(5px);
+}
+
+#boosterImage{
+    height : 80%;
+    top: 50%;
+    left : 50%;
+    position : relative;
+    transform : translate(-50%,-50%);
+    z-index : 100;
+    cursor : pointer
+}
+
+.finalCard{
+    width : 25%;
+    cursor : pointer
+}
+
+.mainCard{
+    right : 10%;
+    transform : translateY(-50%);
+    position : absolute;
+    border-radius : 1vw;
+    margin-top : 40vh;
+    transition-duration : 1s;
+    height : 60%;
+    cursor : pointer;
+}
+
+#cardResultWrapper{
+    display : flex;
+    flex-wrap : wrap;
+    justify-content : space-around;
+    top : 50%;
+    transform : translateY(-50%);
+    position : relative;
+    gap : 2vw;
+}
+
+.boosterAnimation{
+    animation: boosterDisparition 1.5s ease forwards;
+}
+
 @keyframes boosterDisparition {
     0% {
         transform: translate(-50%,-50%);
