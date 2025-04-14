@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react"
 import Carousel from "../components/Carrousel.jsx";
 import {Button} from "@radix-ui/themes";
-import BoosterOpening from "../components/boosterOpening.jsx";
+import BoosterOpening from "../components/BoosterOpening.jsx";
 
 function Home() {
 
@@ -17,13 +17,18 @@ function Home() {
             document.body.style.overflowY = "initial"
         )
     },[openBoosterState])
+
+    function openingOver(){
+        setOpenBoosterSet(null)
+        setOpenBoosterState(false)
+    }
             
     return (
         <>
             <Carousel setCurrentSetId={setOpenBoosterSet}></Carousel>
             <Button style={openButtonStyle} onClick={()=>setOpenBoosterState(true)}>OPEN</Button>
             {openBoosterState && (
-                <BoosterOpening setId={openBoosterSet}/>
+                <BoosterOpening setId={openBoosterSet} callback={openingOver}/>
             )}
         </>
     )

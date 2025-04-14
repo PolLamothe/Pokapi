@@ -1,6 +1,19 @@
-#boosterImage{
-    animation: boosterDisparition 1s;
-    animation-fill-mode: forwards;
+.sideCard{
+    position : absolute;
+    border-radius : 1vw;
+    margin-top : 40vh;
+    transition: all 1s ease;
+}
+.initSideCard{
+    left : 51%;
+    transform: translate(-50%,-50%);
+    height : 54%;
+}
+
+.finalSideCard{
+    cursor : pointer;
+    left : 2%;
+    height : 60%;
 }
 
 @keyframes boosterDisparition {

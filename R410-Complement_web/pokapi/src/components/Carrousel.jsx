@@ -55,7 +55,7 @@ const Carousel = ({setCurrentSetId}) => {
                 >
                     {listSet.map((set,index) => (
                         <SwiperSlide key={set.id}>
-                            <SetPresentation setId={set.id} displayState={index >= activeIndex-1 && index <= activeIndex + 2} middleState={index == activeIndex+1 || (activeIndex == 19 && index == 0)}/>
+                            <SetPresentation setId={set.id} displayState={index >= activeIndex-1 && index <= activeIndex + 2} middleState={index == activeIndex+1 || (activeIndex == 20-1 && index == 0)}/>
                         </SwiperSlide>
                     ))}
                 </Swiper>  
