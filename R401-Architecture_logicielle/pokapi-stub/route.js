@@ -11,6 +11,18 @@ import rarities from './assets/rarities.json' with {type: 'json'}
 const router = express.Router()
 
 // ---
+// OpenAI
+// ---
+
+router.route("/presentation/:cardId").get((req,res)=>{
+    res.status(200).send({text : "*Pika pika!* Je suis Pikachu, le Pokémon Électrique le plus mignon et le plus populaire de tous! *Pika pika!*"})
+})
+
+router.route("/pokemonResponse/:cardId").post((req,res)=>{
+    res.status(200).send({text : "grave !"})
+})
+
+// ---
 // Data
 // ---
 

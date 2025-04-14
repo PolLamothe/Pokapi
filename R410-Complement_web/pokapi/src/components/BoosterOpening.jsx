@@ -22,7 +22,9 @@ function BoosterOpening({setId,callback}){
     },[])
 
     function nextCard(){
-        setCurrentIndex(currentIndex+1)
+        if(boosterAnimationState){
+            setCurrentIndex(currentIndex+1)
+        }
     }
 
     function startBoosterAnimation(){
@@ -31,7 +33,7 @@ function BoosterOpening({setId,callback}){
 
     return (
         <>
-            <div id="globalWrapper">
+            <div id="globalWrapper" onClick={currentIndex > 5 ? callback : nextCard}>
                 <div id="mainWrapper">
                     {!cardDisplayState && (
                         <img src="/public/booster.png" className={boosterAnimationState ? "boosterAnimation" : ""} id="boosterImage" onAnimationEnd={()=>{setCardDisplayState(true)}} onClick={startBoosterAnimation}/>
@@ -50,11 +52,10 @@ function BoosterOpening({setId,callback}){
                         style={(cardDisplayState && index < 5-currentIndex) ? 
                             dynamicCardStyle(index) : 
                             {zIndex : 5-index}
-                        } 
-                        onClick={nextCard}/>
+                        }/>
                     })}
                     {currentIndex > 5 && (
-                        <div id="cardResultWrapper" onClick={callback}>
+                        <div id="cardResultWrapper">
                             {cardList.map((card,index)=>{
                             return <img src={card.images.large} className="finalCard"/>
                         })}
