@@ -1,27 +1,44 @@
-import SetPresentation from "../components/SetPresentation";
-import dao from "../dao/pokapiDAO.js"
 import React,{useState,useEffect} from "react"
 import Carousel from "../components/Carrousel.jsx";
 import {Button} from "@radix-ui/themes";
+import BoosterOpening from "../components/BoosterOpening.jsx";
 
 function Home() {
+
+    const [openBoosterState,setOpenBoosterState] = useState(false)
+
+    const [openBoosterSet,setOpenBoosterSet] = useState(null)
+
+    useEffect(()=>{
+        if(openBoosterState){
+            document.body.style.overflowY = "hidden"
+            window.scrollTo("0px","0px")
+        }else(
+            document.body.style.overflowY = "initial"
+        )
+    },[openBoosterState])
+            
     return (
         <>
-            <Carousel></Carousel>
-            <Button style={openButtonStyle}>OPEN</Button>
+            <Carousel setCurrentSetId={setOpenBoosterSet}></Carousel>
+            <Button style={openButtonStyle} onClick={()=>setOpenBoosterState(true)}>OPEN</Button>
+            {openBoosterState && (
+                <BoosterOpening setId={openBoosterSet}/>
+            )}
         </>
     )
 }
 
 const openButtonStyle = {
+    background: "#64408D",
     marginLeft : "50vw",
     transform : "translateX(-50%)",
-    fontSize : "110px",
+    fontSize : "70px",
     padding : "2vw",
     cursor : "pointer",
     height : "fit-content",
     borderRadius : "40px",
-    border : "solid 5px rgba(200,50,50,1)",
+    border: "2px solid #B42D5C",
     fontFamily: "'Racing Sans One', sans-serif",
     marginBottom : "2vh",
 }

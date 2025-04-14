@@ -14,6 +14,7 @@ import ProtectedRoute from "./pages/auth/ProtectedRoute.jsx";
 import "@radix-ui/themes/styles.css";
 import {Theme} from "@radix-ui/themes";
 import ChatPokemon from "./pages/ChatPokemon.jsx";
+import CardOpening from './pages/CardOpening.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
