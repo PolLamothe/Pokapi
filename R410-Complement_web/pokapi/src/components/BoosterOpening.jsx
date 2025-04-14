@@ -12,10 +12,6 @@ function BoosterOpening({setId,callback}){
 
     const [boosterAnimationState,setBoosterAnimationState] = useState(false)
 
-    const [currentCardAnimationState,setCurrentCardAnimationState] = useState(null)
-
-    const [allCardAnimationState,setAllCardAnimationState] = useState(true)
-
     useEffect(()=>{
         async function getOpenedCard(){
             const result = await pokapiDAO.openBooster(setId)
@@ -25,18 +21,8 @@ function BoosterOpening({setId,callback}){
         getOpenedCard()
     },[])
 
-    useEffect(()=>{
-        async function changeCurrentCardAnimationState(){
-            if(currentCardAnimationState === false){
-                setCurrentCardAnimationState(true)
-            }
-        }
-        changeCurrentCardAnimationState()
-    },[currentCardAnimationState])
-
     function nextCard(){
         setCurrentIndex(currentIndex+1)
-        setCurrentCardAnimationState(false)
     }
 
     function startBoosterAnimation(){
@@ -51,7 +37,7 @@ function BoosterOpening({setId,callback}){
                         <img src="/public/booster.png" className={boosterAnimationState ? "boosterAnimation" : ""} id="boosterImage" onAnimationEnd={()=>{setCardDisplayState(true)}} onClick={startBoosterAnimation}/>
                     )}
                     {currentIndex <= 5 && cardList.map((card,index)=>{
-                        return <img src={(currentCardAnimationState === true && index >= 5-currentIndex) ? cardList[index].images.large : "/public/cardBack.webp"}
+                        return <img src={(index >= 5-currentIndex) ? cardList[index].images.large : "/public/cardBack.webp"}
                         className={index < 5-currentIndex ? 
                             ("cardTransition card "+ 
                                 (!cardDisplayState ? 
@@ -59,17 +45,8 @@ function BoosterOpening({setId,callback}){
                                     "finalSideCard"
                                 )
                             ) : 
-                            ("card " + (!cardDisplayState ?
-                                "initSideCard" : 
-                                (currentCardAnimationState ? 
-                                    " mainCard" : 
-                                    "finalSideCard"
-                                )
-                                ) + (allCardAnimationState ? 
-                                    " cardTransition" : 
-                                    ""
-                                )
-                            )}
+                            ("card mainCard")
+                            }
                         style={(cardDisplayState && index < 5-currentIndex) ? 
                             dynamicCardStyle(index) : 
                             {zIndex : 5-index}
