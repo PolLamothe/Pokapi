@@ -37,4 +37,9 @@ describe("DAO - SetFetchDAO", () => {
         const res = await setFetchDAO.find(base.id)
         assert.deepEqual(base,res)
     })
+
+    it("Find one wrong",async()=>{
+        const res = await setFetchDAO.find("wrong")
+        assert.equal(res, null)
+    })
 })

@@ -12,6 +12,7 @@ const CONFIG = {
     API_POKEMON_KEY: process.env.API_POKEMON_KEY || undefined,
     PROXY: process.env.PROXY || undefined,
     CACHE_EXPIRATION : process.env.CACHE_EXPIRATION || 86400,
+    LOGS: process.env.LOGS || true,
 }
 
 export default CONFIG

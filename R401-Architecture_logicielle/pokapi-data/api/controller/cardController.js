@@ -33,7 +33,11 @@ const cardController = {
                 return cardDAO.updateCard(id,newCard)
             }
         } else {
-            return await cardDAO.addOneCard((await cardFetchDAO.findCardById(id)))
+            let fetchedCard = await cardFetchDAO.findCardById(id)
+            if (fetchedCard == null) {
+                throw new Error("Card not found")
+            }
+            return await cardDAO.addOneCard(fetchedCard)
         }
     },
     findCards: async (ids) => {

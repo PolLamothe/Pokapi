@@ -8,8 +8,11 @@ const urlCard = url+"cards"
 const cardFetchDAO = {
     findCardById : async (id)=> {
         let response = await fetchAPI(urlCard+`/${id}`)
-        let json = await response.json()
-        return new Card(json.data)
+        if (response.ok) {
+            let json = await response.json()
+            return new Card(json.data)
+        }
+        return null
     },
     findCardsByID : async (ids) => {
         let resultat = [];

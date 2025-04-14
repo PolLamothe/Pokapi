@@ -10,9 +10,13 @@ router.route("/open-booster/:SETID").get(async (req, res) => {
     return res.status(200).json(booster)
 })
 
-router.route("/card/:ID").get(async (req, res) => {
-    const card = await cardController.findCard(req.params.ID)
-    return res.status(200).json({card})
+router.route("/card/:id").get(async (req, res) => {
+    try {
+        const card = await cardController.findCard(req.params.id)
+        return res.status(200).json(card)
+    } catch (e) {
+        return res.status(404).json({message: e.message})
+    }
 })
 
 router.route("/cards").post((req,res) => {
@@ -33,10 +37,13 @@ router.route("/set/presentation/:SETID").get(async (req, res) => {
 
 })
 
-router.route("/set/:SETID").get(async (req, res) => {
-    const set = await setController.find(req.params.SETID)
-    return res.status(200).json({set})
-
+router.route("/set/:setId").get(async (req, res) => {
+    try {
+        const set = await setController.find(req.params.setId)
+        return res.status(200).json(set)
+    } catch (e) {
+        return res.status(404).json({message: e.message})
+    }
 })
 
 router.route("/sets").get(async (req, res) => {

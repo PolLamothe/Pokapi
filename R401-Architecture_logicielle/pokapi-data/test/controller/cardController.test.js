@@ -49,6 +49,10 @@ describe('Controller - CardController', () => {
         CONFIG.CACHE_EXPIRATION = oldConfig
     })
 
+    it("findCard wrong", async () => {
+        await assert.rejects(cardController.findCard("wrong"))
+    })
+
     it("findCards",async ()=>{
         const cards = testCards["data"]
         cards.splice(5,cards.length-5)

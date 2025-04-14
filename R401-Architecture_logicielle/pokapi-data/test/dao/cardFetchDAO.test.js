@@ -11,6 +11,11 @@ describe('DAO - CardFetchDAO', () => {
         assert.deepEqual(res.id, expected.id)
     })
 
+    it("Find one card wrong", async () => {
+        const res = await cardFetchDAO.findCardById("wrong")
+        assert.equal(res, null)
+    })
+
     it('Find many cards',async () => {
         const expected1 = new Card(testCards.data[0])
         const expected2 = new Card(testCards.data[1])

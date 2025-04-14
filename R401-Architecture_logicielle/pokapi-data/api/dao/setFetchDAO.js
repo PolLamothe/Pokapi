@@ -7,8 +7,12 @@ const urlSet = url+"sets"
 // DAO
 const setFetchDAO = {
     find : async(id)=>{
-        const data = (await (await fetchAPI(urlSet+"/"+id)).json())["data"]
-        return new SetInfo(data)
+        const response = await fetchAPI(urlSet+"/"+id)
+        if (response.ok){
+            const data = (await response.json())["data"]
+            return new SetInfo(data)
+        }
+        return null
     },
     findAll: async () => {
         let response = await fetchAPI(urlSet)

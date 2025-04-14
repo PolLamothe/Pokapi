@@ -14,8 +14,17 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Headers", 'Content-Type,Authorization');
     next();
 })
-//pour traiter les body en json
+// Handle JSON body
 app.use(express.json())
+
+// Logger middleware
+app.use((req,res,next) =>{
+    if (CONFIG.LOGS) {
+        req.time = new Date(Date.now()).toUTCString();
+        console.log(req.method, req.hostname, req.path, req.time);
+    }
+    next();
+});
 
 //route pour swagger
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerJson))

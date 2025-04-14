@@ -17,7 +17,11 @@ const setController = {
                 return await setDAO.update(id,newSet)
             }
         } else {
-            return await setDAO.add(await setFetchDAO.find(id))
+            const fetchedSet = await setFetchDAO.find(id)
+            if (fetchedSet == null) {
+                throw new Error("Set not found")
+            }
+            return await setDAO.add(fetchedSet)
         }
     },
     findAll: async () => {

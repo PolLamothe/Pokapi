@@ -47,6 +47,10 @@ describe('Controller - SetController', () => {
         CONFIG.CACHE_EXPIRATION = oldConfig
     })
 
+    it("find wrong", async () => {
+        await assert.rejects(setController.find("wrong"))
+    })
+
     it("findAll", async () => {
         let result = await setController.findAll()
         assert.ok(result.length > 0)
