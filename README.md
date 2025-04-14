@@ -15,7 +15,7 @@ Ce repository a pour but de rassembler les différentes parties de la SAE.
 
 ## R401 - Architecture logicielle
 
-**Deadline : mardi 15 avril**
+**Deadline : jeudi 17 avril**
 
 **Consignes :**
 
@@ -41,7 +41,7 @@ Vous devrez développer une application de préférence « one page » sur des s
 
 ![plan](./commun/Plan-app.drawio.png)
 
-## R408 - Virtualisation
+## R408 - Virtualisation ✅
 
 **Deadline : ? avril**
 
@@ -50,9 +50,11 @@ Vous devrez développer une application de préférence « one page » sur des s
 
 **Consignes :** [R408-Virtualisation/README.md](https://gitlab.univ-nantes.fr/pub/but/but2/sae4/sae4_class_grp1_eq1_arnaud-kyllian_destain-jauzua_lamothe-pol_le-carluer-brieuc_souchet-thomas/-/tree/main/R408-Virtualisation?ref_type=heads)
 
-## R409 - Management avancé des systèmes d'information
+## R409 - Management avancé des systèmes d'information ✅
 
-**Deadline : lundi 14 avril /!\\**
+**Deadline : lundi 14 avril**
+
+- [x] Rendu
 
 **Consignes :** [R409-MASI/README.md](https://gitlab.univ-nantes.fr/pub/but/but2/sae4/sae4_class_grp1_eq1_arnaud-kyllian_destain-jauzua_lamothe-pol_le-carluer-brieuc_souchet-thomas/-/blob/main/R409-MASI/README.md?ref_type=heads)
 
