@@ -1,19 +1,20 @@
-.sideCard{
-    position : absolute;
-    border-radius : 1vw;
-    margin-top : 40vh;
+.cardTransition{
     transition: all 1s ease;
+    border-radius : 1vw;
 }
 .initSideCard{
     left : 51%;
     transform: translate(-50%,-50%);
     height : 54%;
+    position : absolute;
 }
 
 .finalSideCard{
     cursor : pointer;
     left : 2%;
     height : 60%;
+    border-radius : 1vw;
+    position : absolute;
 }
 
 #mainWrapper{
@@ -53,13 +54,16 @@
     cursor : pointer
 }
 
+.card{
+    margin-top: 40vh;
+}
+
 .mainCard{
-    right : 10%;
+    left : 70%;
     transform : translateY(-50%);
     position : absolute;
     border-radius : 1vw;
-    margin-top : 40vh;
-    transition-duration : 1s;
+    transition: all 1s ease;
     height : 60%;
     cursor : pointer;
 }
@@ -76,6 +80,10 @@
 
 .boosterAnimation{
     animation: boosterDisparition 1.5s ease forwards;
+}
+
+.cardTranslation{
+    animation: cardTranslation 1s ease;
 }
 
 @keyframes boosterDisparition {
