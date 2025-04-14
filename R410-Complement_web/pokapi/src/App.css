@@ -89,6 +89,8 @@
     transition: transform 0.2s ease-in-out;
 }
 
+
+
 .hoverEffect figure:hover img {
     transform: scale(1.02);
 }
@@ -193,4 +195,69 @@
 
 .swiper-button-next {
     right: 10px;
+}
+
+
+
+
+.card-effect-wrapper {
+    position: relative;
+    width: 300px;
+    height: 412.5px;
+    border-radius: 10px;
+    overflow: hidden;
+    perspective: 800px;
+    transform-style: preserve-3d;
+}
+
+.card-effect-wrapper::before,
+.card-effect-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+.card-effect-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 10px;
+    pointer-events: none;
+
+    background: linear-gradient(
+            115deg,
+            transparent 0%,
+            rgb(0, 231, 255) 25%,
+            transparent 47%,
+            transparent 53%,
+            rgb(255, 0, 231) 75%,
+            transparent 100%
+    );
+    background-size: 300% 300%;
+
+    /* 🔥 Mets ceci après le background */
+    background-position: var(--x, 50%) var(--y, 50%);
+
+    opacity: 0.5;
+    filter: brightness(0.5) contrast(1);
+    z-index: 1;
+    transition: background-position 0.1s ease;
+}
+
+
+.card-effect-wrapper::after {
+    background:
+            url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/13471/sparkles.gif"),
+            url("https://assets.codepen.io/13471/holo.png"),
+            linear-gradient(125deg, #ff008450 15%, #fca40040 30%, #ffff0030 40%, #00ff8a20 60%, #00cfff40 70%, #cc4cfa50 85%);
+    background-position: 50% 50%;
+    background-size: 160%;
+    background-blend-mode: overlay;
+    filter: brightness(1) contrast(1);
+    mix-blend-mode: color-dodge;
+    opacity: 0.75;
+    transition: all 0.33s ease;
+    z-index: 2;
 }
