@@ -32,6 +32,19 @@ const setController = {
                 3.1. Récupérer les sets de la BD
                 3.1. Retourner les sets [END]
          */
+        const now = Date.now()
+        const oneDay = 24 * 60 * 60 * 1000
+
+        if (lasUpdate == null || lasUpdate > oneDay) {
+            var setsApi = await setFetchDAO.findAll()
+            await setDAO.addMany(setsApi)
+            lasUpdate = now
+            return await setDAO.findAll()
+        } else {
+            return await setDAO.findAll()
+        }
+
+
     }
 }
 

@@ -21,6 +21,7 @@ function Card() {
             setLoaded(true);
         })
     }, [params.cardId]);
+    console.log(cardData)
     return (
         <>
             {loaded ? (
@@ -107,7 +108,11 @@ function Card() {
                         style={{textAlign: "center"}}
                     >
                         <div className="card">
-                            <CardEffect card={cardData}/>
+                            {cardData.rarity.includes("Rare") ? (
+                                <CardEffectHolo card={cardData}/>
+                            ) : (
+                                <CardEffect card={cardData}/>
+                            )}
                         </div>
                         <Box
                             p="4"
@@ -137,7 +142,6 @@ function Card() {
 
 
 }
-
 
 function CardEffect({card}) {
     const boundingRef = useRef(null);
@@ -211,6 +215,68 @@ function CardEffect({card}) {
                     }}
                 />
                 <div style={glowStyle} />
+            </div>
+        </div>
+    );
+}
+
+
+function CardEffectHolo({ card }) {
+    const boundingRef = useRef(null);
+
+    const handleMouseEnter = (ev) => {
+        boundingRef.current = ev.currentTarget.getBoundingClientRect();
+    };
+
+    const handleMouseLeave = (ev) => {
+        boundingRef.current = null;
+        ev.currentTarget.style.removeProperty("--x-rotation");
+        ev.currentTarget.style.removeProperty("--y-rotation");
+        ev.currentTarget.style.removeProperty("--x");
+        ev.currentTarget.style.removeProperty("--y");
+    };
+
+    const handleMouseMove = (ev) => {
+        if (!boundingRef.current) return;
+
+        const { left, top, width, height } = boundingRef.current;
+        const x = ev.clientX - left;
+        const y = ev.clientY - top;
+        const xPercent = x / width;
+        const yPercent = y / height;
+        const xRotation = (xPercent - 0.5) * 20;
+        const yRotation = (0.5 - yPercent) * 20;
+
+        const el = ev.currentTarget;
+        el.style.setProperty("--x-rotation", `${yRotation}deg`);
+        el.style.setProperty("--y-rotation", `${xRotation}deg`);
+        el.style.setProperty("--x", `${xPercent * 100}%`);
+        el.style.setProperty("--y", `${yPercent * 100}%`);
+    };
+
+    return (
+        <div style={{ perspective: "800px" }}>
+            <div
+                className="card-effect-wrapper"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onMouseMove={handleMouseMove}
+                style={{
+                    transform: "rotateX(var(--x-rotation)) rotateY(var(--y-rotation)) scale(1.1)",
+                    transition: "transform 0.3s ease-out",
+                }}
+            >
+                <img
+                    src={card.images?.large}
+                    alt={card.name}
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "10px",
+                        position: "relative",
+                        zIndex: 0
+                    }}
+                />
             </div>
         </div>
     );
