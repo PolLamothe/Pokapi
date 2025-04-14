@@ -19,6 +19,7 @@ function BoosterOpening({setId,callback}){
     useEffect(()=>{
         async function getOpenedCard(){
             const result = await pokapiDAO.openBooster(setId)
+            console.log(result)
             setCardList(result)
         }
         getOpenedCard()
@@ -27,7 +28,6 @@ function BoosterOpening({setId,callback}){
     useEffect(()=>{
         async function changeCurrentCardAnimationState(){
             if(currentCardAnimationState === false){
-                await new Promise(r => setTimeout(r, 0));
                 setCurrentCardAnimationState(true)
             }
         }
@@ -48,24 +48,34 @@ function BoosterOpening({setId,callback}){
             <div id="globalWrapper">
                 <div id="mainWrapper">
                     {!cardDisplayState && (
-                        <img src="/booster.png" className={boosterAnimationState ? "boosterAnimation" : ""} id="boosterImage" onAnimationEnd={()=>{setCardDisplayState(true)}} onClick={startBoosterAnimation}/>)}
-                    {cardList.map((card,index)=>{
-                        if(index > 4-currentIndex){
-                            return null
-                        }else{
-                            return <img src="/cardBack.webp" className={"sideCard "+(!cardDisplayState ? "initSideCard" : "finalSideCard")} style={cardDisplayState ? dynamicCardStyle(index) : {}} onClick={nextCard}/>
-                        }
-                    })}
-                    {currentIndex <= 5 && (
-                        <img src={currentCardAnimationState === true ? cardList[currentIndex-1].images.large : "/public/cardBack.webp"}
-                        className={"card " + (!cardDisplayState ? "initSideCard" : (currentCardAnimationState ? " mainCard" : "finalSideCard")) + (allCardAnimationState ? " cardTransition" : "")}
-                        style={(!cardDisplayState) ? {} : (!currentCardAnimationState ? dynamicCardStyle(4-currentIndex) : {})}
-                        onClick={nextCard}
-                        onTransitionEnd={()=>{
-                            setAllCardAnimationState(false)
-                        }}
-                        />
+                        <img src="/public/booster.png" className={boosterAnimationState ? "boosterAnimation" : ""} id="boosterImage" onAnimationEnd={()=>{setCardDisplayState(true)}} onClick={startBoosterAnimation}/>
                     )}
+                    {currentIndex <= 5 && cardList.map((card,index)=>{
+                        return <img src={(currentCardAnimationState === true && index >= 5-currentIndex) ? cardList[index].images.large : "/public/cardBack.webp"}
+                        className={index < 5-currentIndex ? 
+                            ("cardTransition card "+ 
+                                (!cardDisplayState ? 
+                                    "initSideCard" : 
+                                    "finalSideCard"
+                                )
+                            ) : 
+                            ("card " + (!cardDisplayState ?
+                                "initSideCard" : 
+                                (currentCardAnimationState ? 
+                                    " mainCard" : 
+                                    "finalSideCard"
+                                )
+                                ) + (allCardAnimationState ? 
+                                    " cardTransition" : 
+                                    ""
+                                )
+                            )}
+                        style={(cardDisplayState && index < 5-currentIndex) ? 
+                            dynamicCardStyle(index) : 
+                            {zIndex : 5-index}
+                        } 
+                        onClick={nextCard}/>
+                    })}
                     {currentIndex > 5 && (
                         <div id="cardResultWrapper" onClick={callback}>
                             {cardList.map((card,index)=>{
