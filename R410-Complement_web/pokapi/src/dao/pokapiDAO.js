@@ -12,6 +12,16 @@ const pokapiDAO = {
     types: null,
     rarities: null,
     sets: null,
+    openBooster : async (setId)=>{
+        let cards = await fetch(config.url + `/open-booster/${setId}`, {
+            method: "GET",
+            headers : {
+                ...baseHeaders,
+                "Authentification-Token": localStorage.getItem("token")
+            }
+        })
+        return await cards.json()
+    },
     fetchMyCards: async () => {
         let cards = await fetch(config.url + "/my-cards", {
             method: "GET",

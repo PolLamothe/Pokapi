@@ -17,7 +17,7 @@ function shuffle(array){
     return result
 }
 
-const Carousel = () => {
+const Carousel = ({setCurrentSetId}) => {
     const [listSet, setListSet] = useState(null)
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -28,7 +28,6 @@ const Carousel = () => {
             let newListSet = (await dao.fetchSets()).data
             newListSet = shuffle(newListSet)
             newListSet = newListSet.slice(0,20)
-            console.log(newListSet)
             setListSet(newListSet)
         }
         retrieveSetList()
@@ -36,7 +35,7 @@ const Carousel = () => {
 
     const handleSlideChange = (swiper) => {
         setActiveIndex(swiper.realIndex);
-        console.log(swiper.realIndex)
+        setCurrentSetId(listSet[(swiper.realIndex+1)%20].id)
     };
 
     return (
