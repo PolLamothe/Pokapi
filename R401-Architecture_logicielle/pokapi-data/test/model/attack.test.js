@@ -22,6 +22,8 @@ describe("Model - Attack",()=>{
     })
     it("Missing attribute",()=>{
         Object.keys(valid).forEach((key)=> {
+            // Don't test optional attributes
+            if (["damage", "text"].includes(key)) return
             test = Object.assign({}, valid)
             delete test[key]
             assert.throws(()=> new Attack(test),{

@@ -25,6 +25,11 @@ describe('Controller - CardController', () => {
         await cardDAO.deleteAllCards()
     })
 
+    after(async ()=>{
+        await mongod.stop()
+        connexion.disconnect()
+    })
+
     it("findCard",async ()=>{
         const testCard = new Card(testCards["data"][0])
         const result = await cardController.findCard(testCard.id)
@@ -41,16 +46,18 @@ describe('Controller - CardController', () => {
         cards.splice(5,cards.length-5)
         const ids = cards.map((card)=>card["id"])
         const result = await cardController.findCards(ids)
+        assert.equal(ids.length, result.length)
         result.forEach((card,index)=>{
             assert(((Date.now()/1000) - card.storageDate) < 1)
             assert(new Card(cards[index]).compare(card))
         })
         await new Promise(resolve => setTimeout(resolve, 1000))
         const cachedResult = await cardController.findCards(ids);
-        cachedResult.forEach(async (card,index)=>{
+        for (const card of cachedResult) {
+            const index = cachedResult.indexOf(card);
             assert.equal(card.storageDate,result[index].storageDate)
             assert(new Card(cards[index]).compare(card))
-        })
+        }
     })
 
     it("findSetCard",async()=>{
@@ -130,8 +137,6 @@ describe('Controller - CardController', () => {
         let testCard = []
         let cards = []
 
-
-
         for (const c of testCards["data"]) {
             testCard.push(await cardFetchDAO.findCardById(c.id))
             cards.push(c.id)
@@ -141,7 +146,6 @@ describe('Controller - CardController', () => {
         testCard.forEach((card)=>{
             totalPrice += card.cardmarket.prices.trendPrice
         })
-
 
         const result = await cardController.deckPrice(cards)
         assert.equal(result, totalPrice)

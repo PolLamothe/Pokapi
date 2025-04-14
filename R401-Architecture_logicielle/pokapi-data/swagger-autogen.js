@@ -10,7 +10,7 @@ const config = {
         description: '',
     },
     tags: [ ],
-    host: CONFIG.HOST+':'+CONFIG.PORT+CONFIG.APIPATH,
+    host: CONFIG.HOST+':'+CONFIG.PORT+CONFIG.API_PATH,
     schemes: ['http'],
 };
 

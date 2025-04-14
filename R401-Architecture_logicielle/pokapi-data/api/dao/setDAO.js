@@ -30,10 +30,10 @@ const setDAO = {
         }
     },
     addMany: async (sets) => {
-        const allSets = await setDAO.findAll()//TODO : Très mal optimisé
+        const allSets = await setDAO.findAll()
         for (let s of sets) {
             if (s instanceof SetInfo ) {
-                if (!allSets.includes(s)) {
+                if (!allSets.some(bdSet => bdSet.id === s.id)) {
                     s.storageDate = parseInt(Date.now()/1000)
                     await setModel.insertOne(s)
                 }
@@ -44,8 +44,9 @@ const setDAO = {
         if(set instanceof SetInfo){
             set.storageDate = parseInt(Date.now()/1000)
             await setModel.updateOne({id : id,$set : set})
-            return await setModel.findOne({id : id})
+            return new SetInfo(await setModel.findOne({id: id}));
         }
+        return null
     }
 }
 

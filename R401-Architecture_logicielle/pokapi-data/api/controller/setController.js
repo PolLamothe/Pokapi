@@ -7,16 +7,16 @@ import CONFIG from "../../const.js"
 let lasUpdate = null
 
 const setController = {
-    find : async (id)=>{
+    find : async (id)=> {
         const localSet = await setDAO.find(id)
-        if(localSet != null){
-            if((parseInt(Date.now()/1000) - localSet.storageDate) < CONFIG.CACHEEXPIRATION){
+        if (localSet != null) {
+            if ((parseInt(Date.now()/1000) - localSet.storageDate) < CONFIG.CACHE_EXPIRATION) {
                 return localSet
-            }else{//si le cache a expiré
-                var newSet = await setFetchDAO.find(id)
+            } else { // Si le cache a expiré
+                let newSet = await setFetchDAO.find(id)
                 return await setDAO.update(id,newSet)
             }
-        }else{
+        } else {
             return await setDAO.add(await setFetchDAO.find(id))
         }
     },
@@ -32,19 +32,14 @@ const setController = {
                 3.1. Récupérer les sets de la BD
                 3.1. Retourner les sets [END]
          */
-        const now = Date.now()
-        const oneDay = 24 * 60 * 60 * 1000
-
-        if (lasUpdate == null || lasUpdate > oneDay) {
-            var setsApi = await setFetchDAO.findAll()
-            await setDAO.addMany(setsApi)
-            lasUpdate = now
+        if (lasUpdate == null || (parseInt(Date.now()/1000) - lasUpdate) > CONFIG.CACHE_EXPIRATION) {
+            let setsAPI = await setFetchDAO.findAll()
+            await setDAO.addMany(setsAPI)
+            lasUpdate = parseInt(Date.now()/1000)
             return await setDAO.findAll()
         } else {
             return await setDAO.findAll()
         }
-
-
     }
 }
 

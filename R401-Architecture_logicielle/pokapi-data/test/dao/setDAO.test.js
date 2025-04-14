@@ -80,6 +80,26 @@ describe("DAO - SetDAO", () => {
         assert((await setDAO.find(base11.id)).compare(base11))
     })
 
+    it("add already here", async () => {
+        const base11 = new SetInfo(set1)
+        assert((await setDAO.add(base11)).compare(base11))
+        assert.ok(!(await setDAO.add(base11)))
+    })
+
+    it("update wrong", async () => {
+        assert.equal(await setDAO.update("xy", "wrong"), null)
+    })
+
+    it("update valid", async () => {
+        const base11 = new SetInfo(set1)
+        const base12 = new SetInfo(set1)
+        const addedSet = await setDAO.add(base11)
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        const updatedSet = await setDAO.update(base12.id, addedSet)
+        assert.ok((parseInt(Date.now()/1000) - updatedSet.storageDate < 1))
+        assert.ok(updatedSet.compare(base12))
+    })
+
     after(async ()=>{
         await mongod.stop()
         connexion.disconnect()

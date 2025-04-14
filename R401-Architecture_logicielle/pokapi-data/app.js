@@ -22,7 +22,7 @@ app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerJson))
 
 //chargement des routes
 const {default: routes} = await import ('./api/route/route.js')
-app.use(CONFIG.APIPATH + '/', routes)
+app.use(CONFIG.API_PATH + '/', routes)
 
 app.use((error, req, res, next) => {
     console.log(error)

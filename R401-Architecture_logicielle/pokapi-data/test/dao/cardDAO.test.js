@@ -99,12 +99,15 @@ describe('DAO - CardDAO', () => {
         result.forEach(card=>{
             assert((parseInt(Date.now()/1000) - card.storageDate) < 1)
         })
-        new Promise(resolve => setTimeout(resolve, 1000)).then(async()=>{
-            let result = await cardDAO.updateCards([base01, base11, base21])
-            result.forEach(card=>{
-                assert((parseInt(Date.now()/1000) - card.storageDate) < 1)
-            })
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        result = await cardDAO.updateCards([base01, base11, base21])
+        result.forEach(card=>{
+            assert((parseInt(Date.now()/1000) - card.storageDate) < 1)
         })
+    })
+
+    it('updateCards wrong', async () => {
+        await assert.rejects(cardDAO.updateCards(["x", "y"]))
     })
 
     it("find card by name",async ()=>{

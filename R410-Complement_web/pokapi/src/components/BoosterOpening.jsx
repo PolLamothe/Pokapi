@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import "./BoosterOpening.css"
+import "./boosterOpening.css"
 import pokapiDAO from "../dao/pokapiDAO"
 
 function BoosterOpening({setId,callback}){
@@ -33,12 +33,12 @@ function BoosterOpening({setId,callback}){
             <div id="globalWrapper">
                 <div id="mainWrapper">
                     {!cardDisplayState && (
-                        <img src="/public/booster.png" className={boosterAnimationState ? "boosterAnimation" : ""} id="boosterImage" onAnimationEnd={()=>{setCardDisplayState(true)}} onClick={startBoosterAnimation}/>)}
+                        <img src="/booster.png" className={boosterAnimationState ? "boosterAnimation" : ""} id="boosterImage" onAnimationEnd={()=>{setCardDisplayState(true)}} onClick={startBoosterAnimation}/>)}
                     {cardList.map((card,index)=>{
                         if(index < currentIndex+1){
                             return null
                         }else{
-                            return <img src="/public/cardBack.webp" className={"sideCard "+(!cardDisplayState ? "initSideCard" : "finalSideCard")} style={cardDisplayState ? dynamicCardStyle(index) : {}} onClick={nextCard}/>
+                            return <img src="/cardBack.webp" className={"sideCard "+(!cardDisplayState ? "initSideCard" : "finalSideCard")} style={cardDisplayState ? dynamicCardStyle(index) : {}} onClick={nextCard}/>
                         }
                     })}
                     {cardList.length > 0 && cardDisplayState && currentIndex >= 0 && currentIndex < 5 && (
