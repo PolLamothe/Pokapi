@@ -101,5 +101,35 @@ describe("Route - route",()=> {
         assert.equal(response.status, 200);
         assert.equal(response.body.length, 3);
     })
+
+    it("GET /card/evolution/:id wrong card", async () => {
+        const response = await request(app).get(CONFIG.API_PATH+"/card/evolution/wrong")
+        assert.equal(response.status, 404);
+    })
+
+    it("GET /card/evolution/:id no evolution", async () => {
+        const response = await request(app).get(CONFIG.API_PATH+"/card/evolution/xy1-2")
+        assert.equal(response.status, 400);
+    })
+
+    it("GET /card/evolution/:id several evolutions", async () => {
+        const response = await request(app).get(CONFIG.API_PATH+"/card/evolution/pop3-13")
+        assert.equal(response.status, 200);
+        assert.equal(response.body.length, 3);
+        assert.equal(response.body[1].set.id, "pop3");
+    })
+
+    it("POST /deck-price one wrong card", async () => {
+        const response = await request(app).post(CONFIG.API_PATH+"/deck-price")
+            .send({deck: ["xy1-1", "xy1-2", "wrong"]})
+        assert.equal(response.status, 404);
+    })
+
+    it("POST /deck-price valid", async () => {
+        const response = await request(app).post(CONFIG.API_PATH+"/deck-price")
+            .send({deck: ["xy1-1", "xy1-2"]})
+        assert.equal(response.status, 200);
+        assert.ok(response.body > 0);
+    })
 })
 

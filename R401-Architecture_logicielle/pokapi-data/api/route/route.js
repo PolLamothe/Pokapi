@@ -32,11 +32,16 @@ router.route("/cards").post(async (req,res) => {
 })
 
 router.route("/card/evolution/:id").get(async (req, res) => {
-    const evolution = await cardController.findEvolution(req.params.id)
-    if (evolution == null) {
-        return res.status(404).json({message: "Le Pokémon n'a pas d'évolution"})
+    // #swagger.summary = "Récupérer toutes les évolutions possibles d'une carte dans le même set"
+    try {
+        const evolution = await cardController.findEvolution(req.params.id)
+        if (evolution == null) {
+            return res.status(400).json({message: "This Pokémon has no evolution in this set"})
+        }
+        return res.status(200).json(evolution)
+    } catch (e) {
+        return res.status(404).json({message: e.message})
     }
-    return res.status(200).json({evolution})
 })
 
 router.route("/set/cards/:setId").get(async (req, res) => {
@@ -80,8 +85,13 @@ router.route("/sets").get(async (req, res) => {
 })
 
 router.route("/deck-price").post(async (req, res) => {
-    const deckPrice = await cardController.deckPrice(req.body.deck)
-    return res.status(200).json({deckPrice})
+    // #swagger.summary = "Donne le prix d'un deck de cartes"
+    try {
+        const deckPrice = await cardController.deckPrice(req.body.deck)
+        return res.status(200).json(deckPrice)
+    } catch (e) {
+        return res.status(404).json({message: e.message})
+    }
 })
 
 router.route("/types").get((req,res) => {

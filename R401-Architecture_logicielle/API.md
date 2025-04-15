@@ -10,7 +10,7 @@
 	+ Obtenir une carte a partir de son ID
 - `POST /cards {cards: Array<ID>}` ✅
 	+ Obtenir plusieurs cartes a partir de leurs IDs
-- `GET /card/evolution/<ID>`
+- `GET /card/evolution/<ID>` ✅
 	+ Faire évoluer une carte si possible
 - `GET /set/presentation/<SET>` ✅
 	+ Obtenir un SET avec 4 images de cartes qui le représente

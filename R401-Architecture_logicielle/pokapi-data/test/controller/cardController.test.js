@@ -146,12 +146,23 @@ describe('Controller - CardController', () => {
     it("Find evolution existing",async ()=>{
         const base = new Card(evolve.data[0])
         const result = await cardController.findEvolution(base.id)
+        assert.equal(result.length, 1)
         const resultByName = await cardController.findByName(base.set.id,base.evolvesTo[0])
-        assert(result.compare(resultByName))
-        assert(((Date.now()/1000)-result.storageDate) < 1)
+        assert(result[0].compare(resultByName))
+        assert(((Date.now()/1000)-result[0].storageDate) < 1)
         await new Promise(resolve => setTimeout(resolve, 1000))
         const result2 = await cardController.findEvolution(base.id)
-        assert(((Date.now()/1000)-result2.storageDate) > 1)
+        assert.equal(result2.length, 1)
+        assert(((Date.now()/1000)-result2[0].storageDate) > 1)
+    })
+
+    it("Find evolution several", async () => {
+        const result = await cardController.findEvolution("pop3-13")
+        assert.equal(result.length, 3)
+        result.forEach(r => {
+            assert(r.set.id, "pop3")
+            assert.equal(r.evolvesFrom, "Eevee")
+        })
     })
 
     it("Find evolution not existing",async ()=>{
@@ -174,7 +185,7 @@ describe('Controller - CardController', () => {
         })
     })
 
-    it("Deck Price", async () =>{
+    it("Deck Price valid", async () =>{
         let testCard = []
         let cards = []
 
@@ -190,5 +201,9 @@ describe('Controller - CardController', () => {
 
         const result = await cardController.deckPrice(cards)
         assert.equal(result, totalPrice)
+    })
+
+    it("Deck Price wrong", async () => {
+        await assert.rejects(cardController.deckPrice("xy1-1", "xy1-2", "wrong"))
     })
 })

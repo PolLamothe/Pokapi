@@ -135,10 +135,20 @@ const cardController = {
             3. Retourner toutes les évolutions possibles [END]
          */
         const card = await cardController.findCard(id)
-        if(card.evolvesTo == null){
+        if(card.evolvesTo == null) {
             return null
         }
-        return await cardController.findByName(card.set.id,card.evolvesTo[0])
+        const result = []
+        for(const evo of card.evolvesTo) {
+            const fetchedCard = await cardController.findByName(card.set.id, evo)
+            if (fetchedCard != null) {
+                result.push(fetchedCard)
+            }
+        }
+        if (result.length === 0) {
+            return null
+        }
+        return result
     },
     findByName : async(setId,name)=>{
         const localCard = await cardDAO.findCardByName(setId,name)
@@ -178,10 +188,13 @@ const cardController = {
         let cards = []
         for (const id of ids) {
             let res = await cardController.findCard(id)
+            if (res == null) {
+                throw new Error(`Card with id : ${id} not found`)
+            }
             cards.push(res)
         }
-        let prix_total = 0
 
+        let prix_total = 0
         cards.forEach((card) => {
             prix_total+= card.cardmarket.prices.trendPrice
         })
