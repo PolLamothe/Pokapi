@@ -20,11 +20,11 @@
 	+ Obtenir toutes les cartes d'un set à partir de son ID
 - `GET /sets` ✅
 	+ Obtenir tous les sets
-- `POST /deck-price {deck: Array<ID>}`
+- `POST /deck-price {deck: Array<ID>}` ✅
 	+ Prix d'un deck (en €) a partir d'un array d'id de cartes 
-- `GET /types`
+- `GET /types` ✅
 	+ Tous les types
-- `GET /rarities`
+- `GET /rarities` ✅
 	+ Toutes les raretés
 
 ### User :

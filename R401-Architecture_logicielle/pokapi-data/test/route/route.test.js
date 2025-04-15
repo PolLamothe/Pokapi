@@ -131,5 +131,17 @@ describe("Route - route",()=> {
         assert.equal(response.status, 200);
         assert.ok(response.body > 0);
     })
+
+    it("GET /types", async () => {
+        const response = await request(app).get(CONFIG.API_PATH+"/types")
+        assert.equal(response.status, 200);
+        assert.ok(response.body.length > 0);
+    })
+
+    it("GET /rarities", async () => {
+        const response = await request(app).get(CONFIG.API_PATH+"/rarities")
+        assert.equal(response.status, 200);
+        assert.ok(response.body.length > 0);
+    })
 })
 

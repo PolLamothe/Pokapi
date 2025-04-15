@@ -2,6 +2,8 @@
 import express from 'express'
 import cardController from "../controller/cardController.js";
 import setController from "../controller/setController.js";
+import typeController from "../controller/typeController.js";
+import raritiesController from "../controller/raritiesController.js";
 
 const router = express.Router()
 
@@ -94,12 +96,16 @@ router.route("/deck-price").post(async (req, res) => {
     }
 })
 
-router.route("/types").get((req,res) => {
-
+router.route("/types").get(async (req,res) => {
+    // #swagger.summary = "Récupérer tous les types"
+    const types = await typeController.findAll()
+    return res.status(200).json(types)
 })
 
-router.route("/rarities").get((req,res) => {
-
+router.route("/rarities").get(async (req,res) => {
+    // #swagger.summary = "Récupérer toutes les raretés"
+    const rarities = await raritiesController.findAll()
+    return res.status(200).json(rarities)
 })
 
 export default router

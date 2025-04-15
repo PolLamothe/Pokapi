@@ -1,8 +1,7 @@
 import assert from "node:assert"
-import { describe, it, before, beforeEach, after } from "node:test"
+import { describe, it} from "node:test"
 import setFetchDAO from "../../api/dao/setFetchDAO.js";
 import {SetInfo} from "../../api/model/SetInfo.js";
-import { set } from "mongoose";
 
 const set1 = {
     "id": "mcd19",
