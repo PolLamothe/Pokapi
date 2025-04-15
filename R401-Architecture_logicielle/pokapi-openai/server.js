@@ -36,6 +36,25 @@ app.use((req,res,next) => {
     next()
 })
 
+//Authentification
+app.use(async (req,res,next)=>{
+    if(req.path == "doc"){
+        next()
+    }else{
+        const response = await fetch(`${userURL}/info`,{
+            method : "GET",
+            headers : {
+                "Authentification-Token" : req.headers["authentification-token"]
+            }
+        })
+        if(response.status == 200){
+            next()
+        }else{
+            res.status(response.status).send(response.statusText)
+        }
+    }
+})
+
 //chargement des routes
 const {default: routes}  = await import ('./route.js')
 app.use(CONFIG.APIPATH+'/',routes)
@@ -47,27 +66,6 @@ app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerJson))
 app.use((error,req,res,next)=>{
     console.log(error)
     res.status(error.statusCode || 500).json({message:error.message})
-})
-
-//Authentification
-app.use(async (req,res,next)=>{
-    if(req.path == "doc"){
-        next()
-        
-    }else{
-        console.log(`${userURL}/info`)
-        const response = await fetch(`${userURL}/info`,{
-            method : "GET",
-            headers : {
-                "Authentification-Token" : req.headers["Authentification-Token"]
-            }
-        })
-        if(response.status == 200){
-            next()
-        }else{
-            res.status(response.status).send(response.statusText)
-        }
-    }
 })
 
 
