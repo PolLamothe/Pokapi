@@ -13,7 +13,7 @@ const pokapiDAO = {
     rarities: null,
     sets: null,
     fetchPokemonPresentation : async(cardId) => {
-        let text = await fetch(config.url + `/presentation/${cardId}`, {
+        let text = await fetch(`http://localhost:8083/api/v0/presentation/${cardId}`, {
             method: "GET",
             headers : {
                 ...baseHeaders,

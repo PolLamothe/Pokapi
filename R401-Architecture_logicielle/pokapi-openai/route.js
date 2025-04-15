@@ -35,6 +35,7 @@ const router = express.Router()
 
 const dataURL = `http://${CONFIG.DATA_HOST}:${CONFIG.DATA_PORT}${CONFIG.DATA_API_PATH}`
 
+
 async function fetchCard(cardId){
 	const dataResponse = await fetch(`${dataURL}/card/${cardId}`)
 	if(dataResponse.status != 200){
@@ -50,7 +51,8 @@ router.route("/presentation/:cardId").get(async (req,res)=>{
         instructions: instructions+JSON.stringify(retrieveUsefulData(card)),
         input: 'Présente toi et pose une question à l\'utilisateur',
       });
-    res.send(response.output.content[0].text)
+	console.log(response)
+    res.send({text : response.output_text})
 })
 
 export default router
