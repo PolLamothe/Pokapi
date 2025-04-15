@@ -1,31 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import pokapimini from "../assets/masterball.svg";
-import {NavLink} from "react-router";
-import {Link} from "@radix-ui/themes";
+import { NavLink } from "react-router";
+import { Link } from "@radix-ui/themes";
 
 const Footer = () => {
-  return (
-    <footer style={footerStyle}>
-        <div style={imageSlotStyle}>
-          <img src={pokapimini} alt="Logo" style={imageStyle} />
-        </div>
-        <div style={columnStyle}>
-          <h4 style={titleStyle}>Pages</h4>
-          <ul style={listStyle}>
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-            <li><NavLink to="/collection">Cards</NavLink></li>
-            <li><NavLink to="/">Home</NavLink></li>
-            <li><NavLink to="/account">Account</NavLink></li>
-          </ul>
-        </div>
-        <div style={columnStyle}>
-          <h4 style={titleStyle}>Source</h4>
-          <ul style={listStyle}>
-            <li><Link href="https://www.pokemon.com/fr">Pokémon Company</Link></li>
-            <li><Link href="https://dev.pokemontcg.io/">API Pokemon</Link></li>
-            <li><Link href="https://gitlab.univ-nantes.fr/pub/but/but2/sae4/sae4_class_grp1_eq1_arnaud-kyllian_destain-jauzua_lamothe-pol_le-carluer-brieuc_souchet-thomas">Code</Link></li>
-          </ul>
-        </div>
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const estTablette = windowWidth < 1024;
+  const estMobile = windowWidth < 600;
+
+  const dynamicFooterStyle = {
+    ...footerStyle,
+    flexDirection: estMobile ? "column" : "row",
+    alignItems: estMobile ? "center" : "start",
+    gap: estMobile ? "20px" : estTablette ? "6%" : "10%",
+    padding: estMobile ? "24px 20px" : estTablette ? "36px 40px" : "48px 80px",
+    textAlign: estMobile ? "center" : "left",
+  };
+
+  const dynamicImageStyle = {
+    ...imageStyle,
+    height: estMobile ? "30px" : estTablette ? "35px" : "40px",
+  };
+
+  const dynamicColumnStyle = {
+    ...columnStyle,
+    fontSize: estMobile ? "16px" : estTablette ? "20px" : "25px",
+    alignItems: estMobile ? "center" : "start",
+  };
+
+  const dynamicListStyle = {
+    ...listStyle,
+    fontSize: estMobile ? "12px" : estTablette ? "13px" : "14px",
+  };
+
+  return (
+    <footer style={dynamicFooterStyle}>
+      <div style={imageSlotStyle}>
+        <img src={pokapimini} alt="Logo" style={dynamicImageStyle} />
+      </div>
+      <div style={dynamicColumnStyle}>
+        <h4 style={titleStyle}>Pages</h4>
+        <ul style={dynamicListStyle}>
+          <li><NavLink to="/collection">Cards</NavLink></li>
+          <li><NavLink to="/">Home</NavLink></li>
+          <li><NavLink to="/account">Account</NavLink></li>
+        </ul>
+      </div>
+      <div style={dynamicColumnStyle}>
+        <h4 style={titleStyle}>Source</h4>
+        <ul style={dynamicListStyle}>
+          <li><Link href="https://www.pokemon.com/fr">Pokémon Company</Link></li>
+          <li><Link href="https://dev.pokemontcg.io/">API Pokemon</Link></li>
+          <li><Link href="https://gitlab.univ-nantes.fr/pub/but/but2/sae4/sae4_class_grp1_eq1_arnaud-kyllian_destain-jauzua_lamothe-pol_le-carluer-brieuc_souchet-thomas">Code</Link></li>
+        </ul>
+      </div>
     </footer>
   );
 };

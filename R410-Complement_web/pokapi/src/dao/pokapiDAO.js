@@ -12,6 +12,30 @@ const pokapiDAO = {
     types: null,
     rarities: null,
     sets: null,
+    fetchPokemonPresentation : async(cardId) => {
+        let text = await fetch(`http://localhost:8083/api/v0/presentation/${cardId}`, {
+            method: "GET",
+            headers : {
+                ...baseHeaders,
+                "Authentification-Token": localStorage.getItem("token")
+            }
+        })
+        return await text.json()
+    },
+    fetPokemonResponse : async(cardId,message,previous) => {
+        const text = await fetch(config.url + `/pokemonResponse/${cardId}`,{
+            method : "POST",
+            headers : {
+                ...baseHeaders,
+                "Authentification-Token": localStorage.getItem("token")
+            },
+            body : JSON.stringify({
+                "message" : message,
+                "previous" : JSON.stringify(previous)
+            })
+        })
+        return await text.json()
+    },
     openBooster : async (setId)=>{
         let cards = await fetch(config.url + `/open-booster/${setId}`, {
             method: "GET",

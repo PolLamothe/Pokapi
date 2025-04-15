@@ -1,5 +1,5 @@
 .cardTransition{
-    transition: all 1s ease;
+    transition: all .5s ease;
     border-radius : 1vw;
 }
 .initSideCard{
@@ -17,7 +17,7 @@
     position : absolute;
 }
 
-#mainWrapper{
+.mainWrapper{
     width : 60%;
     height : 80%;
     left : 50%;
@@ -51,7 +51,8 @@
 
 .finalCard{
     width : 25%;
-    cursor : pointer
+    cursor : pointer;
+    transition: all .5s ease;
 }
 
 .card{
@@ -68,22 +69,18 @@
     cursor : pointer;
 }
 
-#cardResultWrapper{
+.cardResultWrapper{
     display : flex;
     flex-wrap : wrap;
     justify-content : space-around;
     top : 50%;
-    transform : translateY(-50%);
+    transform : translate(-50%,-50%);
     position : relative;
     gap : 2vw;
 }
 
 .boosterAnimation{
-    animation: boosterDisparition 1.5s ease forwards;
-}
-
-.cardTranslation{
-    animation: cardTranslation 1s ease;
+    animation: boosterDisparition 1s ease forwards;
 }
 
 @keyframes boosterDisparition {

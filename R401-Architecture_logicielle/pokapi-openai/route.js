@@ -3,7 +3,6 @@
 import express from 'express'
 import OpenAI from 'openai';
 import CONFIG from "./const.js"
-import cards from "./cards.json" with {type : "json"}
 
 const client = new OpenAI({
     apiKey: CONFIG.API_KEY
@@ -34,13 +33,26 @@ Voici la carte (en anglais) de ton Pokemon : `
 
 const router = express.Router()
 
-router.route("/presentation").post(async (req,res)=>{
+const dataURL = `http://${CONFIG.DATA_HOST}:${CONFIG.DATA_PORT}${CONFIG.DATA_API_PATH}`
+
+
+async function fetchCard(cardId){
+	const dataResponse = await fetch(`${dataURL}/card/${cardId}`)
+	if(dataResponse.status != 200){
+		throw Error("The data server return an error")
+	}
+	return await dataResponse.json()
+}
+
+router.route("/presentation/:cardId").get(async (req,res)=>{
+	const card = await fetchCard(req.params.cardId)
     const response = await client.responses.create({
         model: model,
-        instructions: instructions+JSON.stringify(retrieveUsefulData(req.body.card)),
-        input: 'Présente toi',
+        instructions: instructions+JSON.stringify(retrieveUsefulData(card)),
+        input: 'Présente toi et pose une question à l\'utilisateur',
       });
-    res.send(response)
+	console.log(response)
+    res.send({text : response.output_text})
 })
 
 export default router

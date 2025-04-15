@@ -9,6 +9,8 @@ import cors from 'cors';
 
 const app = express()
 
+const userURL = `http://${CONFIG.USER_HOST}:${CONFIG.USER_PORT}${CONFIG.USER_API_PATH}`
+
 //Pour le CORS
 app.use((req,res,next)=>{
     res.setHeader("Access-Control-Allow-Origin",'*');
@@ -46,6 +48,28 @@ app.use((error,req,res,next)=>{
     console.log(error)
     res.status(error.statusCode || 500).json({message:error.message})
 })
+
+//Authentification
+app.use(async (req,res,next)=>{
+    if(req.path == "doc"){
+        next()
+        
+    }else{
+        console.log(`${userURL}/info`)
+        const response = await fetch(`${userURL}/info`,{
+            method : "GET",
+            headers : {
+                "Authentification-Token" : req.headers["Authentification-Token"]
+            }
+        })
+        if(response.status == 200){
+            next()
+        }else{
+            res.status(response.status).send(response.statusText)
+        }
+    }
+})
+
 
 const server = app.listen(CONFIG.PORT, () =>
     console.log(`--- Pokapi listening on port ${CONFIG.PORT}! ---`)
