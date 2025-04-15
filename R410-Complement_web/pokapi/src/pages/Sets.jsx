@@ -11,6 +11,8 @@ function Sets(){
 
     const [limitSize,setLimitSize] = useState(initialLimitSize)
 
+    const [windowSize, setWindowSize] = useState(window.innerWidth)
+
     const [searchBarValue,setSearchBarValue] = useState("")
 
     const searchBar = useRef(null)
@@ -23,7 +25,17 @@ function Sets(){
         fetchSets()
     },[])
 
-    const textFieldStyle = {
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [])
+
+    var textFieldStyle = {
         width : "30vw",
         marginLeft : "50vw",
         transform : "translateX(-50%)",
@@ -33,7 +45,7 @@ function Sets(){
         justifyContent: "center"
     }
 
-    const setItemStyle = {
+    var setItemStyle = {
         width : "12vw",
         height : "10vh",
         objectFit : "contain",
@@ -43,13 +55,29 @@ function Sets(){
         cursor : "pointer",
     }
 
-    const setsContainerStyle = {
+    var setsContainerStyle = {
         display : "flex",
         flexDirection : "row",
         flexWrap : "wrap",
         gap : "5vw",
         justifyContent : "center",
         marginBottom : "5vh",
+    }
+
+    if(windowSize < 1000 && windowSize > 600){
+        textFieldStyle["width"] = "50vw"
+
+        setItemStyle["width"] = "22.5vw"
+        setItemStyle["height"] = "15vh"
+
+        setsContainerStyle["gap"] = "7vw"
+    }else if(windowSize < 600){
+        textFieldStyle["width"] = "75vw"
+
+        setItemStyle["width"] = "35vw"
+        setItemStyle["height"] = "17.5vh"
+
+        setsContainerStyle["gap"] = "9vw"
     }
 
     return (
