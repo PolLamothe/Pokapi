@@ -186,6 +186,18 @@ const pokapiDAO = {
         }
         throw new Error((await response.json()).message)
     },
+    fetchSearched : async ()=>{
+        const response = await fetch(config.url+"/searched",{
+            method:"GET",
+            headers: {
+                ...baseHeaders,
+                "Authentification-Token": localStorage.getItem("token")
+            },
+        })
+        if(response.status == 200){
+            return await response.json()
+        }
+    }
 }
 
 export default pokapiDAO
