@@ -36,6 +36,7 @@ const Header = () => {
     ...containerStyle,
     gap: surMobile ? "20px" : surTablette ? "40px" : "60px",
     padding: surMobile ? "10px" : "20px",
+    width: surMobile ? "calc(100% - 20px)" : "calc(100% - 40px)"
   };
 
   return (
@@ -67,7 +68,6 @@ const Header = () => {
 };
 
 const containerStyle = {
-  width: "100%",
   margin: "0 auto",
   boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
   display: "flex",

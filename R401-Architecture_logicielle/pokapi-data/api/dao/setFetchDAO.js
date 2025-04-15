@@ -8,7 +8,7 @@ const urlSet = url+"sets"
 const setFetchDAO = {
     find : async(id)=>{
         const response = await fetchAPI(urlSet+"/"+id)
-        if (response.ok){
+        if (response.ok) {
             const data = (await response.json())["data"]
             return new SetInfo(data)
         }
@@ -16,8 +16,11 @@ const setFetchDAO = {
     },
     findAll: async () => {
         let response = await fetchAPI(urlSet)
-        let json = await response.json()
-        return json.data.map(s =>  new SetInfo(s))
+        if (response.ok) {
+            let json = await response.json()
+            return json.data.map(s =>  new SetInfo(s))
+        }
+        throw new Error("API error")
     }
 }
 

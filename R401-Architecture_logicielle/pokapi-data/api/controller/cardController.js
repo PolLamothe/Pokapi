@@ -95,7 +95,11 @@ const cardController = {
                 localSet = await setDAO.update(id, await setFetchDAO.find(id))
             }
         } else {
-            localSet = await setDAO.add(await setFetchDAO.find(id))
+            const fetchedSet = await setFetchDAO.find(id)
+            if (fetchedSet == null) {
+                throw new Error("Set not found")
+            }
+            localSet = await setDAO.add(fetchedSet)
         }
         const localCards = await cardDAO.findCardsBySet(localSet.id)
         const localIds = new Set(localCards.map(card=>card.id))
@@ -113,7 +117,7 @@ const cardController = {
         const set = await setController.find(id)
         let setCards = await cardController.findSetCards(id)
         const cards = []
-        while(cards.length < 3){
+        while(cards.length < 3) {
             const randomIndex = parseInt(Math.random() * (setCards.length-1))
             cards.push(setCards[randomIndex])
             setCards.splice(randomIndex,1)
@@ -157,7 +161,7 @@ const cardController = {
          */
         let allCards = await cardController.findSetCards(setId)
         let result = []
-        for(let i = 0;i<5;i++){
+        for(let i = 0;i<5;i++) {
             const index = parseInt(Math.random()*(allCards.length-1))
             result.push(allCards[index])
             allCards.splice(index,1)

@@ -111,6 +111,10 @@ describe('Controller - CardController', () => {
         CONFIG.CACHE_EXPIRATION = oldConfig
     })
 
+    it("findSetCard wrong", async () => {
+        await assert.rejects(cardController.findSetCards("wrong"))
+    })
+
     it("setPresentation",async()=>{
         const set = (new Card(setCards.data[0])).set
         const result = await cardController.setPresentation(set.id)

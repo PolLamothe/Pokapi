@@ -4,24 +4,28 @@
 
 ### Data :
 
-- `GET /open-booster/<SET>`
+- `GET /open-booster/<SET>` ✅
 	+ Ouvrir un booster en fonction d'un SET
 - `GET /card/<ID>` ✅
 	+ Obtenir une carte a partir de son ID
-- `POST /cards {cards: Array<ID>}`
+- `POST /cards {cards: Array<ID>}` ✅
 	+ Obtenir plusieurs cartes a partir de leurs IDs
 - `GET /card/evolution/<ID>`
 	+ Faire évoluer une carte si possible
-- `GET /set/presentation/<SET>`
+- `GET /set/presentation/<SET>` ✅
 	+ Obtenir un SET avec 4 images de cartes qui le représente
 - `GET /set/<SETID>` ✅
 	+ Obtenir un set à partir de son ID
-- `GET /set-cards/<SETID>`
+- `GET /set/cards/<SETID>` ✅
 	+ Obtenir toutes les cartes d'un set à partir de son ID
-- `GET /sets`
+- `GET /sets` ✅
 	+ Obtenir tous les sets
 - `POST /deck-price {deck: Array<ID>}`
 	+ Prix d'un deck (en €) a partir d'un array d'id de cartes 
+- `GET /types`
+	+ Tous les types
+- `GET /rarities`
+	+ Toutes les raretés
 
 ### User :
 
