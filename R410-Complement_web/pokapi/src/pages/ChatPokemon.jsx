@@ -30,6 +30,8 @@ function ChatPokemon() {
 
     const inputRef = useRef(null)
 
+    var firstMessageState = false
+
     useEffect(()=>{
         async function fetchPresentation(){
             const response = (await dao.fetchPokemonPresentation(params.cardId)).text
@@ -37,15 +39,24 @@ function ChatPokemon() {
             tempMessagesList.push({sender : "pokemon",text : response})
             setMessagesList(tempMessagesList)
         }
-        fetchPresentation()
+        if(!firstMessageState){
+            fetchPresentation()
+            firstMessageState = true
+        }
     },[])
 
     async function sendMessage(message){
+        if(message.length == 0){
+            return
+        }
+        setTextAreaValue("")
+        inputRef.current.value = ""
         const response = (await dao.fetPokemonResponse(params.cardId,message,messagesList)).text
         let tempMessagesList = [...messagesList]
         tempMessagesList.push({sender : "user",text : message})
         tempMessagesList.push({sender : "pokemon",text : response})
         setMessagesList(tempMessagesList)
+        setTextAreaValue("")
         inputRef.current.value = ""
     }
 
@@ -60,6 +71,14 @@ function ChatPokemon() {
             window.removeEventListener('resize', handleResize);
         }
     }, [])
+
+    onkeypress = (e)=>{
+        if(e.key == "Enter"){
+            sendMessage(textAreaValue)
+            setTextAreaValue("")
+            inputRef.current.value = ""
+        }
+    }
 
     useEffect(() => {
         pokapiDAO.fetchCard(params.cardId).then(data => {

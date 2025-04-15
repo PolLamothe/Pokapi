@@ -23,7 +23,7 @@ const pokapiDAO = {
         return await text.json()
     },
     fetPokemonResponse : async(cardId,message,previous) => {
-        const text = await fetch(config.url + `/pokemonResponse/${cardId}`,{
+        const text = await fetch(`http://localhost:8083/api/v0/pokemonResponse/${cardId}`,{
             method : "POST",
             headers : {
                 ...baseHeaders,
