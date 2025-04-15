@@ -32,28 +32,29 @@ Les identifiants pour se connecter avec le stub sont : `login: admin ; password:
 - [x] Formulaire login / register
     - [x] Style de la page (cf. maquette)
     - [x] Gestion des tokens avec **localstorage**
-- [ ] Header 🟢
+- [x] Header
     - [x] Ajouté la navigation fonctionnelle avec le react router
-    - [ ] Responsive
+    - [x] Responsive
 - [ ] Footer 🟢
-  - [ ] Responsive
-- [ ] Collection 🟢
+  - [x] Responsive
+- [x] Collection
     - [x] Fetch pour récupérer la collection
     - [x] Style de la page (cf. maquette)
     - [x] Filtres
     - [x] Recherche
-    - [ ] Boutton clear filtres
-- [x] Home 🟢
+    - [x] Boutton clear filtres
+- [x] Home
     - [x] Carousel avec les booster 
         - [x] Choisir lib pour faire le carousel => [Slick](https://react-slick.neostack.com/) ?
         - [x] Gérer le chargement au fur et à mesure
         - [x] Responsive
-- [ ] Card 🟢 
+- [x] Card
     - [x] Style de la page (cf. maquette)
     - [x] Chat avec Pokemon
 - [ ] Account 🟢
     - [ ] Style de la page (cf. maquette)
 - [x] Page opening booster
+- [ ] Bouton page /sets à mettre à un endroit
 
 ---
 - [ ] Recherche utilisateurs
