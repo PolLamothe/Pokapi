@@ -22,6 +22,20 @@ function Home() {
         setOpenBoosterSet(null)
         setOpenBoosterState(false)
     }
+
+    const openButtonStyle = {
+        background: "#64408D",
+        marginLeft : "50vw",
+        transform : "translateX(-50%)",
+        fontSize : "70px",
+        padding : "3vh",
+        cursor : "pointer",
+        height : "fit-content",
+        borderRadius : "40px",
+        border: "2px solid #B42D5C",
+        fontFamily: "'Racing Sans One', sans-serif",
+        marginBottom : "2vh",
+    }
             
     return (
         <>
@@ -32,20 +46,6 @@ function Home() {
             )}
         </>
     )
-}
-
-const openButtonStyle = {
-    background: "#64408D",
-    marginLeft : "50vw",
-    transform : "translateX(-50%)",
-    fontSize : "70px",
-    padding : "2vw",
-    cursor : "pointer",
-    height : "fit-content",
-    borderRadius : "40px",
-    border: "2px solid #B42D5C",
-    fontFamily: "'Racing Sans One', sans-serif",
-    marginBottom : "2vh",
 }
 
 export default Home;

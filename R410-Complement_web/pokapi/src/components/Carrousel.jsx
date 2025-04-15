@@ -21,6 +21,22 @@ const Carousel = ({setCurrentSetId}) => {
     const [listSet, setListSet] = useState(null)
     const [activeIndex, setActiveIndex] = useState(0);
 
+    const [windowSize, setWindowSize] = useState(window.innerWidth)
+
+    const [slicePerView,setSlicePerView] = useState(3)
+
+    const [spaceBetween,setSpaceBetween] = useState(50)
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [])
+
     const swiperRef = useRef(null);
 
     useEffect(() => {
@@ -38,12 +54,30 @@ const Carousel = ({setCurrentSetId}) => {
         setCurrentSetId(listSet[(swiper.realIndex+1)%20].id)
     };
 
+    var carouselStyle = {
+        paddingTop : "2vh",
+        paddingBottom : "2vh"
+    }
+
+    useEffect(()=>{
+        if(windowSize <= 600){
+            setSlicePerView(1)
+            setSpaceBetween(50)
+        }else if(windowSize < 1000){
+            setSlicePerView(3)
+            setSpaceBetween(20)
+        }else{
+            setSlicePerView(3)
+            setSpaceBetween(50)
+        }
+    },[windowSize])
+
     return (
         <div className="carousel-container" style={carouselStyle}>
             {listSet != null ? (
                 <Swiper
-                    spaceBetween={50}
-                    slidesPerView={3}
+                    spaceBetween={spaceBetween}
+                    slidesPerView={slicePerView}
                     modules={[Navigation]}
                     navigation={{
                         prevEl: '.swiper-button-prev',
@@ -52,6 +86,7 @@ const Carousel = ({setCurrentSetId}) => {
                     allowTouchMove={false}
                     loop={true}
                     onSlideChange={handleSlideChange}
+                    style={{"paddingTop" : "4vh","paddingBottom" : "4vh"}}
                 >
                     {listSet.map((set,index) => (
                         <SwiperSlide key={set.id}>
@@ -69,11 +104,6 @@ const Carousel = ({setCurrentSetId}) => {
             <div className="swiper-button-next">❯</div>
         </div>
     )
-}
-
-const carouselStyle = {
-    paddingTop : "2vh",
-    paddingBottom : "2vh"
 }
 
 export default Carousel
