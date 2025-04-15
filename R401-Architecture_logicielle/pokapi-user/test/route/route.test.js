@@ -297,12 +297,12 @@ describe("Route - route",()=> {
         const token = await userController.register(user1.login, user1.pseudo, user1.password)
         const response = await request(app).get(CONFIG.API_PATH+'/open-booster/wrong')
             .set("Authorization", `Bearer ${token}`)
-        assert.equal(response.status, 400)
+        assert.equal(response.status, 404)
     })
 
     it("GET /open-booster/:setId valid", async () => {
         const token = await userController.register(user1.login, user1.pseudo, user1.password)
-        let response = await request(app).get(CONFIG.API_PATH+'/open-booster/test')
+        let response = await request(app).get(CONFIG.API_PATH+'/open-booster/base1')
             .set("Authorization", `Bearer ${token}`)
         assert.equal(response.status, 200)
         assert.equal(response.body.length, 5)

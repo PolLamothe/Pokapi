@@ -1,0 +1,23 @@
+{
+  "name": "pokapi-proxy",
+  "version": "1.0.0",
+  "description": "Microservice 3 qui fait proxy pour les autres micro-services",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "node --test --experimental-test-coverage --test-force-exit test/*.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "http-proxy-middleware": "^3.0.5",
+    "https-proxy-agent": "^7.0.6",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.1.0",
+    "swagger-ui-express": "^5.0.1"
+  }
+}

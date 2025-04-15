@@ -4,6 +4,10 @@ const baseHeaders = {
     "Content-Type": "application/json",
 }
 
+const athenticationHeader = () => (
+    {"Authorization": "Bearer " + localStorage.getItem("token")}
+)
+
 const extractInfoFromJWT = (token) => {
     return JSON.parse(atob(token.split('.')[1]))
 }
@@ -13,21 +17,21 @@ const pokapiDAO = {
     rarities: null,
     sets: null,
     fetchPokemonPresentation : async(cardId) => {
-        let text = await fetch(`http://localhost:8083/api/v0/presentation/${cardId}`, {
+        let text = await fetch(config.url + `/openai/presentation/${cardId}`, {
             method: "GET",
             headers : {
                 ...baseHeaders,
-                "Authentification-Token": localStorage.getItem("token")
+                ...athenticationHeader()
             }
         })
         return await text.json()
     },
     fetPokemonResponse : async(cardId,message,previous) => {
-        const text = await fetch(`http://localhost:8083/api/v0/pokemonResponse/${cardId}`,{
+        const text = await fetch(config.url + `/openai/pokemonResponse/${cardId}`,{
             method : "POST",
             headers : {
                 ...baseHeaders,
-                "Authentification-Token": localStorage.getItem("token")
+                ...athenticationHeader()
             },
             body : JSON.stringify({
                 "message" : message,
@@ -37,28 +41,28 @@ const pokapiDAO = {
         return await text.json()
     },
     openBooster : async (setId)=>{
-        let cards = await fetch(config.url + `/open-booster/${setId}`, {
+        let cards = await fetch(config.url + `/user/open-booster/${setId}`, {
             method: "GET",
             headers : {
                 ...baseHeaders,
-                "Authentification-Token": localStorage.getItem("token")
+                ...athenticationHeader()
             }
         })
         return await cards.json()
     },
     fetchMyCards: async () => {
-        let cards = await fetch(config.url + "/my-cards", {
+        let cards = await fetch(config.url + "/user/my-cards", {
             method: "GET",
             headers : {
                 ...baseHeaders,
-                "Authentification-Token": localStorage.getItem("token")
+                ...athenticationHeader()
             }
         })
         return await cards.json()
     },
     fetchSets: async () => {
         if (pokapiDAO.sets === null) {
-            let allSets = await fetch(config.url + "/sets", {
+            let allSets = await fetch(config.url + "/data/sets", {
                 method: "GET",
                 headers: baseHeaders
             })
@@ -68,7 +72,7 @@ const pokapiDAO = {
     },
     fetchRarities: async () => {
         if (pokapiDAO.rarities === null) {
-            let allRarities = await fetch(config.url + "/rarities", {
+            let allRarities = await fetch(config.url + "/data/rarities", {
                 method: "GET",
                 headers: baseHeaders
             })
@@ -78,7 +82,7 @@ const pokapiDAO = {
     },
     fetchTypes: async () => {
         if (pokapiDAO.types === null) {
-            let allTypes = await fetch(config.url + "/types", {
+            let allTypes = await fetch(config.url + "/data/types", {
                 method: "GET",
                 headers: baseHeaders
             })
@@ -87,21 +91,21 @@ const pokapiDAO = {
         return pokapiDAO.types
     },
     fetchCard: async (cardId) => {
-        let card = await fetch(config.url + "/my-cards/" + cardId, {
+        let card = await fetch(config.url + "/user/my-cards/" + cardId, {
             method: "GET",
             headers : {
                 ...baseHeaders,
-                "Authentification-Token": localStorage.getItem("token")
+                ...athenticationHeader()
             }
         });
         return await card.json();
     },
     fetchInfo: async () => {
-        const response = await fetch(config.url + "/info",{
+        const response = await fetch(config.url + "/user/info",{
             method:"GET",
             headers : {
                 ...baseHeaders,
-                "Authentification-Token": localStorage.getItem("token")
+                ...athenticationHeader()
             }
         })
         if (response.status === 200) {
@@ -111,23 +115,27 @@ const pokapiDAO = {
         }
     },
     fetchSetPresentation : async(setId)=>{
-        const result = await fetch(config.url+"/set/presentation/"+setId,{
+        const result = await fetch(config.url+"/data/set/presentation/"+setId,{
             method : "GET",
             headers: baseHeaders
         })
         if(result.status === 200){
             return await result.json()
-        }else{
+        }else if (result.status === 404) {
+            let content = await result.json()
+            console.log("Not found : ", content.message)
+            return content
+        } else {
             console.log(result.status)
         }
     },
     fetchAuthentication: async ()=> {
         if (localStorage.getItem("token") !== null) {
-            const result = await fetch(config.url+"/login",{
+            const result = await fetch(config.url+"/user/login",{
                 method : "post",
                 headers : {
                     ...baseHeaders,
-                    "Authentification-Token": localStorage.getItem("token")
+                    ...athenticationHeader()
                 }
             })
             if (result.status === 200) {
@@ -135,10 +143,11 @@ const pokapiDAO = {
                 return true
             }
         }
+        localStorage.removeItem("token")
         return false
     },
     fetchLogin: async (login, password) => {
-        const response = await fetch(config.url+"/login",{
+        const response = await fetch(config.url+"/user/login",{
             method: "POST",
             headers: baseHeaders,
             body : JSON.stringify({
@@ -147,7 +156,8 @@ const pokapiDAO = {
             })
         })
         if(response.status === 200) {
-            localStorage.setItem("token", (await response.json()).token)
+            let newToken = await response.json()
+            localStorage.setItem("token", newToken.token)
             return true
         } else if (response.status === 401) {
             return false
@@ -155,7 +165,7 @@ const pokapiDAO = {
         throw new Error(`${response.status} : ${response.statusText}`)
     },
     fetchRegister: async (login, pseudo, password) => {
-        const response = await fetch(config.url+"/register",{
+        const response = await fetch(config.url+"/user/register",{
             method:"POST",
             headers: baseHeaders,
             body : JSON.stringify({
@@ -171,7 +181,7 @@ const pokapiDAO = {
         throw new Error((await response.json()).message)
     },
     fetchUpdate: async (pseudo, password) => {
-        const response = await fetch(config.url+"/update",{
+        const response = await fetch(config.url+"/user/update",{
             method:"PUT",
             headers: baseHeaders,
             body: JSON.stringify({

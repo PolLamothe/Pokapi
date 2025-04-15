@@ -1,5 +1,4 @@
 import React, { useState,useEffect } from 'react';
-import config from "../config.js"
 import dao from "../dao/pokapiDAO.js"
 
 const SetPresentation = ({setId,displayState,middleState}) => {
@@ -31,7 +30,7 @@ const SetPresentation = ({setId,displayState,middleState}) => {
             async function retrieveSetData(){
                 const resultJSON = await dao.fetchSetPresentation(setId)
                 setSetData(resultJSON.set)
-                setCardImages(resultJSON.images)
+                setCardImages(resultJSON.images.map(i => i.small))
             }
             retrieveSetData()
         }

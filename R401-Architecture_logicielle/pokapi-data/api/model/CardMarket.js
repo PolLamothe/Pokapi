@@ -29,7 +29,7 @@ export class CardMarket extends Model {
     static schema = {
         url: S.String,
         updatedAt: S.String,
-        prices: {type: "object", objectName: CardMarketPrices, required: true},
+        prices: {type: "object", objectName: CardMarketPrices, required: false},
     }
 
     constructor(data) {

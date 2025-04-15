@@ -33,16 +33,17 @@ Comment créer une plateforme permettant aux utilisateurs de gérer, optimiser e
 ### Étape 3 : 
 
 - [x] Contrôlleur user avec tests
-- [ ] Contrôlleur data avec tests 🟢 (*Pol*)
-	- [ ] cardController
+- [x] Contrôlleur data avec tests
+	- [x] cardController
 	- [x] setController
 
 ### Étape 4 : 
 
 - [x] Routes user avec tests
-- [ ] Routes data avec tests 
+- [x] Routes data avec tests 
 
 ### Étape 5 : 
 
-- [ ] Définir architecture et fonctionnement du proxy 🟢 (*Thomas*)
-- [ ] Routes proxy avec tests 🟢 (*Thomas*)
+- [x] Définir architecture et fonctionnement du proxy
+- [x] Routes proxy
+- [ ] Tests routes

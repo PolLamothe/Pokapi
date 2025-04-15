@@ -58,16 +58,16 @@ function Collection() {
         })
 
         pokapiDAO.fetchTypes().then(AllTypes => {
-            setTypes(AllTypes.data)
+            setTypes(AllTypes)
         })
 
         pokapiDAO.fetchRarities().then(AllRarities => {
-            setRarities(AllRarities.data)
-            setRaritiesAll(AllRarities.data)
+            setRarities(AllRarities)
+            setRaritiesAll(AllRarities)
         })
 
         pokapiDAO.fetchSets().then(AllSets => {
-            let dataSets = AllSets.data.map(s => s.name)
+            let dataSets = AllSets.map(s => s.name)
             setSets(dataSets)
             setSetsAll(dataSets)
         })
@@ -146,9 +146,9 @@ function Collection() {
         }
         const recupTypeFilter = (a, b) => {
             if (selectOthers[a][b].value.length > 0) {
-                filterCards = filterCards.filter(card =>
-                    selectOthers[a][b].value.some(type => card.card.types.includes(type))
-                )
+                filterCards = filterCards.filter(card => {
+                    return card.card.types !== null && selectOthers[a][b].value.some(type => card.card.types.includes(type))
+                })
             }
         }
 
@@ -172,9 +172,9 @@ function Collection() {
         } else {
             selectOne[nom].setter(e)
             if (nom === "Type") {
-                filterCards = filterCards.filter(card =>
-                    e.some(type => card.card.types.includes(type))
-                )
+                filterCards = filterCards.filter(card => {
+                    return card.card.types !== null && e.some(type => card.card.types.includes(type))
+                })
             } else if (nom === "Rarity") {
                 filterCards = filterCards.filter(card =>
                     e.some(rarity => card.card.rarity === rarity)

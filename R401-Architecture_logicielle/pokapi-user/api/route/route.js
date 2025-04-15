@@ -166,7 +166,7 @@ router.route('/open-booster/:setId').get(verifyAuth, async (req, res) => {
         if (e.cause === "API_ERROR")
             return res.status(503).json({message: e.message})
         else
-            return res.status(400).json({message: e.message})
+            return res.status(404).json({message: e.message})
     }
 })
 

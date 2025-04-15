@@ -7,7 +7,7 @@ export const pokapiDataDAO = {
         const res = await fetchAPI(url)
         if (res.ok) {
             return await res.json()
-        } else if (res.status === 400) {
+        } else if (res.status === 404) {
             throw new Error(`This set does not exist`)
         }
         throw new Error(`Can't fetch Pokapi-data API : ${res.status} ${res.statusText}`, {cause: "API_ERROR"})

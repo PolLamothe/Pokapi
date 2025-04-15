@@ -72,6 +72,9 @@ export function fetchAPI(fetchUrl, method="GET", body=null) {
     }
     if (body !== null) {
         fields.body = JSON.stringify(body)
+        fields.headers = {
+            "Content-Type": "application/json",
+        }
     }
     if (agent !== null) fields.agent = agent
     return fetch(fetchUrl, fields)

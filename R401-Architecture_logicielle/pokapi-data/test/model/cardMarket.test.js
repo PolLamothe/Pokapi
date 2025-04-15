@@ -33,6 +33,8 @@ describe("Model - CardMarket",()=>{
     })
     it("Missing attribute",()=>{
         Object.keys(valid).forEach((key)=> {
+            // Don't test optional attributes
+            if (["prices"].includes(key)) return
             test = Object.assign({}, valid)
             delete test[key]
             assert.throws(()=> new CardMarket(test),{

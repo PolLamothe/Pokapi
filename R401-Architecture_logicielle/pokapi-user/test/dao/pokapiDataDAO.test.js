@@ -27,6 +27,7 @@ describe('DAO - PokapiDataDAO', () => {
         } catch (e) {
             return t.skip("Make sure to use the Pokapi-stub API to run this test")
         }
+        if (result.length === 0) return t.skip("Make sure to use the Pokapi-stub API to run this test")
         assert.equal(result.length, 10)
     })
 

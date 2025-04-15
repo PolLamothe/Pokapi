@@ -11,20 +11,7 @@ const app = express()
 
 const userURL = `http://${CONFIG.USER_HOST}:${CONFIG.USER_PORT}${CONFIG.USER_API_PATH}`
 
-//Pour le CORS
-app.use((req,res,next)=>{
-    res.setHeader("Access-Control-Allow-Origin",'*');
-    res.setHeader("Access-Control-Allow-Methods",'OPTIONS, GET, POST, PUT, PATCH, DELETE');
-    res.setHeader("Access-Control-Allow-Headers",'Content-Type,Authorization');
-    next();
-})
-
-const corsOptions = {
-    origin: 'http://localhost:5173',
-    credentials: true,
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 //pour traiter les body en json
 app.use(express.json())
@@ -38,16 +25,16 @@ app.use((req,res,next) => {
 
 //Authentification
 app.use(async (req,res,next)=>{
-    if(req.path == "doc"){
+    if (req.path === "doc") {
         next()
-    }else{
-        const response = await fetch(`${userURL}/info`,{
-            method : "GET",
+    } else {
+        const response = await fetch(`${userURL}/login`,{
+            method : "POST",
             headers : {
-                "Authentification-Token" : req.headers["authentification-token"]
+                "Authorization" : req.headers.authorization
             }
         })
-        if(response.status == 200){
+        if (response.status === 200) {
             next()
         }else{
             res.status(response.status).send(response.statusText)

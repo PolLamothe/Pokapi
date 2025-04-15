@@ -101,6 +101,7 @@ const userController = {
         return await userDAO.update(user.login, userStored)
     },
     getUserCards: async (user) => {
+        if (user.cards.length === 0) return []
         const cards = await pokapiDataDAO.fetchCards(user.cards.map(c => c.id))
         const userCardsWithContent = []
         user.cards.forEach(userCard => {

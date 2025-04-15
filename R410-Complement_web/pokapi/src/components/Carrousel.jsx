@@ -41,7 +41,7 @@ const Carousel = ({setCurrentSetId}) => {
 
     useEffect(() => {
         async function retrieveSetList() {
-            let newListSet = (await dao.fetchSets()).data
+            let newListSet = await dao.fetchSets()
             newListSet = shuffle(newListSet)
             newListSet = newListSet.slice(0,20)
             setListSet(newListSet)
