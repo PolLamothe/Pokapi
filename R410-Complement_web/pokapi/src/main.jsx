@@ -1,4 +1,3 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import {BrowserRouter, Navigate, Route, Routes} from "react-router";
 import './index.css'
@@ -14,6 +13,7 @@ import ProtectedRoute from "./pages/auth/ProtectedRoute.jsx";
 import "@radix-ui/themes/styles.css";
 import {Theme} from "@radix-ui/themes";
 import ChatPokemon from "./pages/ChatPokemon.jsx";
+import Sets from "./pages/Sets.jsx"
 
 createRoot(document.getElementById('root')).render(
   <Theme accentColor="violet" grayColor="mauve">
@@ -26,6 +26,7 @@ createRoot(document.getElementById('root')).render(
                       <Route path="/collection" element={<Collection />} />
                       <Route path="/card/:cardId" element={<Card />} />
                       <Route path="/chatpokemon/:cardId" element={<ChatPokemon />} />
+                      <Route path="/sets" element={<Sets/>}></Route>
                   </Route>
               </Route>
               <Route path="/auth" element={<Auth />}>

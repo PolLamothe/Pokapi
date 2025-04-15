@@ -83,6 +83,39 @@
     animation: boosterDisparition 1s ease forwards;
 }
 
+@media screen and (max-width : 1000px) {
+    .mainWrapper{
+        width: 90%;
+    }
+    .mainCard{
+        left: 60%;
+    }
+    .finalCard{
+        width: 30%;
+    }
+}
+
+@media screen and (max-width : 600px) {
+    #globalWrapper{
+        height: 100vh;
+    }
+    .card{
+        border-radius: 4vw;
+    }
+    .finalSideCard{
+        margin-top: 15vh;
+    }
+    .mainCard{
+        margin-top: 65vh;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+    .finalCard{
+        height: fit-content;
+        width: 45%;
+    }
+}
+
 @keyframes boosterDisparition {
     0% {
         transform: translate(-50%,-50%);

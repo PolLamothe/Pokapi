@@ -5,6 +5,7 @@ import dao from "../dao/pokapiDAO.js"
 import 'swiper/css'
 import SetPresentation from './SetPresentation'
 import {Flex, Spinner} from "@radix-ui/themes";
+import {ChevronLeft, ChevronRight} from "lucide-react";
 
 function shuffle(array){
     let copy = [...array]
@@ -65,10 +66,13 @@ const Carousel = ({setCurrentSetId}) => {
             setSpaceBetween(50)
         }else if(windowSize < 1000){
             setSlicePerView(3)
-            setSpaceBetween(20)
-        }else{
+            setSpaceBetween(-25)
+        } else if (windowSize >= 1000 && windowSize < 1500) {
             setSlicePerView(3)
-            setSpaceBetween(50)
+            setSpaceBetween(-40)
+        } else {
+            setSlicePerView(3)
+            setSpaceBetween(-60)
         }
     },[windowSize])
 
@@ -86,7 +90,7 @@ const Carousel = ({setCurrentSetId}) => {
                     allowTouchMove={false}
                     loop={true}
                     onSlideChange={handleSlideChange}
-                    style={{"paddingTop" : "4vh","paddingBottom" : "4vh"}}
+                    style={{"paddingTop" : "2vh","paddingBottom" : "2vh"}}
                 >
                     {listSet.map((set,index) => (
                         <SwiperSlide key={set.id}>
@@ -100,8 +104,12 @@ const Carousel = ({setCurrentSetId}) => {
                     Loading
                 </Flex>
             )}
-            <div className="swiper-button-prev">❮</div>
-            <div className="swiper-button-next">❯</div>
+            <div className="swiper-button-prev">
+                <ChevronLeft size="80px" strokeWidth="1px"/>
+            </div>
+            <div className="swiper-button-next">
+                <ChevronRight size="80px" strokeWidth="1px"/>
+            </div>
         </div>
     )
 }

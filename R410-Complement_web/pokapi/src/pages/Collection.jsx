@@ -8,10 +8,11 @@ import {useNavigate} from "react-router";
 import pokapiDAO from "../dao/pokapiDAO.js";
 
 
-function ImageCard({card, navigate}) {
+function ImageCard({card, navigate,favoriteState,heartStyle}) {
     return (
         <Flex className="hoverEffect" justify="center">
             <figure>
+                {favoriteState && <img src="public/heart.png" style={heartStyle}/>}
                 <img className="img" alt={card.card.name} src={card.card.images.small} onClick={navigate} />
             </figure>
         </Flex>
@@ -20,7 +21,6 @@ function ImageCard({card, navigate}) {
 
 function Collection() {
 
-
     const [userCards, setUserCards] = useState([])
     const [userCardsAll, setUserCardsAll] = useState([])
     const [types, setTypes] = useState([])
@@ -28,6 +28,8 @@ function Collection() {
     const [raritiesAll, setRaritiesAll] = useState([])
     const [sets, setSets] = useState([])
     const [setsAll, setSetsAll] = useState([])
+
+    const [searched,setSearched] = useState(null)
 
     const [selectedType, setSelectedType] = useState([])
     const [selectedRarities, setSelectedRarities] = useState([])
@@ -81,6 +83,12 @@ function Collection() {
 
         return () => clearTimeout(timer)
     }, [])
+
+    useEffect(()=>{
+        pokapiDAO.fetchSearched().then(AllSearched => {
+            setSearched(AllSearched)
+        })
+    },[])
 
 
     const handleSearch = async (e) => {
@@ -205,6 +213,21 @@ function Collection() {
     )
     }
 
+    var heartStyle = {
+        height : "fit-content",
+        width : "2vw",
+        position : "absolute",
+        top : "0px",
+        left : "0px",
+        zIndex : "2",
+        maxWidth : "30px"
+    }
+    if(windowSize < 1000 && windowSize > 600){
+        heartStyle["width"] = "5vw"
+    }else if(windowSize <= 600){
+        heartStyle["width"] = "10vw"
+    }
+
     return (
         <Grid className="principalGrid" columns="3" style={{gridTemplateColumns: `${gridtemplate}`}} py="5" px="5">
             <Flex id="searchBar" px="5" py="5" justify="center">
@@ -227,9 +250,9 @@ function Collection() {
                 </Accordion.Root>
             </Flex>
             <Grid className="cardsUser" columns={columnImage} style={{maxWidth: '1500px', height: "fit-content", marginLeft: "15px"}} gap="4">
-                {userCards && userCards.length > 0 ? (
+                {userCards && searched && userCards.length > 0 ? (
                     userCards.map(card => (
-                    <ImageCard key={card.card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}}/>
+                    <ImageCard key={card.card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}} favoriteState={searched.filter(card2 => card2.id == card.card.id).length > 0} heartStyle={heartStyle}/>
                     ))
                 ) : !loadingExpired ? (
                     <Flex align="center" direction="column" py="9">

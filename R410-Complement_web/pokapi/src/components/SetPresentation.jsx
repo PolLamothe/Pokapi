@@ -62,7 +62,10 @@ const SetPresentation = ({setId,displayState,middleState}) => {
         boxShadow : "rgba(0, 0, 0, 0.35) 0px 5px 15px",
         borderRadius : "20px",
         padding : "1vw",
-        margin : "4vw",
+        marginTop: "4vw",
+        marginRight: "4vw",
+        marginBottom: "4vw",
+        marginLeft: "4vw",
         transitionDuration : ".25s",
     }
     
@@ -106,13 +109,17 @@ const SetPresentation = ({setId,displayState,middleState}) => {
 
         cardImageStyle["width"] = "40%"
 
-        containerStyle["marginLeft"] = "0%"
-    }else if(windowSize <= 600){
+        containerStyle["marginLeft"] = "4vw"
+    }else if (windowSize > 1000 && windowSize < 1500) {
+        containerStyle["marginLeft"] = "4vw"
+    } else if(windowSize > 1500) {
+        containerStyle["marginLeft"] = "4vw"
+    } else if(windowSize <= 600){
 
     }
 
     return (
-        <div id='container' style={{...middleStyle,...containerStyle}}>
+        <div id='container' style={{...middleStyle,...containerStyle,backgroundColor: "white"}}>
             {setData != null && (
                 <img src={setData.images.logo} id="setLogo" style={setLogoStyle}/>
             )}
