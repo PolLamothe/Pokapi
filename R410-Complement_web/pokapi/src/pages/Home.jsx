@@ -19,7 +19,6 @@ function Home() {
     },[openBoosterState])
 
     function openingOver(){
-        setOpenBoosterSet(null)
         setOpenBoosterState(false)
     }
 

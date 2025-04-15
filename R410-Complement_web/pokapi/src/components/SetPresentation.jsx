@@ -67,6 +67,7 @@ const SetPresentation = ({setId,displayState,middleState}) => {
         marginBottom: "4vw",
         marginLeft: "4vw",
         transitionDuration : ".25s",
+        height : "40vh"
     }
     
     var cardContainerStyle = {
@@ -77,10 +78,12 @@ const SetPresentation = ({setId,displayState,middleState}) => {
     }
     
     var setLogoStyle = {
-        width : "40%",
+        height : "10vh",
+        maxWidth : "90%",
         marginLeft : "50%",
         transform : "translateX(-50%)",
         marginBottom : "5vh",
+        objectFit : "contain",
     }
     
     const rotationEffect = (index)=>{
@@ -110,12 +113,13 @@ const SetPresentation = ({setId,displayState,middleState}) => {
         cardImageStyle["width"] = "40%"
 
         containerStyle["marginLeft"] = "4vw"
+        containerStyle["height"] = "35vh"
     }else if (windowSize > 1000 && windowSize < 1500) {
         containerStyle["marginLeft"] = "4vw"
     } else if(windowSize > 1500) {
         containerStyle["marginLeft"] = "4vw"
     } else if(windowSize <= 600){
-
+        containerStyle["height"] = "45vh"
     }
 
     return (
@@ -131,7 +135,6 @@ const SetPresentation = ({setId,displayState,middleState}) => {
                     return <img key={index} src={image} className='cardImage' style={{...cardImageStyle,...rotationEffect(index)}}/>
                 })}
             </div>
-            <p>{setId || JSON.stringify(setId)}</p>
         </div>
     )
 

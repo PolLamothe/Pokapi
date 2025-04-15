@@ -117,7 +117,7 @@ const cardController = {
         const set = await setController.find(id)
         let setCards = await cardController.findSetCards(id)
         const cards = []
-        while(cards.length < 3) {
+        while(cards.length < 4) {
             const randomIndex = parseInt(Math.random() * (setCards.length-1))
             cards.push(setCards[randomIndex])
             setCards.splice(randomIndex,1)
