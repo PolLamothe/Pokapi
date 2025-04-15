@@ -22,6 +22,10 @@ function ChatPokemon() {
 
     var firstMessageState = false
 
+    let scrollChatWidth, txtAreaWidth, chatBubbleWidth, chatBarWidth, fontSizeBubble, heightHeader,heightHeaderButton = null
+
+
+
     useEffect(()=>{
         async function fetchPresentation(){
             const response = (await dao.fetchPokemonPresentation(params.cardId)).text
@@ -49,8 +53,6 @@ function ChatPokemon() {
         setTextAreaValue("")
         inputRef.current.value = ""
     }
-
-    let scrollChatWidth, txtAreaWidth, chatBubbleWidth, chatBarWidth, fontSizeBubble = null
 
     useEffect(() => {
         const handleResize = () => {
@@ -82,28 +84,42 @@ function ChatPokemon() {
         chatBubbleWidth = "60%",
         chatBarWidth = "80%",
         txtAreaWidth = "65vw",
-        fontSizeBubble = "16px"
+        fontSizeBubble = "16px",
+        heightHeader = "160px",
+        heightHeaderButton = "190px"
 
     ) : windowSize < 600 ? (
         scrollChatWidth = "100vw",
         chatBubbleWidth = "60%",
         chatBarWidth = "80%",
         txtAreaWidth = "65vw",
-        fontSizeBubble = "12px"
+        fontSizeBubble = "12px",
+        heightHeader = "110px",
+        heightHeaderButton = "140px"
+    ) : windowSize > 1500 ? (
+        scrollChatWidth = "70vw",
+        chatBubbleWidth = "40vw",
+        chatBarWidth = "60vw",
+        txtAreaWidth = "55vw",
+        fontSizeBubble = "16px",
+        heightHeader = "190px",
+        heightHeaderButton = "220px"
     ) : (
         scrollChatWidth = "70vw",
         chatBubbleWidth = "40vw",
         chatBarWidth = "60vw",
         txtAreaWidth = "55vw",
-        fontSizeBubble = "16px"
+        fontSizeBubble = "16px",
+        heightHeader = "160px",
+        heightHeaderButton = "190px"
     )
     }
 
     return (
         <>
             {loaded ? (
-                <Flex align="center" direction="column" gap="5" style={{height: 'calc(100vh - 150px)'}}>
-                    <IconButton radius="full"  size="3" style={{zIndex: "100",position: "fixed", top: "180px", left: "30px", backgroundColor: "rgb(100, 64, 141)", border: "1px solid rgb(180, 45, 92)"}} onClick={()=>navigateBack(-1)}>
+                <Flex align="center" direction="column" gap="5" style={{height: `calc(100vh - ${heightHeader})`}}>
+                    <IconButton radius="full" size="3" style={{zIndex: "100",position: "fixed", top: `${heightHeaderButton}`, left: "30px", backgroundColor: "rgb(100, 64, 141)", border: "1px solid rgb(180, 45, 92)"}} onClick={()=>navigateBack(-1)}>
                         <Undo2/>
                     </IconButton>
                     <ScrollArea className={`ChatScroll`} style={{width: `${scrollChatWidth}`}}>

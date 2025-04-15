@@ -14,7 +14,7 @@ const Header = () => {
   }, []);
 
   //tout le responsif je sais pas faire avec un media query en react 
-  const surTablette = windowWidth < 1024;
+  const surTablette = windowWidth < 1400;
   const surMobile = windowWidth < 600;
 
   const getButtonStyle = (isHovered, borderRadius) => ({
