@@ -43,17 +43,17 @@ Les identifiants pour se connecter avec le stub sont : `login: admin ; password:
     - [x] Filtres
     - [x] Recherche
     - [ ] Boutton clear filtres
-- [ ] Home 🟢
-    - [ ] Carousel avec les booster 
+- [x] Home 🟢
+    - [x] Carousel avec les booster 
         - [x] Choisir lib pour faire le carousel => [Slick](https://react-slick.neostack.com/) ?
         - [x] Gérer le chargement au fur et à mesure
-        - [ ] Responsive
+        - [x] Responsive
 - [ ] Card 🟢 
     - [x] Style de la page (cf. maquette)
-    - [ ] Chat avec Pokemon
+    - [x] Chat avec Pokemon
 - [ ] Account 🟢
     - [ ] Style de la page (cf. maquette)
-- [ ] Page opening booster
+- [x] Page opening booster
 
 ---
 - [ ] Recherche utilisateurs
