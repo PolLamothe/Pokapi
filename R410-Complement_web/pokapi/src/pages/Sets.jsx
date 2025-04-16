@@ -91,14 +91,11 @@ function Sets(){
             </TextField.Root>
             <div id="setsContainer" style={setsContainerStyle}>
                 {listSets && listSets.map((element,index)=>{
-                    if(index > limitSize-1){
-                        return null
-                    }
                     if(!element.name.toLowerCase().includes(searchBarValue.toLowerCase())){
                         return null
                     }
                     return <img key={element.id} src={element.images.logo} style={setItemStyle} onClick={() => navigateToSet(`/set/${element.id}`)}/>
-                })}
+                }).filter(img => img != null).slice(0,limitSize)}
             </div>
             <Button style={{marginLeft : "50vw",transform : "translateX(-50%)",marginBottom : "5vh",cursor : "pointer"}} onClick={()=>{setLimitSize(limitSize+initialLimitSize)}}>
                 <ReloadIcon /> Charger plus
