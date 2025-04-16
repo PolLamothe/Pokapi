@@ -60,8 +60,6 @@ function SetSection({set,cards,searchState}){
         width : "20vw",
         maxHeight : "15vh",
         objectFit : "contain",
-        marginLeft : "50%",
-        transform : "translateX(-50%)",
         cursor : "pointer",
     })
 
@@ -76,7 +74,8 @@ function SetSection({set,cards,searchState}){
     }, [])
 
     var wrapperStyle = {
-        width : "fit-content"
+        width : "100%",
+        justifyContent: "center"
     }
 
     var cardWrapperStyle = {
@@ -100,11 +99,13 @@ function SetSection({set,cards,searchState}){
 
     return (
         <div style={wrapperStyle}>
-            <img src={set.images.logo} style={logoStyle} onClick={()=>{navigateToCardPage(`/set/${set.id}`)}}/>
+            <Flex justify="center">
+                <img src={set.images.logo} style={logoStyle} onClick={()=>{navigateToCardPage(`/set/${set.id}`)}}/>
+            </Flex>
             <div style={cardWrapperStyle}>
                 {cards.map(card =>
                     <ImageCard 
-                    key={card.card.name} 
+                    key={card.card.id}
                     card={card} 
                     navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}} 
                     posssesed={!searchState}
@@ -135,7 +136,9 @@ function Collection() {
     const [selectedSet, setSelectedSet] = useState([])
 
     const [loadingExpired, setLoadingExpired] = useState(false)
-    const [separedSet,setSeparedSet] = useState(true)
+    const [separedSet,setSeparedSet] = useState(false)
+
+    let navigateToCardPage = useNavigate()
 
 
     const [windowSize, setWindowSize] = useState(window.innerWidth)
@@ -373,7 +376,7 @@ function Collection() {
                         <AccordionContent className="AccordionContent">
                             <div style={{display:"flex",alignItems:"center",gap:"1vw",justifyContent : "space-between",width : "100%"}}>
                                 <b>Séparer les sets</b>
-                                <Switch style={{cursor : "pointer"}} onCheckedChange={setSeparedSet} defaultChecked/>
+                                <Switch style={{cursor : "pointer"}} onCheckedChange={setSeparedSet}/>
                             </div>
                             
                             <div style={{display:"flex",alignItems:"center",gap:"1vw",marginTop : "2vh",justifyContent : "space-between",width : "100%"}}>
@@ -389,8 +392,8 @@ function Collection() {
                 {userCards && userCardsAll.length > 0 ? (
                     separedSet ? 
                         (Object.keys(cardInSets).map(setId => {
-                        return <SetSection 
-                            set={cardInSets[setId]["set"]} 
+                        return <SetSection
+                            set={cardInSets[setId]["set"]}
                             cards={cardInSets[setId]["cards"]}
                             searchState={searchedState}
                             />
