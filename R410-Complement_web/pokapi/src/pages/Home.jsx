@@ -9,6 +9,10 @@ function Home() {
 
     const [openBoosterSet,setOpenBoosterSet] = useState(null)
 
+    const [windowSize, setWindowSize] = useState(window.innerWidth)
+
+    let heightHeader
+
     useEffect(()=>{
         if(openBoosterState){
             document.body.style.overflowY = "hidden"
@@ -17,6 +21,16 @@ function Home() {
             document.body.style.overflowY = "initial"
         )
     },[openBoosterState])
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [])
 
     function openingOver(){
         setOpenBoosterState(false)
@@ -35,15 +49,26 @@ function Home() {
         fontFamily: "'Racing Sans One', sans-serif",
         marginBottom : "2vh",
     }
-            
+
+    { windowSize < 1000 && windowSize > 600 ? (
+        heightHeader = "160px"
+    ) : windowSize < 600 ? (
+        heightHeader = "110px"
+    ) : windowSize > 1500 ? (
+        heightHeader = "190px"
+    ) : (
+        heightHeader = "160px"
+    )
+    }
+
     return (
-        <>
+        <div style={{height: `calc(100vh - ${heightHeader})`}}>
             <Carousel setCurrentSetId={setOpenBoosterSet}></Carousel>
             <Button style={openButtonStyle} onClick={()=>setOpenBoosterState(true)}>OPEN</Button>
             {openBoosterState && (
                 <BoosterOpening setId={openBoosterSet} callback={openingOver}/>
             )}
-        </>
+        </div>
     )
 }
 

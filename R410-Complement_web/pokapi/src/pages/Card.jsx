@@ -13,6 +13,10 @@ function Card() {
     let navigateToChat = useNavigate()
     let navigateBack = useNavigate()
     let navigateToSet = useNavigate()
+    const [windowSize, setWindowSize] = useState(window.innerWidth)
+
+    let marginLeftButton, marginTopButton
+
 
 
     useEffect(() => {
@@ -22,7 +26,27 @@ function Card() {
             setLoaded(true);
         })
     }, [params.cardId]);
-    console.log(cardData)
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [])
+
+    { windowSize < 1000 && windowSize > 768 ? (
+        marginLeftButton = "15px",
+        marginTopButton = "-15px"
+    ) : windowSize < 768 ? (
+        marginLeftButton = "15px",
+        marginTopButton = "15px"
+    ) : (
+        marginLeftButton = "30px"
+    )}
+
     return (
         <>
             {loaded ? (
@@ -40,9 +64,10 @@ function Card() {
                         radius="full"
                         size="3"
                         style={{
-                            position: "fixed",
-                            top: "20px",
-                            left: "20px",
+                            position: "absolute",
+                            left: "0",
+                            marginLeft: marginLeftButton,
+                            marginTop: marginTopButton,
                             backgroundColor: "rgb(100, 64, 141)",
                             border: "1px solid rgb(180, 45, 92)",
                         }}
@@ -52,11 +77,11 @@ function Card() {
                     </IconButton>
                     <Box
                         p="9"
-                        mt= "6"
+                        mt= "9"
                         style={{
                             backgroundColor: "#ffffff",
                             borderRadius: "10px",
-                            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
+                            boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "space-between",
@@ -79,7 +104,7 @@ function Card() {
                                     fontWeight: "bold",
                                     backgroundColor: "#ffffff",
                                     borderRadius: "25px",
-                                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.3)",
+                                    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
                                     width: "75px",
                                     height: "35px",
                                     display: "flex",
