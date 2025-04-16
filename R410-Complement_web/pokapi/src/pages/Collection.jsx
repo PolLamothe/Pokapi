@@ -3,20 +3,71 @@ import {Button, CheckboxGroup, Flex, Grid, ScrollArea, Spinner, TextField} from 
 import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
 import * as Accordion from '@radix-ui/react-accordion';
 import {AccordionContent, AccordionTrigger} from "@radix-ui/react-accordion";
-import {ChevronDownIcon, Scroll, X} from "lucide-react";
+import {ChevronDownIcon, Fish, Scroll, X} from "lucide-react";
 import {useNavigate} from "react-router";
 import pokapiDAO from "../dao/pokapiDAO.js";
 
 
-function ImageCard({card, navigate,favoriteState,heartStyle}) {
+function ImageCard({card, navigate}) {
     return (
         <Flex className="hoverEffect" justify="center">
             <figure>
-                {favoriteState && <img src="public/heart.png" style={heartStyle}/>}
                 <img className="img" alt={card.card.name} src={card.card.images.small} onClick={navigate} />
             </figure>
         </Flex>
     )
+}
+
+function SetSection({set,cards}){
+    const navigateToCardPage = useNavigate()
+
+    const [windowSize, setWindowSize] = useState(window.innerWidth)
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [])
+
+    var wrapperStyle = {
+        width : "fit-content"
+    }
+
+    var cardWrapperStyle = {
+        display : "flex",
+        flexWrap : "wrap",
+        width : "100%",
+        marginLeft : "50%",
+        transform : "translateX(-50%)",
+        justifyContent : "center"
+    }
+
+    var logoStyle = {
+        width : "20vw",
+        marginLeft : "50%",
+        transform : "translateX(-50%)",
+        cursor : "pointer",
+        marginTop : "5vh",
+    }
+
+    if(windowSize < 600){
+        logoStyle["width"] = "50vw"
+    }
+
+    return (
+        <div style={wrapperStyle}>
+            <img src={set.images.logo} style={logoStyle} onClick={()=>{navigateToCardPage(`/set/${set.id}`)}}/>
+            <div style={cardWrapperStyle}>
+                {cards.map(card =>
+                    <ImageCard key={card.card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}}/>
+                )
+                }
+            </div>
+        </div>)
 }
 
 function Collection() {
@@ -29,7 +80,7 @@ function Collection() {
     const [sets, setSets] = useState([])
     const [setsAll, setSetsAll] = useState([])
 
-    const [searched,setSearched] = useState(null)
+    const [cardInSets,setCardInSets] = useState(null)
 
     const [selectedType, setSelectedType] = useState([])
     const [selectedRarities, setSelectedRarities] = useState([])
@@ -85,11 +136,18 @@ function Collection() {
     }, [])
 
     useEffect(()=>{
-        pokapiDAO.fetchSearched().then(AllSearched => {
-            setSearched(AllSearched)
+        var temp = {}
+        userCards.forEach(card=>{
+            if(temp[card.card.set.id] == undefined){
+                temp[card.card.set.id] = {}
+                temp[card.card.set.id]["set"] = card.card.set
+                temp[card.card.set.id]["cards"] = [card]
+            }else{
+                temp[card.card.set.id]["cards"].push(card)
+            }
         })
-    },[])
-
+        setCardInSets(temp)
+    },[userCards])
 
     const handleSearch = async (e) => {
         const recherche = e.target.value
@@ -197,7 +255,6 @@ function Collection() {
         setUserCards(filterCards)
     }
 
-
     { windowSize > 1100 ? (
         gridtemplate = '25% 75%',
         columnImage = "repeat(auto-fit, minmax(245px, 1fr))"
@@ -213,20 +270,12 @@ function Collection() {
     )
     }
 
-    var heartStyle = {
-        height : "fit-content",
-        width : "2vw",
-        position : "absolute",
-        top : "0px",
-        left : "0px",
-        zIndex : "2",
-        maxWidth : "30px"
+    var contentWrapperStyle = {
+        display : "flex",
+        flexDirection : "column",
+        gap : "10vh"
     }
-    if(windowSize < 1000 && windowSize > 600){
-        heartStyle["width"] = "5vw"
-    }else if(windowSize <= 600){
-        heartStyle["width"] = "10vw"
-    }
+
 
     return (
         <Grid className="principalGrid" columns="3" style={{gridTemplateColumns: `${gridtemplate}`}} py="5" px="5">
@@ -249,11 +298,11 @@ function Collection() {
 
                 </Accordion.Root>
             </Flex>
-            <Grid className="cardsUser" columns={columnImage} style={{maxWidth: '1500px', height: "fit-content", marginLeft: "15px"}} gap="4">
-                {userCards && searched && userCards.length > 0 ? (
-                    userCards.map(card => (
-                    <ImageCard key={card.card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}} favoriteState={searched.filter(card2 => card2.id == card.card.id).length > 0} heartStyle={heartStyle}/>
-                    ))
+            <div id="contentWrapper" style={contentWrapperStyle}>
+                {userCards && userCardsAll.length > 0 ? (
+                    Object.keys(cardInSets).map(setId => {
+                        return <SetSection set={cardInSets[setId]["set"]} cards={cardInSets[setId]["cards"]}/>
+                    })
                 ) : !loadingExpired ? (
                     <Flex align="center" direction="column" py="9">
                         <Spinner size="2"/>
@@ -264,7 +313,7 @@ function Collection() {
                         No Cards founds !
                     </Flex>
                 )}
-            </Grid>
+            </div>
         </Grid>
     )
 }
