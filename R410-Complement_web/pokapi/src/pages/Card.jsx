@@ -27,41 +27,49 @@ function Card() {
         <>
             {loaded ? (
                 <Flex
-                    direction={{base: "column", md: "row"}}
+                    direction={{ base: "column", md: "row" }}
                     justify="center"
-                    align="center"
-                    gap="6"
-                    px="6"
-                    py="6"
-                    style={{fontFamily: "Arial, sans-serif"}}
+                    align="start"
+                    gap={{ base: "6", md: "10" }}
+                    px={{ base: "4", sm: "6", md: "8" }}
+                    py={{ base: "4", sm: "6" }}
+                    style={{ fontFamily: "Arial, sans-serif" }}
+                    wrap="wrap"
                 >
-                    <IconButton radius="full" size="3" style={{
-                        position: "fixed",
-                        top: "180px",
-                        left: "30px",
-                        backgroundColor: "rgb(100, 64, 141)",
-                        border: "1px solid rgb(180, 45, 92)"
-                    }} onClick={() => navigateBack(-1)}>
-                        <Undo2/>
+                    <IconButton
+                        radius="full"
+                        size="3"
+                        style={{
+                            position: "fixed",
+                            top: "20px",
+                            left: "20px",
+                            backgroundColor: "rgb(100, 64, 141)",
+                            border: "1px solid rgb(180, 45, 92)",
+                        }}
+                        onClick={() => navigateBack(-1)}
+                    >
+                        <Undo2 />
                     </IconButton>
                     <Box
                         p="9"
+                        mt= "6"
                         style={{
                             backgroundColor: "#ffffff",
                             borderRadius: "10px",
                             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
-
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "space-between",
-                            alignSelf: "stretch",
+                            alignSelf: "start",
+                            width: "100%",
+                            maxWidth: "400px",
                         }}
                     >
                         <img
                             src={cardData.set?.images?.logo || "placeholder.png"}
                             alt="Logo"
-                            style={{width: "300px", marginBottom: "20px"}}
-                            onClick={()=>navigateToSet(`/set/${cardData.set.id}`)}
+                            style={{ width: "100%", height: "auto", marginBottom: "20px" }}
+                            onClick={() => navigateToSet(`/set/${cardData.set.id}`)}
                         />
                         <Flex direction="row" align="center" gap="4">
                             <Box
@@ -81,53 +89,64 @@ function Card() {
                             >
                                 <Text size="3">{cardData.set?.ptcgoCode || "Unknown"}</Text>
                             </Box>
-                            <Text size="3" style={{textAlign: "left"}}>
+                            <Text size="3" style={{ textAlign: "left" }}>
                                 {cardData.number || "Unknown"}
                                 <strong>/</strong>
                                 {cardData.set?.total || "Unknown"}
                             </Text>
                         </Flex>
                         <Flex direction="column" align="center" gap="2" px="4" py="2">
-                            <Text size="3" style={{textAlign: "left", width: "100%"}}>
+                            <Text size="3" style={{ textAlign: "left", width: "100%" }}>
                                 <strong>Illustrator:</strong> {cardData.artist || "Unknown"}
                             </Text>
-                            <Text size="3" style={{textAlign: "left", width: "100%"}}>
+                            <Text size="3" style={{ textAlign: "left", width: "100%" }}>
                                 <strong>Price:</strong> {cardData.cardmarket?.prices?.averageSellPrice || "N/A"}
                             </Text>
                         </Flex>
                         <Flex justify="center">
-                            <Button variant="soft" radius="full" style={{boxShadow: "0px 0px 5px 1px grey"}}
-                                    onClick={() => {
-                                        navigateToChat(`/chatpokemon/${cardData.id}`)
-                                    }}>Chat with the Pokemon</Button>
+                            <Button
+                                variant="soft"
+                                radius="full"
+                                style={{ boxShadow: "0px 0px 5px 1px grey" }}
+                                onClick={() => {
+                                    navigateToChat(`/chatpokemon/${cardData.id}`);
+                                }}
+                            >
+                                Chat with the Pokemon
+                            </Button>
                         </Flex>
                     </Box>
                     <Flex
                         direction="column"
+                        mt= "6"
                         align="center"
                         justify="center"
                         gap="4"
-                        style={{textAlign: "center"}}
+                        style={{ alignSelf: "start", textAlign: "center", width: "100%", maxWidth: "400px" }}
                     >
-                        <div className="card">
+                        <div>
                             {cardData.rarity.includes("Rare") ? (
-                                <CardEffectHolo card={cardData}/>
+                                <CardEffectHolo card={cardData} />
                             ) : (
-                                <CardEffect card={cardData}/>
+                                <CardEffect card={cardData} />
                             )}
                         </div>
                         <Box
                             p="4"
+                            mt= "4"
+                            mb ="8"
                             style={{
                                 backgroundColor: "#ffffff",
                                 borderRadius: "10px",
                                 boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
                                 textAlign: "center",
-                                width: "100%",
+                                width: "75%",
                             }}
                         >
-                            <Flex direction="row" align="center" gap="4">
-                                <Text size="2"><strong>Number:</strong> {cardData.number || "N/A"}</Text>
+                            <Flex direction="row" align="center" gap="9">
+                                <Text size="2">
+                                    <strong>Number:</strong> {cardData.number || "N/A"}
+                                </Text>
                                 <Text size="2">{cardData.name || "Unknown Card"}</Text>
                             </Flex>
                         </Box>
@@ -135,14 +154,12 @@ function Card() {
                 </Flex>
             ) : (
                 <Flex align="center" direction="column" py="9">
-                    <Spinner size="2"/>
+                    <Spinner size="2" />
                     Loading
                 </Flex>
             )}
         </>
-    );
-
-
+    );    
 }
 
 function CardEffect({card}) {
