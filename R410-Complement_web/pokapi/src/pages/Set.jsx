@@ -26,6 +26,10 @@ function SetView() {
 
     let navigateBack = useNavigate()
 
+    const [windowSize, setWindowSize] = useState(window.innerWidth)
+
+    let gridtemplate
+
     let cardDuSet = null
     let date = [""]
 
@@ -36,6 +40,16 @@ function SetView() {
         })
         console.log(searched)
     }
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [])
 
     useEffect(() => {
         pokapiDAO.fetchSet(params.setId).then(data => {
@@ -93,6 +107,12 @@ function SetView() {
         )
     },[openBoosterState])
 
+    { windowSize < 1100 ? (
+        gridtemplate = "100%"
+    ):(
+        gridtemplate = '30% 70%'
+    )}
+
     return <>
         { loaded ? (
             <Flex style={{justifyContent:"center", height: "fit-content", padding: "2vh"}}>
@@ -103,7 +123,7 @@ function SetView() {
                         </IconButton>
                         <img src={setData.images.logo}  alt="logo" style={{maxWidth:'35vw',maxHeight:'30vh', marginBottom:'6vh'}}/>
                     </Flex>
-                    <Grid columns="2" style={{gridTemplateColumns: "30% 70%"}}>
+                    <Grid columns="2" style={{gridTemplateColumns: `${gridtemplate}`}}>
                         <Flex direction="column" style={{padding: "2vw"}}>
                             <Card style={styleElement}>
                                 <p>Total number of cards in this Set : {setData.total} cards</p>
