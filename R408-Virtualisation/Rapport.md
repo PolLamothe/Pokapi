@@ -1,6 +1,8 @@
-# SAE401 : R408 - Virtualisation 
+# SAE4 : R4.08 - Virtualisation 
 
 **Groupe_1_1 : Kyllian Arnaud, Jauzua Destain, Pol Lamothe, Brieuc Le Carluer, Thomas Souchet**
+
+Dans le cadre de la ressource R4.08 nous avons conteneurisé le framework MVC écrit en PHP, celui-ci se trouve dans le dossier `./MVC`, l'application qu'il fournit consiste à ajouter, modifer et supprimer des produits avec un système d'authentification.
 
 Pour conteneuriser le MVC, il est nécessaire de mettre en place deux conteneurs, un pour la base de données et un pour l'application PHP.
 
