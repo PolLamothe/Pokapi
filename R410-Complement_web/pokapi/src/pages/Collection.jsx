@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Button, CheckboxGroup, Flex, Grid, ScrollArea, Spinner, TextField} from "@radix-ui/themes";
+import {Button, CheckboxGroup, Flex, Grid, ScrollArea, Spinner, TextField, Switch} from "@radix-ui/themes";
 import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
 import * as Accordion from '@radix-ui/react-accordion';
 import {AccordionContent, AccordionTrigger} from "@radix-ui/react-accordion";
@@ -30,7 +30,6 @@ function SetSection({set,cards}){
         marginLeft : "50%",
         transform : "translateX(-50%)",
         cursor : "pointer",
-        marginTop : "5vh",
     })
 
     useEffect(() => {
@@ -95,6 +94,7 @@ function Collection() {
     const [selectedSet, setSelectedSet] = useState([])
 
     const [loadingExpired, setLoadingExpired] = useState(false)
+    const [separedSet,setSeparedSet] = useState(true)
 
     const navigateToCardPage = useNavigate();
 
@@ -278,12 +278,18 @@ function Collection() {
     )
     }
 
-    var contentWrapperStyle = {
+    var contentWrapperStyleSepared = {
         display : "flex",
         flexDirection : "column",
-        gap : "10vh"
+        gap : "5vh"
     }
 
+    var contentWrapperStyle = {
+        display : "flex",
+        flexDirection : "row",
+        flexWrap : "wrap",
+        justifyContent : "center"
+    }
 
     return (
         <Grid className="principalGrid" columns="3" style={{gridTemplateColumns: `${gridtemplate}`}} py="5" px="5">
@@ -304,14 +310,22 @@ function Collection() {
 
                     <AccordionTab name="Set" onchecked={onChecked} filter={sets} selectedFilter={selectedSet} handleSearch={handleSearchSets} searchBar={true} ondelete={onChecked}/>
 
+                    <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:"1vw"}}>
+                        <p>Séparer les sets</p>
+                        <Switch style={{cursor : "pointer"}} onCheckedChange={setSeparedSet} defaultChecked/>
+                    </div>
                 </Accordion.Root>
             </Flex>
-            <div id="contentWrapper" style={contentWrapperStyle}>
+            <div id="contentWrapper" style={separedSet ? contentWrapperStyleSepared : contentWrapperStyle}>
                 {userCards && userCardsAll.length > 0 ? (
-                    Object.keys(cardInSets).map(setId => {
+                    separedSet ? 
+                        (Object.keys(cardInSets).map(setId => {
                         return <SetSection set={cardInSets[setId]["set"]} cards={cardInSets[setId]["cards"]}/>
-                    })
-                ) : !loadingExpired ? (
+                        })) : 
+                        (userCards.map(card => (
+                            <ImageCard key={card.card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}}/>
+                        )))
+                 ) : !loadingExpired ? (
                     <Flex align="center" direction="column" py="9">
                         <Spinner size="2"/>
                         Loading
