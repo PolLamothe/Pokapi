@@ -43,7 +43,7 @@ const SetPresentation = ({setId,displayState,middleState}) => {
     }, [displayState]); 
 
     useEffect(()=>{
-        if(middleState){
+        if(middleState && windowSize > 600){
             setMiddleStyle({transform : "scale(1.25)"})
         }else{
             setMiddleStyle({})
@@ -107,20 +107,22 @@ const SetPresentation = ({setId,displayState,middleState}) => {
         marginLeft : "-10%",
     }
 
-    if(windowSize < 1000 && windowSize > 600){
-        setLogoStyle["width"] = "90%"
-
-        cardImageStyle["width"] = "40%"
-
-        containerStyle["marginLeft"] = "4vw"
-        containerStyle["height"] = "35vh"
-    }else if (windowSize > 1000 && windowSize < 1500) {
-        containerStyle["marginLeft"] = "4vw"
-    } else if(windowSize > 1500) {
-        containerStyle["marginLeft"] = "4vw"
-    } else if(windowSize <= 600){
-        containerStyle["height"] = "45vh"
-    }
+    useEffect(()=>{
+        if(windowSize < 1000 && windowSize > 600){
+            setLogoStyle["width"] = "90%"
+    
+            cardImageStyle["width"] = "40%"
+    
+            containerStyle["marginLeft"] = "4vw"
+            containerStyle["height"] = "35vh"
+        }else if (windowSize > 1000 && windowSize < 1500) {
+            containerStyle["marginLeft"] = "4vw"
+        } else if(windowSize > 1500) {
+            containerStyle["marginLeft"] = "4vw"
+        } else if(windowSize <= 600){
+            containerStyle["height"] = "45vh"
+        }
+    },[windowSize])
 
     return (
         <div id='container' style={{...middleStyle,...containerStyle,backgroundColor: "white"}}>
@@ -132,7 +134,8 @@ const SetPresentation = ({setId,displayState,middleState}) => {
                     if(index >= cardNumber){
                         return null
                     }
-                    return <img key={index} src={image} className='cardImage' style={{...cardImageStyle,...rotationEffect(index)}}/>
+                    return <img key={index} src={image} className='cardImage' 
+                    style={{...cardImageStyle,...rotationEffect(index)}}/>
                 })}
             </div>
         </div>

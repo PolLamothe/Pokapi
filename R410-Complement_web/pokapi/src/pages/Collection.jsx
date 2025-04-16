@@ -23,6 +23,14 @@ function SetSection({set,cards}){
 
     const [windowSize, setWindowSize] = useState(window.innerWidth)
 
+    const [logoStyle,setLogoStyle] = useState({
+        width : "20vw",
+        marginLeft : "50%",
+        transform : "translateX(-50%)",
+        cursor : "pointer",
+        marginTop : "5vh",
+    })
+
     useEffect(() => {
         const handleResize = () => {
             setWindowSize(window.innerWidth);
@@ -46,17 +54,15 @@ function SetSection({set,cards}){
         justifyContent : "center"
     }
 
-    var logoStyle = {
-        width : "20vw",
-        marginLeft : "50%",
-        transform : "translateX(-50%)",
-        cursor : "pointer",
-        marginTop : "5vh",
-    }
-
-    if(windowSize < 600){
-        logoStyle["width"] = "50vw"
-    }
+    useEffect(()=>{
+        let copy = {...logoStyle}
+        if(windowSize < 600){
+            copy["width"] = "50vw"
+        }else{
+            copy["width"] = "20vw"
+        }
+        setLogoStyle(copy)
+    },[windowSize])
 
     return (
         <div style={wrapperStyle}>

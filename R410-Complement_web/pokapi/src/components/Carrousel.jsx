@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react'
+import React, { useState, useEffect,useRef, act } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 import dao from "../dao/pokapiDAO.js"
@@ -52,13 +52,47 @@ const Carousel = ({setCurrentSetId}) => {
 
     const handleSlideChange = (swiper) => {
         setActiveIndex(swiper.realIndex);
-        setCurrentSetId(listSet[(swiper.realIndex+1)%20].id)
+        if(slicePerView == 3){
+            setCurrentSetId(listSet[(swiper.realIndex+1)%20].id)
+        }else{
+            setCurrentSetId(listSet[(swiper.realIndex)%20].id)
+        }
     };
 
     var carouselStyle = {
         paddingTop : "2vh",
         paddingBottom : "2vh"
     }
+
+    function calculateDisplayState(index,activeIndex){
+        return index >= activeIndex-1 && index <= activeIndex + 2
+    }
+
+    function calculateDisplayStateSingle(index,activeIndex){
+        return index == activeIndex
+    }
+
+    function calculateMiddleState(index,activeIndex){
+        return index == activeIndex+1 || (activeIndex == 20-1 && index == 0)
+    }
+
+    function calculateMiddleStateSingle(index,activeIndex){
+        return index == activeIndex
+    }
+
+    const [currentCalculateDisplayState,setCurrentCalculateDisplayState] = useState(()=>calculateDisplayState)
+
+    const [currentCalculateMiddleState,setCurrentCalculateMiddleState] = useState(()=>calculateMiddleState)
+
+    useEffect(()=>{
+        if(slicePerView == 1){
+            setCurrentCalculateDisplayState(()=>calculateDisplayStateSingle)
+            setCurrentCalculateMiddleState(()=>calculateMiddleStateSingle)
+        }else{
+            setCurrentCalculateDisplayState(()=>calculateDisplayState)
+            setCurrentCalculateMiddleState(()=>calculateMiddleState)
+        }
+    },[slicePerView])
 
     useEffect(()=>{
         if(windowSize <= 600){
@@ -75,6 +109,7 @@ const Carousel = ({setCurrentSetId}) => {
             setSpaceBetween(-60)
         }
     },[windowSize])
+
 
     return (
         <div className="carousel-container" style={carouselStyle}>
@@ -94,7 +129,9 @@ const Carousel = ({setCurrentSetId}) => {
                 >
                     {listSet.map((set,index) => (
                         <SwiperSlide key={set.id}>
-                            <SetPresentation setId={set.id} displayState={index >= activeIndex-1 && index <= activeIndex + 2} middleState={index == activeIndex+1 || (activeIndex == 20-1 && index == 0)}/>
+                            <SetPresentation setId={set.id} 
+                            displayState={currentCalculateDisplayState(index,activeIndex)} 
+                            middleState={currentCalculateMiddleState(index,activeIndex)}/>
                         </SwiperSlide>
                     ))}
                 </Swiper>  
