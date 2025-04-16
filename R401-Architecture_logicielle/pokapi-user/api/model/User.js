@@ -32,6 +32,10 @@ export class User extends Model{
             })
             this.cards.push(newCard)
         })
+
+        const ids = cards.map(card => card.id)
+
+        this.searched = this.searched.filter(card => !(ids.includes(card.id)))
     }
 
     /**

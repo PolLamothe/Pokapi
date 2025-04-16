@@ -12,10 +12,11 @@ describe("Model - User",()=>{
             quantity : 3
         },{
             id : "Dialga",
+            quantity : 1
         }],
         searched : [
-            {id:"Palkia",},
-            {id : "Arceus",}
+            {id:"Palkia",quantity : null},
+            {id : "Arceus", quantity : null}
         ]
     }
     let test = null
@@ -68,7 +69,7 @@ describe("Model - User",()=>{
             },
             {
                 id: "Dialga",
-                quantity: 1
+                quantity: 2
             },
             {
                 id: "New",
@@ -76,6 +77,32 @@ describe("Model - User",()=>{
             }
         ]
         assert.deepEqual(user.cards, expected)
+    })
+
+    it("addCards in searched", ()=>{
+        const user = new User(valid)
+        const addCard = [{id: "New"}, {id: "Mew"}, {id: "Palkia"}]
+        user.addCards(addCard)
+        const expected = [
+            {
+                id: "Mew",
+                quantity : 4
+            },
+            {
+                id: "Dialga",
+                quantity: 1
+            },
+            {
+                id: "New",
+                quantity: 1
+            },
+            {
+                id: "Palkia",
+                quantity: 1
+            },
+        ]
+        assert.deepEqual(user.cards.map(c => ({ id: c.id, quantity: c.quantity })), expected)
+        assert.deepEqual(user.searched,valid.searched.filter(card => !(addCard.map(card2 => card2.id)).includes(card.id)))
     })
 
     it("addSearchedCard", () => {
