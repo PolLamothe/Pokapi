@@ -26,6 +26,10 @@ function SetView() {
 
     let navigateBack = useNavigate()
 
+    const [windowSize, setWindowSize] = useState(window.innerWidth)
+
+    let gridtemplate, gridTemplateColumn,widthCard, sizeCard
+
     let cardDuSet = null
     let date = [""]
 
@@ -36,6 +40,16 @@ function SetView() {
         })
         console.log(searched)
     }
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize(window.innerWidth);
+        }
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [])
 
     useEffect(() => {
         pokapiDAO.fetchSet(params.setId).then(data => {
@@ -93,17 +107,34 @@ function SetView() {
         )
     },[openBoosterState])
 
+    { windowSize < 1100 && windowSize > 600 ? (
+        gridtemplate = "100%",
+        gridTemplateColumn = "repeat(auto-fit, minmax(260px, 1fr))",
+        widthCard = "90vw",
+        sizeCard = "2"
+    ) : windowSize < 600 ? (
+        gridtemplate = '100%',
+        gridTemplateColumn = "repeat(auto-fit, minmax(150px, 1fr))",
+        widthCard = "100vw",
+        sizeCard = "1"
+    ) : (
+        gridtemplate = '30% 70%',
+        gridTemplateColumn = "repeat(auto-fit, minmax(260px, 1fr))",
+        widthCard = "80vw",
+        sizeCard = "3"
+    )}
+
     return <>
         { loaded ? (
             <Flex style={{justifyContent:"center", height: "fit-content", padding: "2vh"}}>
-                <Card size="3" style={{width: "80vw", boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"}}>
+                <Card size={sizeCard} style={{width: `${widthCard}`, boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"}}>
                     <Flex justify="center">
                         <IconButton radius="full" size="3" style={{zIndex: "100",position: "fixed", top: `30px`, left: "30px", backgroundColor: "rgb(100, 64, 141)", border: "1px solid rgb(180, 45, 92)"}} onClick={()=>navigateBack(-1)}>
                             <Undo2/>
                         </IconButton>
                         <img src={setData.images.logo}  alt="logo" style={{maxWidth:'35vw',maxHeight:'30vh', marginBottom:'6vh'}}/>
                     </Flex>
-                    <Grid columns="2" style={{gridTemplateColumns: "30% 70%"}}>
+                    <Grid columns="2" style={{gridTemplateColumns: `${gridtemplate}`}}>
                         <Flex direction="column" style={{padding: "2vw"}}>
                             <Card style={styleElement}>
                                 <p>Total number of cards in this Set : {setData.total} cards</p>
@@ -113,11 +144,11 @@ function SetView() {
                             </Card>
                             <Button style={openButtonStyle} onClick={()=>{setOpenBoosterState(true)}}>Open Booster</Button>
                         </Flex>
-                        <Grid columns="repeat(auto-fit, minmax(260px, 1fr))">
+                        <Grid columns={gridTemplateColumn} justify="center">
                             {setsCards && cardDuSet && setsCards.length > 0 ? (
                                 setsCards.map((card) => {
                                     const cardUser = cardDuSet.find((cardS) => cardS.card.id === card.id)
-                                    return <div key={card.id}>
+                                    return <div key={card.id} style={{maxWidth: "100%"}}>
                                         <ImageCard 
                                         key={card.name} 
                                         card={card} 

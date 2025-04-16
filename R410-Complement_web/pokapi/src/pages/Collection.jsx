@@ -34,7 +34,7 @@ export function ImageCard({card, navigate, exception = false, posssesed, searche
     }
 
     return (
-        <Flex className="hoverEffect" justify="center" onClick={navigate}>
+        <Flex className="hoverEffect" justify="center" onClick={posssesed ? navigate : null}>
             <figure onMouseOver={()=>{setHoverState(true)}} onMouseLeave={()=>{setHoverState(false)}}>
                 {!posssesed && hoverState && !searched &&  (
                     <img src="/cross.png" style={addStyle} onClick={addInSearched}/>
@@ -60,8 +60,6 @@ function SetSection({set,cards,searchState}){
         width : "20vw",
         maxHeight : "15vh",
         objectFit : "contain",
-        marginLeft : "50%",
-        transform : "translateX(-50%)",
         cursor : "pointer",
     })
 
@@ -76,7 +74,8 @@ function SetSection({set,cards,searchState}){
     }, [])
 
     var wrapperStyle = {
-        width : "fit-content"
+        maxWidth : "1500px",
+        justifyContent: "center"
     }
 
     var cardWrapperStyle = {
@@ -98,13 +97,16 @@ function SetSection({set,cards,searchState}){
         setLogoStyle(copy)
     },[windowSize])
 
+
     return (
         <div style={wrapperStyle}>
-            <img src={set.images.logo} style={logoStyle} onClick={()=>{navigateToCardPage(`/set/${set.id}`)}}/>
+            <Flex justify="center">
+                <img src={set.images.logo} style={logoStyle} onClick={()=>{navigateToCardPage(`/set/${set.id}`)}}/>
+            </Flex>
             <div style={cardWrapperStyle}>
                 {cards.map(card =>
                     <ImageCard 
-                    key={card.card.name} 
+                    key={card.card.id}
                     card={card} 
                     navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}} 
                     posssesed={!searchState}
@@ -135,12 +137,13 @@ function Collection() {
     const [selectedSet, setSelectedSet] = useState([])
 
     const [loadingExpired, setLoadingExpired] = useState(false)
-    const [separedSet,setSeparedSet] = useState(true)
+    const [separedSet,setSeparedSet] = useState(false)
+
+    let navigateToCardPage = useNavigate()
 
 
     const [windowSize, setWindowSize] = useState(window.innerWidth)
     let gridtemplate = null
-    let columnImage = null
 
     useEffect(() => {
         const handleResize = () => {
@@ -320,17 +323,13 @@ function Collection() {
     }
 
     { windowSize > 1100 ? (
-        gridtemplate = '25% 75%',
-        columnImage = "repeat(auto-fit, minmax(245px, 1fr))"
+        gridtemplate = '25% 75%'
     ) : windowSize > 600 && windowSize < 800 ? (
-        gridtemplate = "100%",
-        columnImage = "repeat(auto-fit, minmax(245px, 1fr))"
+        gridtemplate = "100%"
     ) : windowSize < 600 ? (
-        gridtemplate = "100%",
-        columnImage = "repeat(auto-fit, minmax(150px, 1fr))"
+        gridtemplate = "100%"
     ) : (
-        gridtemplate = '30% 70%',
-        columnImage = "repeat(auto-fit, minmax(245px, 1fr))"
+        gridtemplate = '30% 70%'
     )
     }
 
@@ -344,6 +343,7 @@ function Collection() {
         display : "flex",
         flexDirection : "row",
         flexWrap : "wrap",
+        maxWidth : "1500px",
         justifyContent : "center"
     }
 
@@ -373,7 +373,7 @@ function Collection() {
                         <AccordionContent className="AccordionContent">
                             <div style={{display:"flex",alignItems:"center",gap:"1vw",justifyContent : "space-between",width : "100%"}}>
                                 <b>Séparer les sets</b>
-                                <Switch style={{cursor : "pointer"}} onCheckedChange={setSeparedSet} defaultChecked/>
+                                <Switch style={{cursor : "pointer"}} onCheckedChange={setSeparedSet}/>
                             </div>
                             
                             <div style={{display:"flex",alignItems:"center",gap:"1vw",marginTop : "2vh",justifyContent : "space-between",width : "100%"}}>
@@ -389,8 +389,8 @@ function Collection() {
                 {userCards && userCardsAll.length > 0 ? (
                     separedSet ? 
                         (Object.keys(cardInSets).map(setId => {
-                        return <SetSection 
-                            set={cardInSets[setId]["set"]} 
+                        return <SetSection
+                            set={cardInSets[setId]["set"]}
                             cards={cardInSets[setId]["cards"]}
                             searchState={searchedState}
                             />

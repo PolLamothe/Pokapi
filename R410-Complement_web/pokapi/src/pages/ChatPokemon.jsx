@@ -1,5 +1,5 @@
 import {Button, Flex, ScrollArea, TextField, Box, IconButton, TextArea, Slot, Spinner} from "@radix-ui/themes";
-import {useEffect, useRef, useState} from "react";
+import {use, useEffect, useRef, useState} from "react";
 import pokapiDAO from "../dao/pokapiDAO.js";
 import {useParams, useNavigate} from "react-router";
 import {Undo2, ArrowUp} from "lucide-react";
@@ -43,11 +43,10 @@ function ChatPokemon() {
         }
         setTextAreaValue("")
         inputRef.current.value = ""
-        const response = (await dao.fetPokemonResponse(params.cardId,message,messagesList)).text
         let tempMessagesList = [...messagesList]
-        tempMessagesList.push({sender : "user",text : message})
-        tempMessagesList.push({sender : "pokemon",text : response})
-        setMessagesList(tempMessagesList)
+        setMessagesList(messagesList => [...messagesList,{sender : "user",text : message}])
+        const response = (await dao.fetPokemonResponse(params.cardId,message,messagesList)).text
+        setMessagesList(messagesList => [...messagesList,{sender : "pokemon",text : response}])
         setTextAreaValue("")
         inputRef.current.value = ""
     }
@@ -131,7 +130,9 @@ function ChatPokemon() {
                         
                     </ScrollArea>
                     <Flex width={chatBarWidth} style={{backgroundColor: "rgb(203,181,230)", opacity:'0.9', position: "fixed", bottom: "20px", borderRadius: '20px'}}>
-                        <TextArea ref={inputRef} onChange={(e)=>{setTextAreaValue(e.target.value)}} radius="full" placeholder={`Chat with ${cardData.name}`} variant="soft" size="3" style={{width: `${txtAreaWidth}`, height:"8vh",backgroundColor: "rgb(203,181,230)", border: "none", outline: "none", margin: "10px"}}>
+                        <TextArea ref={inputRef} 
+                        onChange={(e)=>{e.target.value.includes("\n") ? e.target.value = "" : setTextAreaValue(e.target.value)}} 
+                        radius="full" placeholder={`Chat with ${cardData.name}`} variant="soft" size="3" style={{width: `${txtAreaWidth}`, height:"8vh",backgroundColor: "rgb(203,181,230)", border: "none", outline: "none", margin: "10px"}}>
                         </TextArea>
                         <IconButton radius="full" size="3" style={{backgroundColor: "rgb(100, 64, 141)",opacity: "1", border: "1px solid rgb(180, 45, 92)", margin: "10px", position: "absolute", right: "2px", top: "2px"}}>
                             <ArrowUp onClick={(e) => {sendMessage(textAreaValue)}}/>
