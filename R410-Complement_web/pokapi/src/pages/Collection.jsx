@@ -311,7 +311,7 @@ function Collection() {
                     <AccordionTab name="Set" onchecked={onChecked} filter={sets} selectedFilter={selectedSet} handleSearch={handleSearchSets} searchBar={true} ondelete={onChecked}/>
 
                     <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:"1vw"}}>
-                        <p>Séparer les sets</p>
+                        <b>Séparer les sets</b>
                         <Switch style={{cursor : "pointer"}} onCheckedChange={setSeparedSet} defaultChecked/>
                     </div>
                 </Accordion.Root>
@@ -323,7 +323,7 @@ function Collection() {
                         return <SetSection set={cardInSets[setId]["set"]} cards={cardInSets[setId]["cards"]}/>
                         })) : 
                         (userCards.map(card => (
-                            <ImageCard key={card.card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}}/>
+                            <ImageCard key={card.card.id} card={card} navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}} />
                         )))
                  ) : !loadingExpired ? (
                     <Flex align="center" direction="column" py="9">
