@@ -1,16 +1,24 @@
 import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import pokapiDAO from "../dao/pokapiDAO.js";
-import {Flex, Spinner, Card, Grid, Strong} from "@radix-ui/themes";
+import {Flex, Spinner, Card, Grid, Strong,Button} from "@radix-ui/themes";
 import {ImageCard} from "./Collection.jsx";
+import BoosterOpening from "../components/BoosterOpening.jsx";
 
 
 function SetView() {
     let params = useParams()
+    
     const [setData, setSetData] = useState({})
+    
     const [userCards, setUserCards] = useState({})
+    
     const [setsCards, setSetsCards] = useState({})
+    
     const [loaded, setLoaded] = useState(false)
+
+    const [openBoosterState,setOpenBoosterState] = useState(false)
+    
     const navigateToCardPage = useNavigate();
     let cardDuSet = null
     let date = [""]
@@ -27,7 +35,7 @@ function SetView() {
         pokapiDAO.fetchSetsCards(params.setId).then(data => {
             setSetsCards(data)
         })
-    }, [params.setId]);
+    }, [params.setId,openBoosterState]);
 
     if (loaded) {
         date = setData.releaseDate.split("/")
@@ -48,6 +56,28 @@ function SetView() {
         boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"
     }
 
+    const openButtonStyle = {
+        background: "#64408D",
+        fontSize : "35px",
+        padding : "3vh",
+        cursor : "pointer",
+        height : "fit-content",
+        borderRadius : "40px",
+        border: "2px solid #B42D5C",
+        fontFamily: "'Racing Sans One', sans-serif",
+        marginBottom : "2vh",
+        marginTop : "5vh",
+    }
+
+    useEffect(()=>{
+        if(openBoosterState){
+            document.body.style.overflowY = "hidden"
+            window.scrollTo("0px","0px")
+        }else(
+            document.body.style.overflowY = "initial"
+        )
+    },[openBoosterState])
+
     return <>
         { loaded ? (
             <Flex style={{justifyContent:"center", height: "fit-content", padding: "2vh"}}>
@@ -63,12 +93,12 @@ function SetView() {
                                 <p>Set series : {setData.series}</p>
                                 <p>You own : {cardDuSet ? cardDuSet.length : 0}/{setData.total} cards</p>
                             </Card>
+                            <Button style={openButtonStyle} onClick={()=>{setOpenBoosterState(true)}}>Open Booster</Button>
                         </Flex>
                         <Grid columns="repeat(auto-fit, minmax(260px, 1fr))">
                             {setsCards && cardDuSet && setsCards.length > 0 ? (
                                 setsCards.map((card) => {
                                     const cardUser = cardDuSet.find((cardS) => cardS.card.id === card.id)
-
                                     return <div key={card.id}>
                                             { cardUser ? (
                                                 <ImageCard key={card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.id}`)}} exception={true}/>
@@ -78,8 +108,6 @@ function SetView() {
                                                 </div>
                                             )}
                                     </div>
-
-
                                 }
                             )) : (
                                 <Flex align="center" direction="column" py="9">
@@ -97,7 +125,9 @@ function SetView() {
                 Loading
             </Flex>
         )}
-
+        {openBoosterState && (
+            <BoosterOpening setId={params.setId} callback={()=>{setOpenBoosterState(false)}}/>
+        )}
     </>
 }
 
