@@ -12,6 +12,7 @@ function Card() {
     let [loaded, setLoaded] = useState(false);
     let navigateToChat = useNavigate()
     let navigateBack = useNavigate()
+    let navigateToSet = useNavigate()
 
 
     useEffect(() => {
@@ -60,6 +61,7 @@ function Card() {
                             src={cardData.set?.images?.logo || "placeholder.png"}
                             alt="Logo"
                             style={{width: "300px", marginBottom: "20px"}}
+                            onClick={()=>navigateToSet(`/set/${cardData.set.id}`)}
                         />
                         <Flex direction="row" align="center" gap="4">
                             <Box

@@ -129,6 +129,26 @@ const pokapiDAO = {
             console.log(result.status)
         }
     },
+    fetchSet : async(setId) => {
+        const result = await fetch(config.url + "/data/set/"+setId, {
+            method : "GET",
+            headers: baseHeaders
+        })
+        if(result.status === 200) {
+            return await result.json()
+        } else
+            console.log(result.status)
+    },
+    fetchSetsCards : async(setId) => {
+        const result = await fetch(config.url + "/data/set/cards/"+setId, {
+            method : "GET",
+            headers : baseHeaders
+        })
+        if(result.status === 200) {
+            return await result.json()
+        } else
+            console.log(result.status)
+    },
     fetchAuthentication: async ()=> {
         if (localStorage.getItem("token") !== null) {
             const result = await fetch(config.url+"/user/login",{

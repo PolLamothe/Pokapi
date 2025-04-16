@@ -55,7 +55,9 @@ router.route("/data/set/presentation/:SETID").get((req,res) => {
 })
 
 router.route("/data/set/:SETID").get((req,res) => {
-    res.status(200).send(rarestCards)
+    let mesSets = sets.data
+    let setSearched = mesSets.filter(set => set.id === req.params.SETID)
+    res.status(200).send(setSearched)
 })
 
 router.route("/data/sets").get((req,res) => {

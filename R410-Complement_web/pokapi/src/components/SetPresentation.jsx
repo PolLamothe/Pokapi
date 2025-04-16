@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import dao from "../dao/pokapiDAO.js"
+import {useNavigate} from "react-router";
 
 const SetPresentation = ({setId,displayState,middleState}) => {
     const [setData,setSetData] = useState(null)
@@ -15,6 +16,17 @@ const SetPresentation = ({setId,displayState,middleState}) => {
     const [cardNumber,setCardNumber] = useState(4)
 
     const [loadCount,setLoadCount] = useState(0)
+
+    const [setLogoStyle,setSetLogoStyle] = useState({
+        height : "10vh",
+        maxWidth : "90%",
+        marginLeft : "50%",
+        transform : "translateX(-50%)",
+        marginBottom : "5vh",
+        objectFit : "contain",
+    })
+
+    const navigateToSet = useNavigate()
 
     useEffect(() => {
             const handleResize = () => {
@@ -79,15 +91,6 @@ const SetPresentation = ({setId,displayState,middleState}) => {
         paddingLeft : "15%",
     }
     
-    var setLogoStyle = {
-        height : "10vh",
-        maxWidth : "90%",
-        marginLeft : "50%",
-        transform : "translateX(-50%)",
-        marginBottom : "5vh",
-        objectFit : "contain",
-    }
-    
     const rotationEffect = (index)=>{
         var degrees = null
         var translates = null
@@ -122,8 +125,9 @@ const SetPresentation = ({setId,displayState,middleState}) => {
     }
 
     useEffect(()=>{
+        let tempSetLogoStyle = {...setLogoStyle}
         if(windowSize < 1000 && windowSize > 600){
-            setLogoStyle["width"] = "90%"
+            tempSetLogoStyle["width"] = "90%"
     
             cardImageStyle["width"] = "40%"
     
@@ -136,13 +140,14 @@ const SetPresentation = ({setId,displayState,middleState}) => {
         } else if(windowSize <= 600){
             containerStyle["height"] = "45vh"
         }
+        setSetLogoStyle(tempSetLogoStyle)
     },[windowSize])
 
     return (
-        <div id='container' style={{...middleStyle,...containerStyle,backgroundColor: "white"}}>
+        <div id='container' style={{...middleStyle,...containerStyle,backgroundColor: "white"}} onClick={()=> navigateToSet(`/set/${setData.id}`)}>
             {setData != null && (
                 <img src={setData.images.logo} id="setLogo" 
-                style={setLogoStyle} onLoad={()=>setLoadCount(loadCount+1)}/>
+                style={setLogoStyle} onLoad={()=>setLoadCount(loadCount => loadCount+1)}/>
             )}
             <div id='cardContainer' style={cardContainerStyle}>
                 {cardImages && cardImages.map((image, index) => {
@@ -151,7 +156,7 @@ const SetPresentation = ({setId,displayState,middleState}) => {
                     }
                     return <img key={index} src={image} className='cardImage' 
                     style={{...cardImageStyle,...rotationEffect(index)}}
-                    onLoad={()=>setLoadCount(loadCount+1)}/>
+                    onLoad={()=>setLoadCount(loadCount => loadCount+1)}/>
                 })}
                 {loadCount < cardNumber && (
                     <div style={loaderStyle}>
