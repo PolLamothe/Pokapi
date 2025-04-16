@@ -259,3 +259,12 @@
     z-index: 2;
 }
 
+@keyframes spinning {
+    from{
+        transform: rotate(0deg);
+    }
+
+    to{
+        transform: rotate(359deg);
+    }
+}

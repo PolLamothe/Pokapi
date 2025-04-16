@@ -14,6 +14,8 @@ const SetPresentation = ({setId,displayState,middleState}) => {
 
     const [cardNumber,setCardNumber] = useState(4)
 
+    const [loadCount,setLoadCount] = useState(0)
+
     useEffect(() => {
             const handleResize = () => {
                 setWindowSize(window.innerWidth);
@@ -107,6 +109,18 @@ const SetPresentation = ({setId,displayState,middleState}) => {
         marginLeft : "-10%",
     }
 
+    let loaderStyle = {
+        position : "absolute",
+        top : "50%",
+        left : "50%",
+        transform : "translate(-50%,-50%)",
+    }
+
+    let loadImageStyle = {
+        width : "10vw",
+        animation : "spinning .9s ease infinite",
+    }
+
     useEffect(()=>{
         if(windowSize < 1000 && windowSize > 600){
             setLogoStyle["width"] = "90%"
@@ -127,7 +141,8 @@ const SetPresentation = ({setId,displayState,middleState}) => {
     return (
         <div id='container' style={{...middleStyle,...containerStyle,backgroundColor: "white"}}>
             {setData != null && (
-                <img src={setData.images.logo} id="setLogo" style={setLogoStyle}/>
+                <img src={setData.images.logo} id="setLogo" 
+                style={setLogoStyle} onLoad={()=>setLoadCount(loadCount+1)}/>
             )}
             <div id='cardContainer' style={cardContainerStyle}>
                 {cardImages && cardImages.map((image, index) => {
@@ -135,8 +150,14 @@ const SetPresentation = ({setId,displayState,middleState}) => {
                         return null
                     }
                     return <img key={index} src={image} className='cardImage' 
-                    style={{...cardImageStyle,...rotationEffect(index)}}/>
+                    style={{...cardImageStyle,...rotationEffect(index)}}
+                    onLoad={()=>setLoadCount(loadCount+1)}/>
                 })}
+                {loadCount < cardNumber && (
+                    <div style={loaderStyle}>
+                        <img src="public/masterball.png" style={loadImageStyle}/>
+                    </div>
+                )}
             </div>
         </div>
     )

@@ -25,6 +25,8 @@ function SetSection({set,cards}){
 
     const [logoStyle,setLogoStyle] = useState({
         width : "20vw",
+        maxHeight : "15vh",
+        objectFit : "contain",
         marginLeft : "50%",
         transform : "translateX(-50%)",
         cursor : "pointer",
