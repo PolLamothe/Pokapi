@@ -14,6 +14,7 @@ import "@radix-ui/themes/styles.css";
 import {Theme} from "@radix-ui/themes";
 import ChatPokemon from "./pages/ChatPokemon.jsx";
 import Sets from "./pages/Sets.jsx"
+import SetView from "./pages/Set.jsx";
 
 createRoot(document.getElementById('root')).render(
   <Theme accentColor="violet" grayColor="mauve">
@@ -26,7 +27,8 @@ createRoot(document.getElementById('root')).render(
                       <Route path="/collection" element={<Collection />} />
                       <Route path="/card/:cardId" element={<Card />} />
                       <Route path="/chatpokemon/:cardId" element={<ChatPokemon />} />
-                      <Route path="/sets" element={<Sets/>}></Route>
+                      <Route path="/sets" element={<Sets/>}/>
+                      <Route path="/set/:setId" element={<SetView />}/>
                   </Route>
               </Route>
               <Route path="/auth" element={<Auth />}>

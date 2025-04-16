@@ -8,11 +8,15 @@ import {useNavigate} from "react-router";
 import pokapiDAO from "../dao/pokapiDAO.js";
 
 
-function ImageCard({card, navigate}) {
+export function ImageCard({card, navigate, exception = false}) {
     return (
         <Flex className="hoverEffect" justify="center">
             <figure>
-                <img className="img" alt={card.card.name} src={card.card.images.small} onClick={navigate} />
+                { exception ? (
+                    <img className="img" alt={card.name} src={card.images.small} onClick={navigate} />
+                ) : (
+                    <img className="img" alt={card.card.name} src={card.card.images.small} onClick={navigate} />
+                )}
             </figure>
         </Flex>
     )
@@ -96,7 +100,6 @@ function Collection() {
     const [loadingExpired, setLoadingExpired] = useState(false)
     const [separedSet,setSeparedSet] = useState(true)
 
-    const navigateToCardPage = useNavigate();
 
     const [windowSize, setWindowSize] = useState(window.innerWidth)
     let gridtemplate = null
@@ -142,6 +145,7 @@ function Collection() {
 
         return () => clearTimeout(timer)
     }, [])
+
 
     useEffect(()=>{
         var temp = {}

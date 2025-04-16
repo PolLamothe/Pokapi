@@ -2,6 +2,7 @@ import { TextField,Button } from "@radix-ui/themes"
 import {MagnifyingGlassIcon, ReloadIcon} from "@radix-ui/react-icons"
 import { useState,useEffect,useRef } from "react"
 import dao from "../dao/pokapiDAO.js"
+import {useNavigate} from "react-router";
 
 function Sets(){
 
@@ -16,6 +17,8 @@ function Sets(){
     const [searchBarValue,setSearchBarValue] = useState("")
 
     const searchBar = useRef(null)
+
+    const navigateToSet = useNavigate()
 
 
     useEffect(()=>{
@@ -94,7 +97,7 @@ function Sets(){
                     if(!element.name.toLowerCase().includes(searchBarValue.toLowerCase())){
                         return null
                     }
-                    return <img src={element.images.logo} style={setItemStyle}/>
+                    return <img src={element.images.logo} style={setItemStyle} onClick={() => navigateToSet(`/set/${element.id}`)}/>
                 })}
             </div>
             <Button style={{marginLeft : "50vw",transform : "translateX(-50%)",marginBottom : "5vh",cursor : "pointer"}} onClick={()=>{setLimitSize(limitSize+initialLimitSize)}}>

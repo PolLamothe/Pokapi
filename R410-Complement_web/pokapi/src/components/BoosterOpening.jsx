@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import {useEffect, useState} from "react"
 import "./boosterOpening.css"
 import pokapiDAO from "../dao/pokapiDAO"
 
@@ -41,18 +41,18 @@ function BoosterOpening({setId,callback}){
                     {cardList.map((card,index)=>{
                         return <img src={(index >= 5-currentIndex) ? cardList[index].images.large : "/cardBack.webp"}
                         className={currentIndex <= 5 ?
-                            (index < 5-currentIndex ? 
-                                ("cardTransition card "+ 
-                                    (!cardDisplayState ? 
-                                        "initSideCard" : 
+                            (index < 5-currentIndex ?
+                                ("cardTransition card "+
+                                    (!cardDisplayState ?
+                                        "initSideCard" :
                                         "finalSideCard"
                                     )
-                                ) : 
+                                ) :
                                 ("card mainCard")) :
                             ("finalCard")
                             }
-                        style={(cardDisplayState && index < 5-currentIndex && currentIndex <= 5) ? 
-                            dynamicCardStyle(index) : 
+                        style={(cardDisplayState && index < 5-currentIndex && currentIndex <= 5) ?
+                            dynamicCardStyle(index) :
                             {zIndex : 5-index}
                         }/>
                     })}
@@ -68,5 +68,7 @@ const dynamicCardStyle = (index)=> {
         transform : "translate("+margin+"%,-50%)",
     }
 }
+
+
 
 export default BoosterOpening

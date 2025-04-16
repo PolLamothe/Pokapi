@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import dao from "../dao/pokapiDAO.js"
+import {useNavigate} from "react-router";
 
 const SetPresentation = ({setId,displayState,middleState}) => {
     const [setData,setSetData] = useState(null)
@@ -15,6 +16,8 @@ const SetPresentation = ({setId,displayState,middleState}) => {
     const [cardNumber,setCardNumber] = useState(4)
 
     const [loadCount,setLoadCount] = useState(0)
+
+    const navigateToSet = useNavigate()
 
     useEffect(() => {
             const handleResize = () => {
@@ -139,7 +142,7 @@ const SetPresentation = ({setId,displayState,middleState}) => {
     },[windowSize])
 
     return (
-        <div id='container' style={{...middleStyle,...containerStyle,backgroundColor: "white"}}>
+        <div id='container' style={{...middleStyle,...containerStyle,backgroundColor: "white"}} onClick={()=> navigateToSet(`/set/${setData.id}`)}>
             {setData != null && (
                 <img src={setData.images.logo} id="setLogo" 
                 style={setLogoStyle} onLoad={()=>setLoadCount(loadCount+1)}/>

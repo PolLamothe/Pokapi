@@ -53,7 +53,6 @@
     width : 25%;
     cursor : pointer;
     transition: all .5s ease;
-    height: fit-content;
 }
 
 .card{
