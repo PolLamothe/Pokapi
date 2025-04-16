@@ -183,7 +183,10 @@ const pokapiDAO = {
     fetchUpdate: async (pseudo, password) => {
         const response = await fetch(config.url+"/user/update",{
             method:"PUT",
-            headers: baseHeaders,
+            headers: {
+                ...baseHeaders,
+                ...athenticationHeader()
+            },
             body: JSON.stringify({
                 pseudo: pseudo,
                 password: password

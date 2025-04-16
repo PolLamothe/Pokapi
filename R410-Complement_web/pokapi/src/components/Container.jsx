@@ -1,9 +1,9 @@
 import {Flex} from "@radix-ui/themes";
 
-function Cont({children}){
+function Cont({children, height="100vh"}){
 
     return (
-        <Flex height="100vh" align="center" justify="center" style={containerStyle}>
+        <Flex height={height} align="center" justify="center" style={containerStyle}>
             <Flex p="6" direction="column" bg="gray.500" width="calc(100vw - 32px)" maxWidth="420px" align="center" style={cardStyle}>
                 {children}
             </Flex>

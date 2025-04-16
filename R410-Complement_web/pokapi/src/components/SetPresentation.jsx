@@ -155,7 +155,7 @@ const SetPresentation = ({setId,displayState,middleState}) => {
                 })}
                 {loadCount < cardNumber && (
                     <div style={loaderStyle}>
-                        <img src="public/masterball.png" style={loadImageStyle}/>
+                        <img src="/masterball.png" style={loadImageStyle}/>
                     </div>
                 )}
             </div>
