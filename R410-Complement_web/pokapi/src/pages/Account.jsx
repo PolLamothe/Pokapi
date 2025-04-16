@@ -85,6 +85,9 @@ function Account() {
                     </Flex>
                 </Dialog.Content>
             </Dialog.Root>
+            <Button style={{marginBottom : "1vh"}} onClick={()=>{localStorage.removeItem("chat")}}>
+                Clear my conversations
+            </Button>
             <Button variant="outline" style={{width: "40%"}} onClick={() => {
                 localStorage.removeItem("token")
                 navigate("/")
