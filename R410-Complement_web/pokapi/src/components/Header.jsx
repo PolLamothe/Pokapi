@@ -14,6 +14,7 @@ const Header = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+<<<<<<< Updated upstream
     //tout le responsif je sais pas faire avec un media query en react
     const surTablette = windowWidth < 1400;
     const surMobile = windowWidth < 800;
@@ -40,6 +41,34 @@ const Header = () => {
         padding: surMobile ? "10px" : "20px",
         width: surMobile ? "calc(100% - 20px)" : "calc(100% - 40px)"
     };
+=======
+  //tout le responsif je sais pas faire avec un media query en react 
+  //si vous voulez reduire sa taille faut diminuer toutes les valeurs
+  const surTablette = windowWidth < 1400;
+  const surMobile = windowWidth < 600;
+
+  const getButtonStyle = (isHovered, borderRadius) => ({
+    ...buttonBaseStyle,
+    background: isHovered ? "white" : "#64408D",
+    color: isHovered ? "#64408D" : "white",
+    borderRadius,
+    width: surMobile ? "110px" : surTablette ? "130px" : "150px",
+    height: surMobile ? "50px" : surTablette ? "60px" : "70px",
+    fontSize: surMobile ? "14px" : surTablette ? "18px" : "22px",
+  });
+
+  const dynamicLogoStyle = {
+    ...logoStyle,
+    height: surMobile ? "80px" : surTablette ? "100px" : "120px",
+  };
+
+  const dynamicContainerStyle = {
+    ...containerStyle,
+    gap: surMobile ? "10px" : surTablette ? "20px" : "30px",
+    padding: surMobile ? "7.5px" : "15px",
+    width: surMobile ? "calc(100% - 15px)" : "calc(100% - 30px)"
+  };
+>>>>>>> Stashed changes
 
 
 
