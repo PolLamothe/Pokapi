@@ -91,7 +91,7 @@ describe("Route - route",()=> {
     it("GET /set/presentation/:setId valid", async () => {
         const response = await request(app).get(CONFIG.API_PATH+"/set/presentation/mcd19")
         assert.equal(response.status, 200);
-        assert.equal(response.body.images.length, 3);
+        assert.equal(response.body.images.length, 4);
         assert.equal(response.body.set.id, "mcd19");
     })
 

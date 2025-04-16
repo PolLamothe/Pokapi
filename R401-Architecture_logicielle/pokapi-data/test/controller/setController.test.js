@@ -17,6 +17,7 @@ describe('Controller - SetController', () => {
         mongod = await MongoMemoryServer.create();
         const uri = mongod.getUri();
         connexion = await mongoose.connect(uri)
+        CONFIG.LOGS = false
     })
 
     beforeEach(async ()=>{

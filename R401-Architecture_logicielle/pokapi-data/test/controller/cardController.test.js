@@ -20,6 +20,7 @@ describe('Controller - CardController', () => {
         mongod = await MongoMemoryServer.create();
         const uri = mongod.getUri();
         connexion = await mongoose.connect(uri)
+        CONFIG.LOGS = false
     })
 
     beforeEach(async ()=>{
@@ -120,7 +121,7 @@ describe('Controller - CardController', () => {
         const result = await cardController.setPresentation(set.id)
 
         assert(result.set.compare(set))
-        assert.equal(result.images.length,3)
+        assert.equal(result.images.length,4)
         result.images.forEach(image=>{
             assert(image.small.includes(set.id))
             assert(image.large.includes(set.id))

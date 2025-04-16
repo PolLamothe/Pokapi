@@ -1,10 +1,15 @@
 'use strict';
 
 import assert from "node:assert"
-import { describe, it} from "node:test"
+import {before, describe, it} from "node:test"
 import typeFetchDAO from "../../api/dao/typeFetchDAO.js";
+import CONFIG from "../../const.js";
 
 describe("DAO - typeFetchDAO", () => {
+    before(() => {
+        CONFIG.LOGS = false
+    })
+
     it("Find all types", async () => {
         const res = await typeFetchDAO.findAll()
         assert.ok(Array.isArray(res))

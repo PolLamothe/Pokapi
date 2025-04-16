@@ -72,5 +72,13 @@ export function fetchAPI(fetchUrl) {
     }
     if (agent !== null) fields.agent = agent
     if (CONFIG.API_POKEMON_KEY !== undefined) fields.headers = {"X-Api-Key": CONFIG.API_POKEMON_KEY}
+    if (CONFIG.LOGS) {
+        const t = new Date(Date.now()).toUTCString()
+        let logUrl = fetchUrl
+        if (logUrl.length > 80) {
+            logUrl = logUrl.substring(0, 80) + "..."
+        }
+        console.log("FETCH :", logUrl, t)
+    }
     return fetch(fetchUrl, fields)
 }

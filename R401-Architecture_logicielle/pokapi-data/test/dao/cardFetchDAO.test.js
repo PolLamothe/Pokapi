@@ -3,8 +3,13 @@ import { describe, it, before, beforeEach, after } from "node:test"
 import cardFetchDAO from "../../api/dao/cardFetchDAO.js";
 import testCards from '../ressources/cards.json' with {type: 'json'}
 import {Card} from "../../api/model/Card.js";
+import CONFIG from "../../const.js";
 
 describe('DAO - CardFetchDAO', () => {
+    before(() => {
+        CONFIG.LOGS = false
+    })
+
     it('Find one card', async () => {
         const res = await cardFetchDAO.findCardById("dp3-1")
         const expected = new Card(testCards.data[0])

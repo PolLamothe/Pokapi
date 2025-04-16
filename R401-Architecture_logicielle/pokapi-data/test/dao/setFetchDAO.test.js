@@ -1,7 +1,8 @@
 import assert from "node:assert"
-import { describe, it} from "node:test"
+import {before, describe, it} from "node:test"
 import setFetchDAO from "../../api/dao/setFetchDAO.js";
 import {SetInfo} from "../../api/model/SetInfo.js";
+import CONFIG from "../../const.js";
 
 const set1 = {
     "id": "mcd19",
@@ -22,6 +23,10 @@ const set1 = {
 }
 
 describe("DAO - SetFetchDAO", () => {
+    before(() => {
+        CONFIG.LOGS = false
+    })
+
     it("Find all sets", async () => {
         const res = await setFetchDAO.findAll()
         assert.ok(Array.isArray(res))
