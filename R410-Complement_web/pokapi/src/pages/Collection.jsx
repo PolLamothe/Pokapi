@@ -34,7 +34,7 @@ export function ImageCard({card, navigate, exception = false, posssesed, searche
     }
 
     return (
-        <Flex className="hoverEffect" justify="center" onClick={navigate}>
+        <Flex className="hoverEffect" justify="center" onClick={posssesed ? navigate : null}>
             <figure onMouseOver={()=>{setHoverState(true)}} onMouseLeave={()=>{setHoverState(false)}}>
                 {!posssesed && hoverState && !searched &&  (
                     <img src="/public/cross.png" style={addStyle} onClick={addInSearched}/>
