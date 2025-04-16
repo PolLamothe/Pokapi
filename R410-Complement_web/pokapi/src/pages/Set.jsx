@@ -1,9 +1,10 @@
 import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import pokapiDAO from "../dao/pokapiDAO.js";
-import {Flex, Spinner, Card, Grid, Strong,Button} from "@radix-ui/themes";
+import {Flex, Spinner, Card, Grid, Strong, Button, IconButton} from "@radix-ui/themes";
 import {ImageCard} from "./Collection.jsx";
 import BoosterOpening from "../components/BoosterOpening.jsx";
+import {Undo2} from "lucide-react";
 
 
 function SetView() {
@@ -20,6 +21,9 @@ function SetView() {
     const [openBoosterState,setOpenBoosterState] = useState(false)
     
     const navigateToCardPage = useNavigate();
+
+    let navigateBack = useNavigate()
+
     let cardDuSet = null
     let date = [""]
 
@@ -83,6 +87,9 @@ function SetView() {
             <Flex style={{justifyContent:"center", height: "fit-content", padding: "2vh"}}>
                 <Card size="3" style={{width: "80vw", boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"}}>
                     <Flex justify="center">
+                        <IconButton radius="full" size="3" style={{zIndex: "100",position: "fixed", top: `30px`, left: "30px", backgroundColor: "rgb(100, 64, 141)", border: "1px solid rgb(180, 45, 92)"}} onClick={()=>navigateBack(-1)}>
+                            <Undo2/>
+                        </IconButton>
                         <img src={setData.images.logo}  alt="logo" style={{maxWidth:'35vw',maxHeight:'30vh', marginBottom:'6vh'}}/>
                     </Flex>
                     <Grid columns="2" style={{gridTemplateColumns: "30% 70%"}}>
