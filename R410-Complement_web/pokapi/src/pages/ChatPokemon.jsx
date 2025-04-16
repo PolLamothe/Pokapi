@@ -20,20 +20,23 @@ function ChatPokemon() {
 
     const inputRef = useRef(null)
 
-    var firstMessageState = false
-
     let scrollChatWidth, txtAreaWidth, chatBubbleWidth, chatBarWidth, fontSizeBubble, heightHeader,heightHeaderButton = null
 
     useEffect(()=>{
+        if(localStorage.getItem("chat") == null){
+            localStorage.setItem("chat", JSON.stringify({[params.cardId] : []}));
+        }
         async function fetchPresentation(){
             const response = (await dao.fetchPokemonPresentation(params.cardId)).text
             let tempMessagesList = [...messagesList]
             tempMessagesList.push({sender : "pokemon",text : response})
             setMessagesList(tempMessagesList)
         }
-        if(!firstMessageState){
+        if(JSON.parse(localStorage.getItem("chat"))[params.cardId] == undefined || JSON.parse(localStorage.getItem("chat"))[params.cardId].length == 0){
             fetchPresentation()
-            firstMessageState = true
+        }else{
+            console.log(JSON.parse(localStorage.getItem("chat"))[params.cardId])
+            setMessagesList(JSON.parse(localStorage.getItem("chat"))[params.cardId])
         }
     },[])
 
@@ -68,6 +71,15 @@ function ChatPokemon() {
             inputRef.current.value = ""
         }
     }
+
+    useEffect(()=>{
+        if(localStorage.getItem("chat") == null){
+            localStorage.setItem("chat", JSON.stringify({[params.cardId] : []}));
+        }
+        const conv = JSON.parse(localStorage.getItem("chat"))
+        conv[params.cardId] = messagesList
+        localStorage.setItem("chat",JSON.stringify(conv))
+    },[messagesList])
 
     useEffect(() => {
         pokapiDAO.fetchCard(params.cardId).then(data => {
