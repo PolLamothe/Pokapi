@@ -74,7 +74,7 @@ function SetSection({set,cards,searchState}){
     }, [])
 
     var wrapperStyle = {
-        width : "100%",
+        maxWidth : "1500px",
         justifyContent: "center"
     }
 
@@ -96,6 +96,7 @@ function SetSection({set,cards,searchState}){
         }
         setLogoStyle(copy)
     },[windowSize])
+
 
     return (
         <div style={wrapperStyle}>
@@ -143,7 +144,6 @@ function Collection() {
 
     const [windowSize, setWindowSize] = useState(window.innerWidth)
     let gridtemplate = null
-    let columnImage = null
 
     useEffect(() => {
         const handleResize = () => {
@@ -323,17 +323,13 @@ function Collection() {
     }
 
     { windowSize > 1100 ? (
-        gridtemplate = '25% 75%',
-        columnImage = "repeat(auto-fit, minmax(245px, 1fr))"
+        gridtemplate = '25% 75%'
     ) : windowSize > 600 && windowSize < 800 ? (
-        gridtemplate = "100%",
-        columnImage = "repeat(auto-fit, minmax(245px, 1fr))"
+        gridtemplate = "100%"
     ) : windowSize < 600 ? (
-        gridtemplate = "100%",
-        columnImage = "repeat(auto-fit, minmax(150px, 1fr))"
+        gridtemplate = "100%"
     ) : (
-        gridtemplate = '30% 70%',
-        columnImage = "repeat(auto-fit, minmax(245px, 1fr))"
+        gridtemplate = '30% 70%'
     )
     }
 
@@ -347,6 +343,7 @@ function Collection() {
         display : "flex",
         flexDirection : "row",
         flexWrap : "wrap",
+        maxWidth : "1500px",
         justifyContent : "center"
     }
 
