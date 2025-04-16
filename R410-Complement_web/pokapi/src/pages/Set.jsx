@@ -19,6 +19,8 @@ function SetView() {
     const [loaded, setLoaded] = useState(false)
 
     const [openBoosterState,setOpenBoosterState] = useState(false)
+
+    const [searched,setSearched] = useState(null)
     
     const navigateToCardPage = useNavigate();
 
@@ -27,6 +29,13 @@ function SetView() {
     let cardDuSet = null
     let date = [""]
 
+
+    function retrieveSearched(){
+        pokapiDAO.fetchSearched().then(searched => {
+            setSearched(searched)
+        })
+        console.log(searched)
+    }
 
     useEffect(() => {
         pokapiDAO.fetchSet(params.setId).then(data => {
@@ -39,6 +48,8 @@ function SetView() {
         pokapiDAO.fetchSetsCards(params.setId).then(data => {
             setSetsCards(data)
         })
+
+        retrieveSearched()
     }, [params.setId,openBoosterState]);
 
     if (loaded) {
@@ -107,13 +118,14 @@ function SetView() {
                                 setsCards.map((card) => {
                                     const cardUser = cardDuSet.find((cardS) => cardS.card.id === card.id)
                                     return <div key={card.id}>
-                                            { cardUser ? (
-                                                <ImageCard key={card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.id}`)}} exception={true}/>
-                                            ):(
-                                                <div style={{opacity: "0.5"}}>
-                                                    <ImageCard key={card.name} card={card} exception={true}/>
-                                                </div>
-                                            )}
+                                        <ImageCard 
+                                        key={card.name} 
+                                        card={card} 
+                                        navigate={() => {navigateToCardPage(`/card/${card.id}`)}} 
+                                        exception={true} 
+                                        posssesed={cardUser}
+                                        searched={searched.includes(card.id)}
+                                        onSearchedAdd={retrieveSearched}/>
                                     </div>
                                 }
                             )) : (

@@ -230,6 +230,28 @@ const pokapiDAO = {
         if(response.status === 200) {
             return await response.json()
         }
+    },
+    addInSearched : async (cardId)=>{
+        await fetch(config.url+"/user/searched/add",{
+            method:"POST",
+            headers: {
+                ...baseHeaders,
+                ...athenticationHeader()
+            },
+            body : JSON.stringify({
+                id : cardId
+            })
+        })
+    },
+    fetchCards : async(cardsId)=>{
+        const response = await fetch(config.url+"/data/cards",{
+            method : "POST",
+            headers : baseHeaders,
+            body : JSON.stringify({cards : cardsId})
+        })
+        if(response.status == 200){
+            return await response.json()
+        }
     }
 }
 

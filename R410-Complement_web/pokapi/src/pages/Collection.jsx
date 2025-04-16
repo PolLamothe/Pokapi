@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {Button, CheckboxGroup, Flex, Grid, ScrollArea, Spinner, TextField, Switch} from "@radix-ui/themes";
+import {useEffect, useState, useRef, use} from "react";
+import {Button, CheckboxGroup, Flex, Grid, ScrollArea, Spinner, TextField, Switch, AspectRatio} from "@radix-ui/themes";
 import {MagnifyingGlassIcon} from "@radix-ui/react-icons";
 import * as Accordion from '@radix-ui/react-accordion';
 import {AccordionContent, AccordionTrigger} from "@radix-ui/react-accordion";
@@ -8,21 +8,51 @@ import {useNavigate} from "react-router";
 import pokapiDAO from "../dao/pokapiDAO.js";
 
 
-export function ImageCard({card, navigate, exception = false}) {
+export function ImageCard({card, navigate, exception = false, posssesed, searched, onSearchedAdd}) {    
+    const [hoverState,setHoverState] = useState(false)
+    
+    const addStyle = {
+        width : "4vw",
+        height : "fit-content",
+        position : "absolute",
+        zIndex : "2"
+    }
+
+    const heartStyle = {
+        width : "2vw",
+        height : "fit-content",
+        position : "absolute",
+        zIndex : "2",
+        top : "1vh",
+        left : "1vh",
+        filter : "grayscale(10%)"
+    }
+    
+    async function addInSearched(){
+        await pokapiDAO.addInSearched(exception ? card.id : card.card.id)
+        onSearchedAdd()
+    }
+
     return (
         <Flex className="hoverEffect" justify="center">
-            <figure>
-                { exception ? (
-                    <img className="img" alt={card.name} src={card.images.small} onClick={navigate} />
-                ) : (
-                    <img className="img" alt={card.card.name} src={card.card.images.small} onClick={navigate} />
+            <figure onMouseOver={()=>{setHoverState(true)}} onMouseLeave={()=>{setHoverState(false)}}>
+                {!posssesed && hoverState && !searched &&  (
+                    <img src="/public/cross.png" style={addStyle} onClick={addInSearched}/>
                 )}
+                {!posssesed && searched && (
+                    <img src="/public/heart.png" style={heartStyle}/>
+                )}
+                <img className="img" 
+                alt={exception ?  card.name : card.card.name} 
+                src={exception ? card.images.small : card.card.images.small} 
+                onClick={navigate} 
+                style={posssesed ? {} : {opacity : "0.5"}}/>
             </figure>
         </Flex>
     )
 }
 
-function SetSection({set,cards}){
+function SetSection({set,cards,searchState}){
     const navigateToCardPage = useNavigate()
 
     const [windowSize, setWindowSize] = useState(window.innerWidth)
@@ -74,7 +104,13 @@ function SetSection({set,cards}){
             <img src={set.images.logo} style={logoStyle} onClick={()=>{navigateToCardPage(`/set/${set.id}`)}}/>
             <div style={cardWrapperStyle}>
                 {cards.map(card =>
-                    <ImageCard key={card.card.name} card={card} navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}}/>
+                    <ImageCard 
+                    key={card.card.name} 
+                    card={card} 
+                    navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}} 
+                    posssesed={!searchState}
+                    searched={searchState}
+                    />
                 )
                 }
             </div>
@@ -90,6 +126,8 @@ function Collection() {
     const [raritiesAll, setRaritiesAll] = useState([])
     const [sets, setSets] = useState([])
     const [setsAll, setSetsAll] = useState([])
+    const [searched,setSearched] = useState(null)
+    const [searchedState,setSearchedState] = useState(false)
 
     const [cardInSets,setCardInSets] = useState(null)
 
@@ -136,6 +174,12 @@ function Collection() {
             setSetsAll(dataSets)
         })
 
+        pokapiDAO.fetchSearched().then(async searched => {
+            setSearched((await pokapiDAO.fetchCards(searched)).map(
+                card=>{return {card : card,quantity : 1}}
+            ))
+        })
+
     },[])
 
     useEffect(() => {
@@ -160,6 +204,15 @@ function Collection() {
         })
         setCardInSets(temp)
     },[userCards])
+
+    useEffect(()=>{
+        console.log(searched)
+        if(searchedState){
+            setUserCards(searched)
+        }else{
+            setUserCards(userCardsAll)
+        }
+    },[searchedState])
 
     const handleSearch = async (e) => {
         const recherche = e.target.value
@@ -314,20 +367,43 @@ function Collection() {
 
                     <AccordionTab name="Set" onchecked={onChecked} filter={sets} selectedFilter={selectedSet} handleSearch={handleSearchSets} searchBar={true} ondelete={onChecked}/>
 
-                    <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:"1vw"}}>
-                        <b>Séparer les sets</b>
-                        <Switch style={{cursor : "pointer"}} onCheckedChange={setSeparedSet} defaultChecked/>
-                    </div>
+                    <Accordion.Item value="Display" className="AccordionItem">
+                        <AccordionTrigger className="AccordionTrigger">Display
+                            <ChevronDownIcon className="AccordionChevron" aria-hidden /> 
+                        </AccordionTrigger>
+                        <AccordionContent className="AccordionContent">
+                            <div style={{display:"flex",alignItems:"center",gap:"1vw",justifyContent : "space-between",width : "100%"}}>
+                                <b>Séparer les sets</b>
+                                <Switch style={{cursor : "pointer"}} onCheckedChange={setSeparedSet} defaultChecked/>
+                            </div>
+                            
+                            <div style={{display:"flex",alignItems:"center",gap:"1vw",marginTop : "2vh",justifyContent : "space-between",width : "100%"}}>
+                                <b style={{width : "max-content"}}>Afficher les cartes recherchées</b>
+                                <Switch style={{cursor : "pointer"}} onCheckedChange={setSearchedState} />
+                            </div>
+                        </AccordionContent>
+                    </Accordion.Item>
+
                 </Accordion.Root>
             </Flex>
             <div id="contentWrapper" style={separedSet ? contentWrapperStyleSepared : contentWrapperStyle}>
                 {userCards && userCardsAll.length > 0 ? (
                     separedSet ? 
                         (Object.keys(cardInSets).map(setId => {
-                        return <SetSection set={cardInSets[setId]["set"]} cards={cardInSets[setId]["cards"]}/>
+                        return <SetSection 
+                            set={cardInSets[setId]["set"]} 
+                            cards={cardInSets[setId]["cards"]}
+                            searchState={searchedState}
+                            />
                         })) : 
                         (userCards.map(card => (
-                            <ImageCard key={card.card.id} card={card} navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}} />
+                            <ImageCard 
+                                key={card.card.id} 
+                                card={card} 
+                                navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}} 
+                                posssesed={!searchedState}
+                                searched={searchedState}
+                            />
                         )))
                  ) : !loadingExpired ? (
                     <Flex align="center" direction="column" py="9">

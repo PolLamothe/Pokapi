@@ -69,6 +69,7 @@ const Header = () => {
                     src={pokapiLogo}
                     alt="Pokapi Logo"
                     style={dynamicLogoStyle}
+                    onClick={() => navigate("/")}
                 />
 
                 <Flex direction="row" gap="2">
@@ -97,6 +98,7 @@ const Header = () => {
                         src={pokapiLogo}
                         alt="Pokapi Logo"
                         style={dynamicLogoStyle}
+                        onClick={() => navigate("/")}
                     />
 
                     <Flex direction="row" gap="2">
