@@ -35,6 +35,18 @@ const config = {
                     type: 'string',
                     example: 'fire',
                 }
+            },
+            Deck: {
+                type: 'object',
+                properties: {
+                    deck: {
+                        type: 'array',
+                        items: {
+                            type: 'string',
+                            example: 'xy1-1',
+                        }
+                    }
+                }
             }
         },
         responses: {

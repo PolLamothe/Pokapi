@@ -196,7 +196,9 @@ const cardController = {
 
         let prix_total = 0
         cards.forEach((card) => {
-            prix_total+= card.cardmarket.prices.trendPrice
+            if (card.cardmarket!==null && card.cardmarket.prices!==null) {
+                prix_total+= card.cardmarket.prices.trendPrice
+            }
         })
 
         return prix_total

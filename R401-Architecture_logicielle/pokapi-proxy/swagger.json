@@ -319,7 +319,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ListString"
+                "$ref": "#/components/schemas/Deck"
               }
             }
           }
@@ -986,6 +986,18 @@
         "items": {
           "type": "string",
           "example": "fire"
+        }
+      },
+      "Deck": {
+        "type": "object",
+        "properties": {
+          "deck": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "xy1-1"
+            }
+          }
         }
       },
       "ListId": {

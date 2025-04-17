@@ -239,7 +239,7 @@ router.route("/deck-price").post(async (req, res) => {
         description: "Renseigner la liste des id des cartes",
         required: true,
         content: {
-            "application/json": { schema: { $ref: "#/components/schemas/ListString" } }
+            "application/json": { schema: { $ref: "#/components/schemas/Deck" } }
         }
     }
     #swagger.responses[200] = {
