@@ -8,8 +8,9 @@ import {useNavigate} from "react-router";
 import pokapiDAO from "../dao/pokapiDAO.js";
 
 
-export function ImageCard({card, navigate, exception = false, posssesed, searched, onSearchedAdd}) {    
+export function ImageCard({card, exception = false, posssesed, searched, onSearchedAdd}) {    
     const [hoverState,setHoverState] = useState(false)
+    const navigate = useNavigate()
     
     const addStyle = {
         width : "4vw",
@@ -34,7 +35,9 @@ export function ImageCard({card, navigate, exception = false, posssesed, searche
     }
 
     return (
-        <Flex className="hoverEffect" justify="center" onClick={posssesed ? navigate : null}>
+        <Flex className="hoverEffect" justify="center" 
+        onClick={posssesed ? ()=>{navigate(`/card/${exception ? card.id : card.card.id}`)} : ()=>{navigate(`/set/${exception ? card.set.id : card.card.set.id}`)}}
+        >
             <figure onMouseOver={()=>{setHoverState(true)}} onMouseLeave={()=>{setHoverState(false)}}>
                 {!posssesed && hoverState && !searched &&  (
                     <img src="/cross.png" style={addStyle} onClick={addInSearched}/>
@@ -108,7 +111,6 @@ function SetSection({set,cards,searchState}){
                     <ImageCard 
                     key={card.card.id}
                     card={card} 
-                    navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}} 
                     posssesed={!searchState}
                     searched={searchState}
                     />
@@ -398,7 +400,6 @@ function Collection() {
                             <ImageCard 
                                 key={card.card.id} 
                                 card={card} 
-                                navigate={() => {navigateToCardPage(`/card/${card.card.id}`)}} 
                                 posssesed={!searchedState}
                                 searched={searchedState}
                             />

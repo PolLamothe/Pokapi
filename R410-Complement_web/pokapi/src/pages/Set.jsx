@@ -152,7 +152,6 @@ function SetView() {
                                         <ImageCard 
                                         key={card.name} 
                                         card={card} 
-                                        navigate={() => {navigateToCardPage(`/card/${card.id}`)}} 
                                         exception={true} 
                                         posssesed={cardUser}
                                         searched={searched.includes(card.id)}

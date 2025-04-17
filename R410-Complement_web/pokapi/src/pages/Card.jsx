@@ -97,7 +97,7 @@ function Card() {
                         <img
                             src={cardData.set?.images?.logo || "placeholder.png"}
                             alt="Logo"
-                            style={{ width: "100%", height: "auto", marginBottom: "20px" }}
+                            style={{ width: "100%", height: "auto", marginBottom: "20px",cursor : "pointer"}}
                             onClick={() => navigateToSet(`/set/${cardData.set.id}`)}
                         />
                         <Flex direction="row" align="center" gap="4">
