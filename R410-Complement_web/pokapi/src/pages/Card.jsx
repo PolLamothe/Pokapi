@@ -39,6 +39,15 @@ function Card() {
         }
     }, [])
 
+        useEffect(()=>{
+            if(wideCardPage){
+                document.body.style.overflowY = "hidden"
+                window.scrollTo("0px","0px")
+            }else(
+                document.body.style.overflowY = "initial"
+            )
+        },[wideCardPage])
+
 
     { windowSize < 1000 && windowSize > 768 ? (
         marginLeftButton = "15px",

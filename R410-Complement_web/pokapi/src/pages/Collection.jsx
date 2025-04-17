@@ -139,10 +139,9 @@ function Collection() {
     const [selectedSet, setSelectedSet] = useState([])
 
     const [loadingExpired, setLoadingExpired] = useState(false)
-    const [separedSet,setSeparedSet] = useState(false)
+    const [separedSet,setSeparedSet] = useState(localStorage.getItem("separedSet") != null ? JSON.parse(localStorage.getItem("separedSet")) : false)
 
     let navigateToCardPage = useNavigate()
-
 
     const [windowSize, setWindowSize] = useState(window.innerWidth)
     let gridtemplate = null
@@ -216,6 +215,10 @@ function Collection() {
             setUserCards(userCardsAll)
         }
     },[searchedState])
+
+    useEffect(()=>{
+        localStorage.setItem("separedSet",separedSet.toString())
+    },[separedSet])
 
     const handleSearch = async (e) => {
         const recherche = e.target.value
@@ -374,12 +377,12 @@ function Collection() {
                         <AccordionContent className="AccordionContent">
                             <div style={{display:"flex",alignItems:"center",gap:"1vw",justifyContent : "space-between",width : "100%"}}>
                                 <b>Séparer les sets</b>
-                                <Switch style={{cursor : "pointer"}} onCheckedChange={setSeparedSet}/>
+                                <Switch style={{cursor : "pointer"}} onCheckedChange={setSeparedSet} checked={separedSet}/>
                             </div>
                             
                             <div style={{display:"flex",alignItems:"center",gap:"1vw",marginTop : "2vh",justifyContent : "space-between",width : "100%"}}>
                                 <b style={{width : "max-content"}}>Afficher les cartes recherchées</b>
-                                <Switch style={{cursor : "pointer"}} onCheckedChange={setSearchedState} />
+                                <Switch style={{cursor : "pointer"}} onCheckedChange={setSearchedState} checked={searchedState}/>
                             </div>
                         </AccordionContent>
                     </Accordion.Item>
