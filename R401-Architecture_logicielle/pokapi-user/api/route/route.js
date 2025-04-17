@@ -87,10 +87,13 @@ router.route('/register').post(async (req, res) => {
 
 router.route('/my-cards').get(verifyAuth, async (req, res) => {
     // #swagger.summary = "Récupérer toutes les cartes de la collection de l'utilisateur"
-    // #swagger.description = "TODO"
+    // #swagger.description = "Permet à un utilisateur de récupérer la liste des cartes qu'il possède avec la quantité de chaque carte."
     // #swagger.tags = ['User']
     // #swagger.security = [{ "bearerAuth": [] }]
     /*
+    #swagger.responses[200] = {
+        description: "Un tableau avec les cartes de l'utilisateur et leurs quantités",
+    }
     #swagger.responses[401] = { $ref: "#/components/responses/UnauthorizedResponse" }
     #swagger.responses[503] = { $ref: "#/components/responses/APIError" }
      */
@@ -104,11 +107,20 @@ router.route('/my-cards').get(verifyAuth, async (req, res) => {
 
 router.route('/my-cards/:cardId').get(verifyAuth, async (req, res) => {
     // #swagger.summary = "Récupérer une carte de la collection de l'utilisateur"
-    // #swagger.description = "TODO"
+    // #swagger.description = "Permet à l'utilisateur de récupérer une carte spécifique de sa collection pour voir les informations de la carte ainsi que la quantité possédée."
     // #swagger.tags = ['User']
     // #swagger.security = [{ "bearerAuth": [] }]
     /*
+    #swagger.responses[200] = {
+        description: "La carte de l'utilisateur avec la quantité possédée",
+    }
     #swagger.responses[401] = { $ref: "#/components/responses/UnauthorizedResponse" }
+    #swagger.responses[400] = {
+        description: "L'utilisateur n'a pas de carte avec cet id",
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/Error" } }
+        }
+    }
     #swagger.responses[503] = { $ref: "#/components/responses/APIError" }
      */
     try {
@@ -152,12 +164,21 @@ router.route('/pseudo/:pseudo').get(async (req, res) => {
 
 router.route('/open-booster/:setId').get(verifyAuth, async (req, res) => {
     // #swagger.summary = "Ouvrir un booster pour ajouter des cartes dans la collection"
-    // #swagger.description = "TODO"
+    // #swagger.description = "Permet à l'utilisateur d'ouvrir un paquet de 5 cartes aléatoire à partir d'une série (set). Les cartes obtenues sont alors ajoutées à sa collection."
     // #swagger.tags = ['User']
     // #swagger.security = [{ "bearerAuth": [] }]
     /*
+    #swagger.responses[200] = {
+        description: "Un tableau avec les 5 cartes obtenues",
+    }
     #swagger.responses[401] = { $ref: "#/components/responses/UnauthorizedResponse" }
     #swagger.responses[503] = { $ref: "#/components/responses/APIError" }
+    #swagger.responses[404] = {
+        description: "Aucun set avec cet id trouvé",
+        content: {
+            "application/json": { schema: { $ref: "#/components/schemas/Error" } }
+        }
+    }
      */
     try {
         const boosterContent = await userController.openBooster(req.user, req.params.setId)

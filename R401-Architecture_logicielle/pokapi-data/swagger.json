@@ -1,236 +1,395 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
     "title": "pokapi-data API Documentation",
-    "description": "",
+    "description": "Cette API est responsable de la gestion des cartes Pokémon",
     "version": "1.0.0"
   },
-  "host": "localhost:8081/api/v0",
-  "basePath": "/",
-  "schemes": [
-    "http"
+  "servers": [
+    {
+      "url": "http://localhost:8081/api/v0",
+      "description": "Serveur hébergé sur le réseau de l'IUT de Nantes nécessite un VPN."
+    }
+  ],
+  "tags": [
+    {
+      "name": "Data"
+    }
   ],
   "paths": {
     "/open-booster/{setId}": {
       "get": {
+        "tags": [
+          "Data"
+        ],
         "summary": "Ouvrir un booster",
-        "description": "",
+        "description": "Permet d'ouvrir un paquet de 5 cartes aléatoire à partir d'une série (set).",
         "parameters": [
           {
             "name": "setId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id du set à ouvrir"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Un tableau avec la liste des cartes obtenues"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Aucun set avec cet id trouvé",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
     },
     "/card/{id}": {
       "get": {
+        "tags": [
+          "Data"
+        ],
         "summary": "Récupérer les informations d'une carte",
-        "description": "",
+        "description": "Permet de consulter les informations détaillées d'une carte.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id de la carte"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "La carte recherchée"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Aucune carte avec cet id trouvé",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
     },
     "/cards": {
       "post": {
-        "summary": "Récupérer les informations de plusieurs cartes",
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "cards": {
-                  "example": "any"
-                }
-              }
-            }
-          }
+        "tags": [
+          "Data"
         ],
+        "summary": "Récupérer les informations de plusieurs cartes",
+        "description": "Permet de consulter les informations détaillées de plusieurs cartes.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Un tableau avec les cartes recherchées"
+          }
+        },
+        "requestBody": {
+          "in": "body",
+          "description": "Renseigner la liste des id des cartes",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListString"
+              }
+            }
           }
         }
       }
     },
     "/card/evolution/{id}": {
       "get": {
+        "tags": [
+          "Data"
+        ],
         "summary": "Récupérer toutes les évolutions possibles d'une carte dans le même set",
-        "description": "",
+        "description": "Permet de trouver toutes les évolutions possibles d'une carte dans le même set.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id de la carte"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Un tableau avec les cartes des évolutions disponibles"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Cette carte n'a pas d'évolution possible dans ce set",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Aucune carte avec cet id trouvé",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
     },
     "/set/cards/{setId}": {
       "get": {
+        "tags": [
+          "Data"
+        ],
         "summary": "Récupérer toutes les cartes d'un set",
-        "description": "",
+        "description": "Permet de récupérer la liste des cartes appartenant à un set en particulier.",
         "parameters": [
           {
             "name": "setId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id du set à consulter"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "La liste des cartes de ce set"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Aucune set avec cet id trouvé",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
     },
     "/set/presentation/{setId}": {
       "get": {
+        "tags": [
+          "Data"
+        ],
         "summary": "Récupérer les informations d'un set et 3 images de cartes de celui-ci",
-        "description": "",
+        "description": "Permet de récupérer la présentation d'un set. Celle-ci contiendra les informations du set et 4 images de cartes composant ce set.",
         "parameters": [
           {
             "name": "setId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id du set à consulter"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Les informations du set et 4 images de cartes composant ce set."
           },
           "404": {
-            "description": "Not Found"
+            "description": "Aucune set avec cet id trouvé",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
     },
     "/set/{setId}": {
       "get": {
+        "tags": [
+          "Data"
+        ],
         "summary": "Récupérer les informations d'un set",
-        "description": "",
+        "description": "Permet de consulter les informations d'un en particulier.",
         "parameters": [
           {
             "name": "setId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id du set à consulter"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Les informations du set"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Aucune set avec cet id trouvé",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
     },
     "/sets": {
       "get": {
+        "tags": [
+          "Data"
+        ],
         "summary": "Récupérer tous les sets",
-        "description": "",
+        "description": "Permet de récupérer la liste de tous les sets disponibles.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "La liste de tous les sets."
           },
           "503": {
-            "description": "Service Unavailable"
+            "description": "Service Unavailable",
+            "$ref": "#/components/responses/APIError"
           }
         }
       }
     },
     "/deck-price": {
       "post": {
+        "tags": [
+          "Data"
+        ],
         "summary": "Donne le prix d'un deck de cartes",
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "deck": {
-                  "example": "any"
+        "description": "Permet de savoir le prix total d'une liste de cartes (deck).",
+        "responses": {
+          "200": {
+            "description": "Le prix total."
+          },
+          "404": {
+            "description": "Une des cartes n'a pas été trouvée",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
+        },
+        "requestBody": {
+          "in": "body",
+          "description": "Renseigner la liste des id des cartes",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListString"
+              }
+            }
           }
         }
       }
     },
     "/types": {
       "get": {
+        "tags": [
+          "Data"
+        ],
         "summary": "Récupérer tous les types",
-        "description": "",
+        "description": "Permet de récupérer la liste des types disponibles.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Un tableau avec la liste des types",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListString"
+                }
+              }
+            }
           }
         }
       }
     },
     "/rarities": {
       "get": {
+        "tags": [
+          "Data"
+        ],
         "summary": "Récupérer toutes les raretés",
-        "description": "",
+        "description": "Permet de récupérer la liste des raretés disponibles.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Un tableau avec la liste des raretés",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListString"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "error message"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "ListString": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "example": "fire"
+        }
+      }
+    },
+    "responses": {
+      "APIError": {
+        "description": "Une erreur est survenue avec l'API externe api.pokemontcg.io",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
           }
         }
       }
