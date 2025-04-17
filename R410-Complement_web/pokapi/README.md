@@ -1,6 +1,14 @@
 # Pokapi
 
-> [Lien de la maquette Figma](https://www.figma.com/design/psU19cATXeNnEl7xmLXVrJ/Pokemon?node-id=0-1&t=ld5RRQsjuS7JdJmA-1)
+[http://172.21.45.43](http://172.21.45.43)
+
+## Déploiement
+
+*Thomas*
+
+## Fonctionnalités
+
+*TODO*
 
 ## Instruction
 
@@ -24,40 +32,6 @@ Les identifiants pour se connecter avec le stub sont : `login: admin ; password:
 - [Slick](https://react-slick.neostack.com/) : Librairie pour le carousel de la page d'accueil (à confirmer)
 - [React router](https://reactrouter.com/start/declarative/navigating)
 - [React](https://react.dev/reference/react)
-
-## Tâches à faire
-
-> 🟢 = Commencé
-
-- [x] Formulaire login / register
-    - [x] Style de la page (cf. maquette)
-    - [x] Gestion des tokens avec **localstorage**
-- [x] Header
-    - [x] Ajouté la navigation fonctionnelle avec le react router
-    - [x] Responsive
-- [ ] Footer 🟢
-  - [x] Responsive
-- [x] Collection
-    - [x] Fetch pour récupérer la collection
-    - [x] Style de la page (cf. maquette)
-    - [x] Filtres
-    - [x] Recherche
-    - [x] Boutton clear filtres
-- [x] Home
-    - [x] Carousel avec les booster 
-        - [x] Choisir lib pour faire le carousel => [Slick](https://react-slick.neostack.com/) ?
-        - [x] Gérer le chargement au fur et à mesure
-        - [x] Responsive
-- [x] Card
-    - [x] Style de la page (cf. maquette)
-    - [x] Chat avec Pokemon
-- [ ] Account 🟢
-    - [ ] Style de la page (cf. maquette)
-- [x] Page opening booster
-- [ ] Bouton page /sets à mettre à un endroit
-
----
-- [ ] Recherche utilisateurs
 
 ## Plan de l'application
 
