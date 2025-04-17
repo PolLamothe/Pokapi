@@ -208,7 +208,6 @@ function Collection() {
     },[userCards])
 
     useEffect(()=>{
-        console.log(searched)
         if(searchedState){
             setUserCards(searched)
         }else{

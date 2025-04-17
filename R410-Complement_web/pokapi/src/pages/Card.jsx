@@ -15,6 +15,8 @@ function Card() {
     let navigateToSet = useNavigate()
     const [windowSize, setWindowSize] = useState(window.innerWidth)
 
+    const [wideCardPage, setWideCardPage] = useState(false)
+
     let marginLeftButton, marginTopButton
 
 
@@ -37,6 +39,7 @@ function Card() {
         }
     }, [])
 
+
     { windowSize < 1000 && windowSize > 768 ? (
         marginLeftButton = "15px",
         marginTopButton = "-15px"
@@ -46,6 +49,7 @@ function Card() {
     ) : (
         marginLeftButton = "30px"
     )}
+
 
     return (
         <>
@@ -127,6 +131,9 @@ function Card() {
                             <Text size="3" style={{ textAlign: "left", width: "100%" }}>
                                 <strong>Price:</strong> {cardData.cardmarket?.prices?.averageSellPrice || "N/A"}
                             </Text>
+                            <Text size="3" style={{ textAlign: "left", width: "100%" }}>
+                                you have <strong>{quantity || "N/A"}</strong> times this card
+                            </Text>
                         </Flex>
                         <Flex justify="center">
                             <Button
@@ -149,7 +156,7 @@ function Card() {
                         gap="4"
                         style={{ alignSelf: "start", textAlign: "center", width: "100%", maxWidth: "400px" }}
                     >
-                        <div>
+                        <div className="imgCard" onClick={()=>setWideCardPage(true)}>
                             {cardData.rarity.includes("Rare") ? (
                                 <CardEffectHolo card={cardData} />
                             ) : (
@@ -175,6 +182,8 @@ function Card() {
                                 <Text size="2">{cardData.name || "Unknown Card"}</Text>
                             </Flex>
                         </Box>
+
+                        {wideCardPage && <WideCard card={cardData} valueWideCard={setWideCardPage} />}
                     </Flex>
                 </Flex>
             ) : (
@@ -187,7 +196,32 @@ function Card() {
     );    
 }
 
-function CardEffect({card}) {
+function WideCard({card, valueWideCard}) {
+
+    const styleWideCardPage = {
+        width: "100vw",
+        height : "100vh",
+        backgroundColor : "rgba(0,0,0,0.5)",
+        position : "absolute",
+        top : "0px",
+        left : "0px",
+        zIndex : "100",
+        backdropFilter: "blur(5px)"
+    }
+
+
+    return <div style={styleWideCardPage} onClick={()=>valueWideCard(false)}>
+        <Flex justify="center" align="center" height="100%">
+            {card.rarity.includes("Rare") ? (
+                <CardEffectHolo card={card} heightStyle="80vh" widthStyle="auto" borderRadius="40px"/>
+            ) : (
+                <CardEffect card={card} heightStyle="80vh" widthStyle="auto" borderRadius="40px"/>
+            )}
+        </Flex>
+    </div>
+}
+
+function CardEffect({card, heightStyle = "412.5px", widthStyle = "300px", borderRadius = "15px"}) {
     const boundingRef = useRef(null);
     const [glowStyle, setGlowStyle] = useState({});
 
@@ -232,7 +266,7 @@ function CardEffect({card}) {
     };
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", perspective: "800px" }}>
+        <div style={{ perspective: "800px" }}>
             <div
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -240,10 +274,10 @@ function CardEffect({card}) {
                 style={{
                     position: "relative",
                     display: "grid",
-                    width: "300px",
-                    height: "412.5px",
+                    width: widthStyle,
+                    height: heightStyle,
                     gridTemplateRows: "200px 120px 40px",
-                    borderRadius: "0.375rem",
+                    borderRadius: borderRadius,
                     color: "#01A977",
                     transition: "transform 0.3s ease-out",
                     transform: "rotateX(var(--x-rotation)) rotateY(var(--y-rotation)) scale(1.1)",
@@ -253,8 +287,8 @@ function CardEffect({card}) {
                     src={card.images?.large}
                     alt={card.name}
                     style={{
-                        width: "300px",
-                        height: "412.5px",
+                        width: widthStyle,
+                        height: heightStyle,
                         borderRadius: "10px",
                     }}
                 />
@@ -265,7 +299,7 @@ function CardEffect({card}) {
 }
 
 
-function CardEffectHolo({ card }) {
+function CardEffectHolo({ card , heightStyle, widthStyle, borderRadius = "15px"} = {}) {
     const boundingRef = useRef(null);
 
     const handleMouseEnter = (ev) => {
@@ -299,7 +333,7 @@ function CardEffectHolo({ card }) {
     };
 
     return (
-        <div style={{ perspective: "800px" }}>
+        <div style={{ perspective: "800px" , height: heightStyle, width: widthStyle, borderRadius: borderRadius}}>
             <div
                 className="card-effect-wrapper"
                 onMouseEnter={handleMouseEnter}
@@ -308,6 +342,9 @@ function CardEffectHolo({ card }) {
                 style={{
                     transform: "rotateX(var(--x-rotation)) rotateY(var(--y-rotation)) scale(1.1)",
                     transition: "transform 0.3s ease-out",
+                    height: heightStyle,
+                    width: widthStyle,
+                    borderRadius: borderRadius
                 }}
             >
                 <img
