@@ -2,35 +2,61 @@
 
 **Groupe_1_1 :** Thomas Souchet, Kyllian Arnaud, Pol Lamothe, Brieuc Le Carluer, Jauzua Destain
 
-Ce repository regroupe les différentes matières de la SAE401 Développement d'un application complexe.
+Ce repository regroupe les différentes ressources de la SAE401 Développement d'une application complexe.
 
-## Architecture R401 et R410
+Listes des ressources présentes : 
 
-![schema](./commun/Architecture-globale.drawio.png)
++ [R401 - Architecture logicielle](https://gitlab.univ-nantes.fr/pub/but/but2/sae4/sae4_class_grp1_eq1_arnaud-kyllian_destain-jauzua_lamothe-pol_le-carluer-brieuc_souchet-thomas/-/tree/main/R401-Architecture_logicielle?ref_type=heads)
++ [R410 - Complément web](https://gitlab.univ-nantes.fr/pub/but/but2/sae4/sae4_class_grp1_eq1_arnaud-kyllian_destain-jauzua_lamothe-pol_le-carluer-brieuc_souchet-thomas/-/tree/main/R410-Complement_web/pokapi?ref_type=heads)
++ [R408 - Virtualisation](https://gitlab.univ-nantes.fr/pub/but/but2/sae4/sae4_class_grp1_eq1_arnaud-kyllian_destain-jauzua_lamothe-pol_le-carluer-brieuc_souchet-thomas/-/tree/main/R408-Virtualisation?ref_type=heads)
++ [R409 - Management avancé des systèmes d'information](https://gitlab.univ-nantes.fr/pub/but/but2/sae4/sae4_class_grp1_eq1_arnaud-kyllian_destain-jauzua_lamothe-pol_le-carluer-brieuc_souchet-thomas/-/tree/main/R409-MASI?ref_type=heads)
++ [R412 - Automates et langages](https://gitlab.univ-nantes.fr/pub/but/but2/sae4/sae4_class_grp1_eq1_arnaud-kyllian_destain-jauzua_lamothe-pol_le-carluer-brieuc_souchet-thomas/-/tree/main/R412-Automates_langages?ref_type=heads)
+
+Liens des applications déployées (intranet de l'Université de Nantes) :
+
++ R401, micro-services : [http://172.21.45.43:8080/doc/](http://172.21.45.43:8080/doc/)
++ R410, Pokapi : [http://172.21.45.43/](http://172.21.45.43/)
 
 ## R401 - Architecture logicielle
 
-**Consignes :**
+Voir dossier `R401-Architecture_logicielle`.
 
-Vous devrez créer plusieurs micro-services communicants, facilement déployables sur les VM de l’IUT. Chaque micro-service devra être documenté et fourni avec des jeux de tests. Pour la partie serveur HTTP, vous pouvez utiliser le middleware ou le framework de votre choix. Le rendu final sera sur la forme d’une revue de code et une présentation du projet. Vous devrez un jour avant la soutenance avoir déposer sur git votre code, un fichier markdown décrivant l’application et son déploiement et la mise en oeuvre des tests.
-
-A minima devront être créés 3 micro-services répondant à une problématique énoncée :
-
- * Un proxy point d'entré du système
- * Un service reposant sur un jeu de données externes de votre choix
- * Un service libre
-
-Vous devrez pour chaque service fournir les tests du modèle, des contrôleurs, de l'application ainsi que la documentation.
+Création de plusieurs micro-services communicants en JavaScript sous forme d'API REST avec la bibliothèque Express.js. 
 
 ## R410 - Complément web
 
-**Consignes :**
+Voir dossier `R410-Complement_web/pokapi`.
 
-Vous devrez développer une application de préférence « one page » sur des services rest de votre choix (au moins 2), la richesse des fonctionnalités, l’ergonomie, l’utilisation de la mémoire et du CPU seront pris en compte. Le rendu final sera sous la forme d’une revue de code et d'une présentation du projet. Vous devrez un jour avant la soutenance avoir déposé sur git votre code, un fichier markdown décrivant l’application et son déploiement, (le déploiement sur un serveur apache doit-être possible).
-
+Création d'une application web "one page" avec React reposant sur l'utilisation des micro-services développés dans la ressource R401.
 
 ## R408 - Virtualisation
 
+Voir dossier `R408-Virtualisation`.
+
+Conteneurisation d'un framework PHP avec Podman. 
+
 ## R409 - Management avancé des systèmes d'information
 
+Voir dossier `R409-MASI`.
+
+Modélisation à l'aide de diagramme BPMN de processus métier de l'application développée dans la ressource R401. 
+
 ## R412 - Automates et langages
+
+Voir dossier `R412-Automates_langages`.
+
+Modélisation du fonctionnement du micro-service de consultation des données des cartes Pokémon (pokapi-data) à l'aide d'automates à états.
+
+## Annexes
+
+### Architecture R401 et R410
+
+Voici un schéma de l'architecture globale des micro-services développés ainsi que de l'application web.
+
+![schema](./commun/Architecture-globale.drawio.png)
+
+## Application Pokapi
+
+Voici une capture d'écran de l'application web Pokapi.
+
+![screen](./commun/Screenshots/s-home.png)
