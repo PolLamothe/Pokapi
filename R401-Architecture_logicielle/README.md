@@ -10,8 +10,6 @@ Comment créer une plateforme permettant aux utilisateurs de gérer, optimiser e
 
 * **pokapi-user** : Ce microservice gère les utilisateurs et leurs collections. Il permet aux utilisateurs de s'inscrire, de se connecter, de voir leurs cartes et d'ouvrir des boosters, ce qui répond au besoin de gestion personnelle de la collection et d'interaction avec la plateforme.
 
-## Architecture
-
 *Schéma global Thomas*
 
 ## Test
@@ -24,4 +22,12 @@ Comment créer une plateforme permettant aux utilisateurs de gérer, optimiser e
 
 ## Fonctionnement cache 
 
-*Pol*
+### Données mise en cache :
+- cards
+- rarities
+- sets
+- types
+
+### Set :
+
+![](doc/cache.drawio.png)

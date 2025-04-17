@@ -1,0 +1,261 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.2.2 Chrome/134.0.6998.178 Electron/35.1.2 Safari/537.36" version="26.2.2">
+  <diagram name="Page-1" id="vlpZ0lhPYtKqg7JZP0tZ">
+    <mxGraphModel dx="1426" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-1" value="Find Set" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=none;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="30" y="30" width="560" height="590" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-2" value="Vérification de la présence du set dans le cache" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="110" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-3" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="355" y="40" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-4" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-3" target="uV60NB-MyTTJJ1ko4V9U-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="410" as="sourcePoint" />
+            <mxPoint x="620" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-5" value="" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="355" y="200" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-6" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-2" target="uV60NB-MyTTJJ1ko4V9U-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="410" as="sourcePoint" />
+            <mxPoint x="620" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-5" target="uV60NB-MyTTJJ1ko4V9U-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-12" value="Absent" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="uV60NB-MyTTJJ1ko4V9U-11">
+          <mxGeometry x="0.1077" y="1" relative="1" as="geometry">
+            <mxPoint x="-11" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-7" value="Récupération du set depuis l&#39;API distante" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="195" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-13" value="Ajout du set dans le cache" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="280" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-14" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-7" target="uV60NB-MyTTJJ1ko4V9U-13">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="290" as="sourcePoint" />
+            <mxPoint x="620" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-15" value="Vérification de la date d&#39;actualisation du set" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="200" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-16" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-5" target="uV60NB-MyTTJJ1ko4V9U-15">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="290" as="sourcePoint" />
+            <mxPoint x="400" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-17" value="Présent" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="uV60NB-MyTTJJ1ko4V9U-16">
+          <mxGeometry x="-0.1457" y="2" relative="1" as="geometry">
+            <mxPoint x="-3" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-18" value="" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="195" y="280" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-19" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-15" target="uV60NB-MyTTJJ1ko4V9U-18">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="290" as="sourcePoint" />
+            <mxPoint x="400" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-20" value="Envoi du set au client" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="280" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-21" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-18" target="uV60NB-MyTTJJ1ko4V9U-20">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="290" as="sourcePoint" />
+            <mxPoint x="400" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-22" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;gradientColor=none;perimeterSpacing=0;strokeWidth=0;labelBackgroundColor=none;labelBorderColor=default;spacingTop=0;fontColor=none;noLabel=1;fillStyle=auto;" vertex="1" parent="1">
+          <mxGeometry x="70" y="365" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-23" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="65" y="360" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-24" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-20" target="uV60NB-MyTTJJ1ko4V9U-23">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="290" as="sourcePoint" />
+            <mxPoint x="400" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-25" value="Récupération du set depuis l&#39;API distante" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="265" y="280" width="130" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-26" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-18">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="290" as="sourcePoint" />
+            <mxPoint x="265" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-27" value="Actualisation du set stocké dans la base de donnée et de sa date d&#39;actualisation" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="261.5" y="370" width="137" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-28" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-25" target="uV60NB-MyTTJJ1ko4V9U-27">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="290" as="sourcePoint" />
+            <mxPoint x="400" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-29" value="Envoi du set au client" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="480" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-30" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;gradientColor=none;perimeterSpacing=0;strokeWidth=0;labelBackgroundColor=none;labelBorderColor=default;spacingTop=0;fontColor=none;noLabel=1;fillStyle=auto;" vertex="1" parent="1">
+          <mxGeometry x="310" y="565" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-31" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="305" y="560" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-32" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-29" target="uV60NB-MyTTJJ1ko4V9U-31">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="590" y="490" as="sourcePoint" />
+            <mxPoint x="640" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-33" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-27" target="uV60NB-MyTTJJ1ko4V9U-29">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="450" as="sourcePoint" />
+            <mxPoint x="400" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-35" value="Envoi du set au client" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="360" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-36" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;gradientColor=none;perimeterSpacing=0;strokeWidth=0;labelBackgroundColor=none;labelBorderColor=default;spacingTop=0;fontColor=none;noLabel=1;fillStyle=auto;" vertex="1" parent="1">
+          <mxGeometry x="500" y="445" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-37" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="495" y="440" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-38" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-35" target="uV60NB-MyTTJJ1ko4V9U-37">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="780" y="370" as="sourcePoint" />
+            <mxPoint x="830" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-39" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-13" target="uV60NB-MyTTJJ1ko4V9U-35">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="300" as="sourcePoint" />
+            <mxPoint x="440" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-40" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="900" y="40" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-41" value="Vérification de la variable &quot;lastUpdate&quot;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="112.5" width="120" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-42" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-40" target="uV60NB-MyTTJJ1ko4V9U-41">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="530" y="390" as="sourcePoint" />
+            <mxPoint x="580" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-43" value="" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="200" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-44" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-41" target="uV60NB-MyTTJJ1ko4V9U-43">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="530" y="390" as="sourcePoint" />
+            <mxPoint x="580" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-45" value="Récupération de tout les sets depuis l&#39;API distante (1 seul requête)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="190" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-46" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-43" target="uV60NB-MyTTJJ1ko4V9U-45">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="460" y="390" as="sourcePoint" />
+            <mxPoint x="510" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-49" value="Variable null ou expirée" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="uV60NB-MyTTJJ1ko4V9U-46">
+          <mxGeometry x="-0.0874" relative="1" as="geometry">
+            <mxPoint x="-6" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-47" value="Actualisation des sets stockés dans la base de donnée et de leur date d&#39;actualisation" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="641.5" y="280" width="137" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-48" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-45" target="uV60NB-MyTTJJ1ko4V9U-47">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="395" as="sourcePoint" />
+            <mxPoint x="400" y="345" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-50" value="Actualisation de la variable &quot;lastUpdate&quot;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="380" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-51" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-47" target="uV60NB-MyTTJJ1ko4V9U-50">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="390" as="sourcePoint" />
+            <mxPoint x="460" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-57" value="Envoi du set au client" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="480" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-58" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;gradientColor=none;perimeterSpacing=0;strokeWidth=0;labelBackgroundColor=none;labelBorderColor=default;spacingTop=0;fontColor=none;noLabel=1;fillStyle=auto;" vertex="1" parent="1">
+          <mxGeometry x="690" y="565" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-59" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="685" y="560" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-60" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-57" target="uV60NB-MyTTJJ1ko4V9U-59">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="970" y="490" as="sourcePoint" />
+            <mxPoint x="1020" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-62" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-50" target="uV60NB-MyTTJJ1ko4V9U-57">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="620" y="390" as="sourcePoint" />
+            <mxPoint x="670" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-63" value="Envoi du set au client" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="200" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-64" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;gradientColor=none;perimeterSpacing=0;strokeWidth=0;labelBackgroundColor=none;labelBorderColor=default;spacingTop=0;fontColor=none;noLabel=1;fillStyle=auto;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="285" width="40" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-65" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1055" y="280" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-66" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-63" target="uV60NB-MyTTJJ1ko4V9U-65">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1320" y="210" as="sourcePoint" />
+            <mxPoint x="1370" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-67" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="uV60NB-MyTTJJ1ko4V9U-43" target="uV60NB-MyTTJJ1ko4V9U-63">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="620" y="390" as="sourcePoint" />
+            <mxPoint x="670" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-68" value="Variable valide" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="uV60NB-MyTTJJ1ko4V9U-67">
+          <mxGeometry x="-0.5409" y="3" relative="1" as="geometry">
+            <mxPoint x="24" y="-7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="uV60NB-MyTTJJ1ko4V9U-69" value="Find All Set" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fillColor=none;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="630" y="30" width="510" height="590" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
