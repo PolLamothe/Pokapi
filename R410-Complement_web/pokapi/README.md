@@ -8,7 +8,47 @@
 
 ## Fonctionnalités
 
-*TODO*
+#### Page /sets :
+- Visualiser toutes les extensions existantes
+- Recherche dynamique en fonction du nom
+- Affichage progressif des extensions
+
+#### Page /set :
+- Visualiser toutes les cartes d'une extension
+- Ajouter des cartes comme "recherchée"
+
+#### Page / :
+- Choix d'une extentions avec un carrousel (chargement progressif)
+- Ouvrir un booster (5 cartes) d'une extension au choix
+
+#### Page /collections :
+- Visionner toute ses cartes
+- Filter les cartes affichées en fonctions des critères :
+    - Type
+    - Rareté
+    - Extension
+- Séparer les cartes en fonction de leurs extensions (choix enregistré dans le `localStorage`)
+- Visionner les cartes recherchées
+- Recherche dynamique en fonction du nom
+
+#### Page /card :
+- Voir la carte avec un effet visuel (si elle est rare)
+- Voir la carte en grand format
+- Voir les infos suivantes : 
+    - l'extension de la carte
+    - le numéro de la carte
+    - l'illustateur de la carte
+    - le prix de la carte
+    - le nombre d'examplaire possédés
+- Accéder à la page de discussion avec le Pokemon
+
+#### Page /chatpokemon :
+- Discuter avec le pokemon (ChatGPT) (sauvegarde de la discussion dans le `localStorage`)
+
+#### Page /account :
+- Se créer un compte
+- Se connecter
+- Effacer les conversations avec les pokemons (`localStorage`)
 
 ## Instruction
 
