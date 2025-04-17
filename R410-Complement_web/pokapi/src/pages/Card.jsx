@@ -171,7 +171,7 @@ function Card() {
                         style={{ alignSelf: "start", textAlign: "center", width: "100%", maxWidth: "400px" }}
                     >
                         <div className="imgCard" onClick={()=>setWideCardPage(true)}>
-                            {cardData.rarity.includes("Rare") ? (
+                            {(cardData.rarity!==null && cardData.rarity.includes("Rare")) ? (
                                 <CardEffectHolo card={cardData} />
                             ) : (
                                 <CardEffect card={cardData} />
@@ -225,7 +225,7 @@ function WideCard({card, valueWideCard}) {
 
     return <div style={styleWideCardPage} onClick={()=>valueWideCard(false)}>
         <Flex justify="center" align="center" height="100%">
-            {card.rarity.includes("Rare") ? (
+            {(card.rarity!==null && card.rarity.includes("Rare")) ? (
                 <CardEffectHolo card={card} heightStyle="80vh" widthStyle="auto" borderRadius="40px"/>
             ) : (
                 <CardEffect card={card} heightStyle="80vh" widthStyle="auto" borderRadius="40px"/>
