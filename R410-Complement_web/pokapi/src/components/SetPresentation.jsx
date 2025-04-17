@@ -81,7 +81,8 @@ const SetPresentation = ({setId,displayState,middleState}) => {
         marginBottom: "4vw",
         marginLeft: "4vw",
         transitionDuration : ".25s",
-        height : "40vh"
+        height : "40vh",
+        cursor: "pointer"
     }
     
     var cardContainerStyle = {

@@ -111,6 +111,11 @@ const Carousel = ({setCurrentSetId}) => {
     },[windowSize])
 
 
+    let loadImageStyle = {
+        width: "10vw",
+        animation: "spinning .9s ease infinite",
+    }
+
     return (
         <div className="carousel-container" style={carouselStyle}>
             {listSet != null ? (
@@ -137,8 +142,7 @@ const Carousel = ({setCurrentSetId}) => {
                 </Swiper>  
             ) : (
                 <Flex align="center" direction="column" py="9">
-                    <Spinner size="2"/>
-                    Loading
+                    <img src="/masterball.png" style={loadImageStyle}/>
                 </Flex>
             )}
             <div className="swiper-button-prev">

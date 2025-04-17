@@ -1,5 +1,5 @@
 import {Button, Flex, ScrollArea, TextField, Box, IconButton, TextArea, Slot, Spinner} from "@radix-ui/themes";
-import {use, useEffect, useRef, useState} from "react";
+import React, {use, useEffect, useRef, useState} from "react";
 import pokapiDAO from "../dao/pokapiDAO.js";
 import {useParams, useNavigate} from "react-router";
 import {Undo2, ArrowUp} from "lucide-react";
@@ -124,6 +124,11 @@ function ChatPokemon() {
     )
     }
 
+    let loadImageStyle = {
+        width: "10vw",
+        animation: "spinning .9s ease infinite",
+    }
+
     return (
         <>
             {loaded ? (
@@ -153,8 +158,7 @@ function ChatPokemon() {
                 </Flex>
             ) : (
                 <Flex align="center" direction="column" py="9">
-                    <Spinner size="2"/>
-                    Loading
+                    <img src="/masterball.png" style={loadImageStyle}/>
                 </Flex>
             )}
 

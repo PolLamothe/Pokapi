@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "react-router";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import pokapiDAO from "../dao/pokapiDAO.js";
 import {Flex, Spinner, Card, Grid, Strong, Button, IconButton} from "@radix-ui/themes";
 import {ImageCard} from "./Collection.jsx";
@@ -124,6 +124,11 @@ function SetView() {
         sizeCard = "3"
     )}
 
+    let loadImageStyle = {
+        width: "10vw",
+        animation: "spinning .9s ease infinite",
+    }
+
     return <>
         { loaded ? (
             <Flex style={{justifyContent:"center", height: "fit-content", padding: "2vh"}}>
@@ -160,8 +165,7 @@ function SetView() {
                                 }
                             )) : (
                                 <Flex align="center" direction="column" py="9">
-                                    <Spinner size="2"/>
-                                    Loading
+                                    <img src="/masterball.png" style={loadImageStyle}/>
                                 </Flex>
                             )}
                         </Grid>
@@ -170,8 +174,7 @@ function SetView() {
             </Flex>
         ) : (
             <Flex align="center" direction="column" py="9">
-                <Spinner size="2"/>
-                Loading
+                <img src="/masterball.png" style={loadImageStyle}/>
             </Flex>
         )}
         {openBoosterState && (

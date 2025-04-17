@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "react-router";
-import {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {Box, Button, Flex, IconButton, Spinner, Text} from "@radix-ui/themes";
 import pokapiDAO from "../dao/pokapiDAO.js";
 import {Undo2} from "lucide-react";
@@ -58,6 +58,11 @@ function Card() {
     ) : (
         marginLeftButton = "30px"
     )}
+
+    let loadImageStyle = {
+        width: "10vw",
+        animation: "spinning .9s ease infinite",
+    }
 
 
     return (
@@ -197,8 +202,7 @@ function Card() {
                 </Flex>
             ) : (
                 <Flex align="center" direction="column" py="9">
-                    <Spinner size="2" />
-                    Loading
+                    <img src="/masterball.png" style={loadImageStyle}/>
                 </Flex>
             )}
         </>
