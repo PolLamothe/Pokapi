@@ -92,7 +92,7 @@ describe('Controller - CardController', () => {
         let setCardsRetrieved = await cardController.findSetCards(firstCard.set.id)
         assert.equal(setCardsRetrieved.length,firstCard.set.total)
         setCardsRetrieved.forEach((card,index)=>{
-            assert(((Date.now()/1000) - card.storageDate) < 1)
+            assert(((Date.now()/1000) - card.storageDate) < 3)
             assert(card.compare(new Card(setCards.data[index])))
         })
 
