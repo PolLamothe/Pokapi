@@ -23,11 +23,9 @@ Comment créer une plateforme permettant aux utilisateurs de gérer, optimiser e
 ## Fonctionnement cache 
 
 ### Données mise en cache :
+- sets
 - cards
 - rarities
-- sets
 - types
-
-### Set :
-
+### Diagramme :
 ![](doc/cache.drawio.png)
