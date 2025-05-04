@@ -1,6 +1,0 @@
-FROM dockerhub.nexus.dep-info.iut-nantes.univ-nantes.prive/php:8.3-apache
-
-COPY vhost.conf /etc/apache2/sites-available/000-default.conf
-COPY MVC ./
-
-RUN docker-php-ext-install -j$(nproc) pdo_mysql && a2enmod rewrite
