@@ -18,7 +18,7 @@ import SetView from "./pages/Set.jsx";
 
 createRoot(document.getElementById('root')).render(
   <Theme accentColor="violet" grayColor="mauve">
-      <BrowserRouter>
+      <BrowserRouter basename="/pokapi">
           <Routes>
               <Route element={<ProtectedRoute />} >
                   <Route path="/" element={<App />}>
