@@ -5,6 +5,7 @@ import {Flex, Spinner, Card, Grid, Strong, Button, IconButton} from "@radix-ui/t
 import {ImageCard} from "./Collection.jsx";
 import BoosterOpening from "../components/BoosterOpening.jsx";
 import {Undo2} from "lucide-react";
+import config from "../config.js";
 
 
 function SetView() {
@@ -165,7 +166,7 @@ function SetView() {
                                 }
                             )) : (
                                 <Flex align="center" direction="column" py="9">
-                                    <img src="./masterball.png" style={loadImageStyle}/>
+                                    <img src={config.base+"/masterball.png"} style={loadImageStyle}/>
                                 </Flex>
                             )}
                         </Grid>
@@ -174,7 +175,7 @@ function SetView() {
             </Flex>
         ) : (
             <Flex align="center" direction="column" py="9">
-                <img src="./masterball.png" style={loadImageStyle}/>
+                <img src={config.base+"/masterball.png"} style={loadImageStyle}/>
             </Flex>
         )}
         {openBoosterState && (

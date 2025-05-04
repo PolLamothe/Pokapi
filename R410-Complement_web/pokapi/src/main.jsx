@@ -15,10 +15,11 @@ import {Theme} from "@radix-ui/themes";
 import ChatPokemon from "./pages/ChatPokemon.jsx";
 import Sets from "./pages/Sets.jsx"
 import SetView from "./pages/Set.jsx";
+import config from './config.js';
 
 createRoot(document.getElementById('root')).render(
   <Theme accentColor="violet" grayColor="mauve">
-      <BrowserRouter basename="/pokapi">
+      <BrowserRouter basename={config.base}>
           <Routes>
               <Route element={<ProtectedRoute />} >
                   <Route path="/" element={<App />}>

@@ -6,6 +6,7 @@ import 'swiper/css'
 import SetPresentation from './SetPresentation'
 import {Flex, Spinner} from "@radix-ui/themes";
 import {ChevronLeft, ChevronRight} from "lucide-react";
+import config from '../config.js'
 
 function shuffle(array){
     let copy = [...array]
@@ -142,7 +143,7 @@ const Carousel = ({setCurrentSetId}) => {
                 </Swiper>  
             ) : (
                 <Flex align="center" direction="column" py="9">
-                    <img src="./masterball.png" style={loadImageStyle}/>
+                    <img src={config.base+"/masterball.png"} style={loadImageStyle}/>
                 </Flex>
             )}
             <div className="swiper-button-prev">

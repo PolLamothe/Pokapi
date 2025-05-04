@@ -2,6 +2,7 @@ import React,{useState,useEffect} from "react"
 import Carousel from "../components/Carrousel.jsx";
 import {Button} from "@radix-ui/themes";
 import BoosterOpening from "../components/BoosterOpening.jsx";
+import config from "../config.js"
 
 function Home() {
 
@@ -27,7 +28,7 @@ function Home() {
             setWindowSize(window.innerWidth);
         }
         window.addEventListener('resize', handleResize)
-        preloadImages(["./booster.png","./cardBack.webp"])
+        preloadImages([config.base+"/booster.png",config.base+"/cardBack.webp"])
         return () => {
             window.removeEventListener('resize', handleResize);
         }

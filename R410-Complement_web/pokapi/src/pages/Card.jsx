@@ -3,6 +3,7 @@ import React, {useState, useEffect, useRef} from "react";
 import {Box, Button, Flex, IconButton, Spinner, Text} from "@radix-ui/themes";
 import pokapiDAO from "../dao/pokapiDAO.js";
 import {Undo2} from "lucide-react";
+import config from "../config.js";
 
 function Card() {
     let params = useParams()
@@ -202,7 +203,7 @@ function Card() {
                 </Flex>
             ) : (
                 <Flex align="center" direction="column" py="9">
-                    <img src="./masterball.png" style={loadImageStyle}/>
+                    <img src={config.base+"/masterball.png"} style={loadImageStyle}/>
                 </Flex>
             )}
         </>

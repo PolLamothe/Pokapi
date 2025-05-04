@@ -6,6 +6,7 @@ import {AccordionContent, AccordionTrigger} from "@radix-ui/react-accordion";
 import {ChevronDownIcon, Fish, Scroll, X} from "lucide-react";
 import {useNavigate} from "react-router";
 import pokapiDAO from "../dao/pokapiDAO.js";
+import config from "../config.js";
 
 
 export function ImageCard({card, exception = false, posssesed, searched, onSearchedAdd}) {
@@ -40,10 +41,10 @@ export function ImageCard({card, exception = false, posssesed, searched, onSearc
         >
             <figure onMouseOver={()=>{setHoverState(true)}} onMouseLeave={()=>{setHoverState(false)}}>
                 {!posssesed && hoverState && !searched &&  (
-                    <img src="./cross.png" style={addStyle} onClick={addInSearched}/>
+                    <img src={config.base+"/cross.png"} style={addStyle} onClick={addInSearched}/>
                 )}
                 {!posssesed && searched && (
-                    <img src="./heart.png" style={heartStyle}/>
+                    <img src={config.base+"/heart.png"} style={heartStyle}/>
                 )}
                 <img className="img"
                      alt={exception ? card.name : card.card.name}
@@ -429,7 +430,7 @@ function Collection() {
                         )))
                 ) : !loadingExpired ? (
                     <Flex align="center" direction="column" py="9">
-                        <img src="./masterball.png" style={loadImageStyle}/>
+                        <img src={config.base+"/masterball.png"} style={loadImageStyle}/>
                     </Flex>
                 ) : (
                     <Flex justify="center" py="9">

@@ -4,6 +4,7 @@ import pokapiDAO from "../dao/pokapiDAO.js";
 import {useParams, useNavigate} from "react-router";
 import {Undo2, ArrowUp} from "lucide-react";
 import dao from "../dao/pokapiDAO.js"
+import config from "../config.js";
 
 function ChatPokemon() {
     let params = useParams()
@@ -158,7 +159,7 @@ function ChatPokemon() {
                 </Flex>
             ) : (
                 <Flex align="center" direction="column" py="9">
-                    <img src="./masterball.png" style={loadImageStyle}/>
+                    <img src={config.base+"/masterball.png"} style={loadImageStyle}/>
                 </Flex>
             )}
 

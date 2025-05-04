@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import dao from "../dao/pokapiDAO.js"
 import {useNavigate} from "react-router";
+import config from '../config.js';
 
 const SetPresentation = ({setId,displayState,middleState}) => {
     const [setData,setSetData] = useState(null)
@@ -161,7 +162,7 @@ const SetPresentation = ({setId,displayState,middleState}) => {
                 })}
                 {loadCount < cardNumber && (
                     <div style={loaderStyle}>
-                        <img src="./masterball.png" style={loadImageStyle}/>
+                        <img src={config.base+"./masterball.png"} style={loadImageStyle}/>
                     </div>
                 )}
             </div>
