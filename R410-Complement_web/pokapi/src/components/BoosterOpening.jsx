@@ -36,10 +36,10 @@ function BoosterOpening({setId,callback}){
             <div id="globalWrapper" onClick={currentIndex > 5 ? callback : nextCard}>
                 <div className={"mainWrapper " + (currentIndex > 5 ? "cardResultWrapper" : "")}>
                     {!cardDisplayState && (
-                        <img src="/booster.png" className={boosterAnimationState ? "boosterAnimation" : ""} id="boosterImage" onAnimationEnd={()=>{setCardDisplayState(true)}} onClick={startBoosterAnimation}/>
+                        <img src="./booster.png" className={boosterAnimationState ? "boosterAnimation" : ""} id="boosterImage" onAnimationEnd={()=>{setCardDisplayState(true)}} onClick={startBoosterAnimation}/>
                     )}
                     {cardList.map((card,index)=>{
-                        return <img src={(index >= 5-currentIndex) ? cardList[index].images.large : "/cardBack.webp"}
+                        return <img src={(index >= 5-currentIndex) ? cardList[index].images.large : "./cardBack.webp"}
                         className={currentIndex <= 5 ?
                             (index < 5-currentIndex ?
                                 ("cardTransition card "+
