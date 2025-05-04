@@ -429,7 +429,7 @@ function Collection() {
                         )))
                 ) : !loadingExpired ? (
                     <Flex align="center" direction="column" py="9">
-                        <img src="/masterball.png" style={loadImageStyle}/>
+                        <img src="./masterball.png" style={loadImageStyle}/>
                     </Flex>
                 ) : (
                     <Flex justify="center" py="9">

@@ -165,7 +165,7 @@ function SetView() {
                                 }
                             )) : (
                                 <Flex align="center" direction="column" py="9">
-                                    <img src="/masterball.png" style={loadImageStyle}/>
+                                    <img src="./masterball.png" style={loadImageStyle}/>
                                 </Flex>
                             )}
                         </Grid>
@@ -174,7 +174,7 @@ function SetView() {
             </Flex>
         ) : (
             <Flex align="center" direction="column" py="9">
-                <img src="/masterball.png" style={loadImageStyle}/>
+                <img src="./masterball.png" style={loadImageStyle}/>
             </Flex>
         )}
         {openBoosterState && (

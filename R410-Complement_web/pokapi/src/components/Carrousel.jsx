@@ -142,7 +142,7 @@ const Carousel = ({setCurrentSetId}) => {
                 </Swiper>  
             ) : (
                 <Flex align="center" direction="column" py="9">
-                    <img src="/masterball.png" style={loadImageStyle}/>
+                    <img src="./masterball.png" style={loadImageStyle}/>
                 </Flex>
             )}
             <div className="swiper-button-prev">
