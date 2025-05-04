@@ -40,10 +40,10 @@ export function ImageCard({card, exception = false, posssesed, searched, onSearc
         >
             <figure onMouseOver={()=>{setHoverState(true)}} onMouseLeave={()=>{setHoverState(false)}}>
                 {!posssesed && hoverState && !searched &&  (
-                    <img src="/cross.png" style={addStyle} onClick={addInSearched}/>
+                    <img src="./cross.png" style={addStyle} onClick={addInSearched}/>
                 )}
                 {!posssesed && searched && (
-                    <img src="/heart.png" style={heartStyle}/>
+                    <img src="./heart.png" style={heartStyle}/>
                 )}
                 <img className="img"
                      alt={exception ? card.name : card.card.name}
