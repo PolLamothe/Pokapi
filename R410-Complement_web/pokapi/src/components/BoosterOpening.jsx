@@ -15,8 +15,8 @@ function BoosterOpening({setId,callback}){
     useEffect(()=>{
         async function getOpenedCard(){
             const result = await pokapiDAO.openBooster(setId)
-            console.log(result)
             setCardList(result)
+            preloadImages(result.map((card)=>card["images"]["large"]))
         }
         getOpenedCard()
     },[])
@@ -30,6 +30,14 @@ function BoosterOpening({setId,callback}){
     function startBoosterAnimation(){
         setBoosterAnimationState(true)
     }
+
+    function preloadImages(imageUrls) {
+        imageUrls.forEach((url) => {
+          const img = new Image()
+          img.src = url
+        })
+        console.log("booster images loaded")
+      }
 
     return (
         <>

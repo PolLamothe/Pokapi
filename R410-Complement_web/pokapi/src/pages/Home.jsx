@@ -27,6 +27,7 @@ function Home() {
             setWindowSize(window.innerWidth);
         }
         window.addEventListener('resize', handleResize)
+        preloadImages(["./booster.png","./cardBack.webp"])
         return () => {
             window.removeEventListener('resize', handleResize);
         }
@@ -35,6 +36,13 @@ function Home() {
     function openingOver(){
         setOpenBoosterState(false)
     }
+
+    function preloadImages(imageUrls) {
+        imageUrls.forEach((url) => {
+          const img = new Image()
+          img.src = url
+        })
+      }
 
     const openButtonStyle = {
         background: "#64408D",
