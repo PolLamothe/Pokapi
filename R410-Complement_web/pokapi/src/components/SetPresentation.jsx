@@ -114,20 +114,21 @@ const SetPresentation = ({setId,displayState,middleState}) => {
         marginLeft : "-10%",
     }
 
-    let loaderStyle = {
+    var loaderStyle = {
         position : "absolute",
         top : "50%",
         left : "50%",
         transform : "translate(-50%,-50%)",
     }
 
-    let loadImageStyle = {
+    const [loadImageStyle,setLoadImageStyle] = useState({
         width : "10vw",
         animation : "spinning .9s ease infinite",
-    }
+    })
 
     useEffect(()=>{
         let tempSetLogoStyle = {...setLogoStyle}
+        let tempLoadImageStyle = {...loadImageStyle}
         if(windowSize < 1000 && windowSize > 600){
             tempSetLogoStyle["width"] = "90%"
     
@@ -135,14 +136,19 @@ const SetPresentation = ({setId,displayState,middleState}) => {
     
             containerStyle["marginLeft"] = "4vw"
             containerStyle["height"] = "35vh"
+            tempLoadImageStyle["width"] = "10vw"
         }else if (windowSize > 1000 && windowSize < 1500) {
             containerStyle["marginLeft"] = "4vw"
+            tempLoadImageStyle["width"] = "10vw"
         } else if(windowSize > 1500) {
             containerStyle["marginLeft"] = "4vw"
+            tempLoadImageStyle["width"] = "10vw"
         } else if(windowSize <= 600){
             containerStyle["height"] = "45vh"
+            tempLoadImageStyle["width"] = "40vw"
         }
         setSetLogoStyle(tempSetLogoStyle)
+        setLoadImageStyle(tempLoadImageStyle)
     },[windowSize])
 
     return (
@@ -162,7 +168,7 @@ const SetPresentation = ({setId,displayState,middleState}) => {
                 })}
                 {loadCount < cardNumber && (
                     <div style={loaderStyle}>
-                        <img src={config.base+"/masterball.png"} style={loadImageStyle}/>
+                        <img src={config.base+"/masterball.png"} style={{...loadImageStyle}}/>
                     </div>
                 )}
             </div>

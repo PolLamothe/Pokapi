@@ -53,6 +53,7 @@
     width : 25%;
     cursor : pointer;
     transition: all .5s ease;
+    height: fit-content;
 }
 
 .card{
@@ -111,7 +112,6 @@
         transform: translate(-50%,-50%);
     }
     .finalCard{
-        height: fit-content;
         width: 45%;
     }
 }

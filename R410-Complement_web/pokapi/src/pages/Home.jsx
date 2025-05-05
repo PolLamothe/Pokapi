@@ -16,10 +16,11 @@ function Home() {
 
     useEffect(()=>{
         if(openBoosterState){
-            document.body.style.overflowY = "hidden"
+            document.getElementsByTagName("html")[0].style.overflowY = "hidden"
             window.scrollTo("0px","0px")
+            console.log(document.body.style.overflowY)
         }else(
-            document.body.style.overflowY = "initial"
+            document.getElementsByTagName("html")[0].style.overflowY = "initial"
         )
     },[openBoosterState])
 
